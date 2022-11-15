@@ -1,9 +1,15 @@
+# custom
+
 /venv
 /.vscode
 __pycache__
 .sqlite3
 test.json
 notes.md
+.dashboard/
+
+
+# generated
 
 .vscode/*
 !.vscode/settings.json
