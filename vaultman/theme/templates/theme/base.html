@@ -1,24 +1,36 @@
 {% load static tailwind_tags %}
 <!DOCTYPE html>
 <html lang="en">
-	<head>
+
+<head>
     <title>Django Tailwind</title>
-		<meta charset="UTF-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<meta http-equiv="X-UA-Compatible" content="ie=edge">
-		{% tailwind_css %}
-	</head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    {% tailwind_css %}
+</head>
 
-	<body class="bg-gray-50 font-serif leading-normal tracking-normal">
-		<div class="container mx-auto">
-			<section class="flex items-center justify-center h-screen">
-				<h1 class="text-5xl text-red-600">Django + Tailwind = ❤️</h1>
-                <p class="text-3xl text-blue-500">test</p>
-			</section>
+<body class="bg-gray-50 font-sans leading-normal tracking-normal">
 
-           {% block body %}
+    <nav class="w-screen bg-teal-600 inline-flex px-2 sm:px-4 py-2.5">
+        <div class="container flex flex-wrap items-center justify-between mx-auto">
 
-           {% endblock body %}
-		</div>
-	</body>
+            <h2 class="text-3xl font-bold "><a href="{%url_for 'vault:index'}">Key vault</a></h2>
+            <ul class="inline-flex justify-end">
+                {% if user.is_authenticated %}
+                    <li class="mx-2"><a href="{%url 'dasboard:index'%}">User</a></li>
+                    <li class="mx-2"><a href="{%url 'dashboard:logout'%}">Logout</a></li>
+                {%else%}
+                    <li class="mx-2"><a href="{%url 'dashboard:login'%}">Login</a></li>
+                {%endif%}
+            </ul>
+        </div>
+    </nav>
+
+    {% block body %}
+
+    {% endblock body %}
+
+</body>
+
 </html>
