@@ -16,3 +16,23 @@ from .forms import *
 @login_required(login_url=reverse_lazy('vault:login'), redirect_field_name=None)
 def index(request):
     pass
+
+def add_new(request):
+    """add <str:type> per aggiungere sia login che note"""
+    pass
+
+def get_password(request):
+    """ fare controllo se il login è protected presentare richiesta pin"""
+    pass
+
+
+def edit(request, id):
+    """edita il field """
+    # MAYBE convertire id a hex ??
+    pass
+
+
+def delete(request,id):
+    """cancella l'elemento """
+    # MAYBE convertire id a hex ??
+    pass
