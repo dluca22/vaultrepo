@@ -13,9 +13,9 @@ from .forms import *
 
 # Create your views here.
 
-@login_required(login_url=reverse_lazy('vault:login'), redirect_field_name=None)
+# @login_required(login_url=reverse_lazy('vault:login'), redirect_field_name=None)
 def index(request):
-    pass
+    return render(request, 'vault/index.html')
 
 def add_new(request):
     """add <str:type> per aggiungere sia login che note"""

@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'django_browser_reload',
 
     'vault',
+    'dashboard',
 ]
 
 TAILWIND_APP_NAME = 'theme'
@@ -95,7 +96,7 @@ DATABASES = {
     }
 }
 
-AUTH_USER_MODEL = 'vault.User'
+AUTH_USER_MODEL = 'dashboard.User'
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators

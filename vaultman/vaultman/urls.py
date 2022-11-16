@@ -18,9 +18,7 @@ from django.urls import path, include
 
 urlpatterns = [
     path('', include("vault.urls", namespace='vault')),
-    path('dashboard/', include("dasboard.urls", namespace='dashboard')),
-
-    path('admin/', admin.site.urls),
+    path('dashboard/', include("dashboard.urls", namespace='dashboard')),
 
     path('admin/', admin.site.urls),
     path("__reload__/", include("django_browser_reload.urls")),

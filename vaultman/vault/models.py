@@ -2,16 +2,8 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.core.validators import MaxValueValidator
 
+from dashboard.models import User
 
-
-class User(AbstractUser):
-    email = models.EmailField( unique=True)
-    pin = models.PositiveIntegerField(validators=[MaxValueValidator(9999)], null=True, blank=True)
-
-    USERNAME_FIELD: "email"
-
-    def __str__(self):
-        return self.username
 
 
 
