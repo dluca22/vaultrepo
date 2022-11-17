@@ -1,10 +1,44 @@
 {% extends "theme/base.html" %}
+{% load static %}
+
+
 
 {% block title %}
-    Login
+Login
 {% endblock title %}
 
 {% block body %}
 
+<div class="">
+    <!-- login/register box -->
+    <span>
+        <button id="toggle_login" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Login</button>
+        <button id="toggle_register" class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded">Register</button>
+    </span>
+    <div id="login_form" class="">
+        <!-- login -->
+        <p>login</p>
+        <form action="{%url 'dashboard:login'%}" method="post">
+            {%csrf_token%}
+            <input autofocus type="text" name="username" placeholder="Username">
+            <input type="password" name="password" placeholder="Password">
+            <input type="submit" value="Login" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+        </form>
 
+
+    </div>
+    <div id="register_form" class="hidden">
+        <p>register</p>
+        <form action="{%url 'dashboard:register'%}" method="post">
+            {%csrf_token%}
+        <input autofocus type="text" name="username" placeholder="Username">    <!-- register -->
+        <input type="text" name="email" placeholder="email">    <!-- register -->
+        <input type="password" name="password" placeholder="Password">    <!-- register -->
+        <input type="password" name="confirmation" placeholder="Confirm Password">    <!-- register -->
+        <input type="submit", value="Register" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+        </form>
+    </div>
+
+</div>
+<script src="{%static 'dashboard/dashboard-script.js'%}"></script>
 {% endblock body %}

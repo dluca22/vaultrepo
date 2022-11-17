@@ -19,7 +19,7 @@ def edit(request, field):
 
     pass
 
-def login(request):
+def login_form(request):
 
     if request.method == "GET":
         return render(request, 'dashboard/login.html')
@@ -31,17 +31,43 @@ def login(request):
 
         if user is not None:
             login(request, user)
+            messages.success(request, f"Logged-in", fail_silently=True )
             return HttpResponseRedirect(reverse('vault:index'))
         else:
-            return render(request, 'vault/login.html', {"message": "Invalid username and/or password."})
+            messages.error(request, f"Invalid username and/or password", fail_silently=True )
+            return render(request, 'dashboard/login.html')
 
 
     pass
 
-def logout(request):
+def logout_user(request):
+    logout(request)
+    """add logout funct to log user out and reroute to index page """
+    return HttpResponseRedirect(reverse('dashboard:login'))
 
     pass
 
-def register(request):
+def register_form(request):
+    if request.method == "POST":
+        username = request.POST["username"]
+        email = request.POST["email"]
 
+        password = request.POST["password"]
+        confirmation = request.POST["confirmation"]
+        if password != confirmation:
+            messages.error(request, "Passwords MUST match", fail_silently=True )
+
+            return render(request, 'dashboard/login.html')
+
+        try:
+            user= User.objects.create_user(username, email, password)
+            user.save()
+        except IntegrityError:
+            messages.error(request, f"{username} is already taken", fail_silently=True )
+
+            return render(request, 'dashboard/login.html')
+        login(request, user)
+        messages.success(request, f"Succesful registration. Welcome {username}", fail_silently=True )
+
+        return HttpResponseRedirect(reverse('vault:index'))
     pass

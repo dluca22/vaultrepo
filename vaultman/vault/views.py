@@ -7,15 +7,19 @@ from django.http import HttpResponseRedirect, JsonResponse
 from django.contrib import messages
 import json
 
-from .models import *
-from .forms import *
+from .models import Login, History ,Folder
+from .forms import LoginForm, FolderForm
 
 
 # Create your views here.
 
-# @login_required(login_url=reverse_lazy('vault:login'), redirect_field_name=None)
+@login_required(login_url=reverse_lazy('dashboard:login'), redirect_field_name=None)
 def index(request):
-    return render(request, 'vault/index.html')
+
+    login_form = LoginForm()
+    logins = Login.objects.filter(owner=request.user)
+    context = {'logins':logins, 'form':login_form}
+    return render(request, 'vault/index.html', context=context)
 
 def add_new(request):
     """add <str:type> per aggiungere sia login che note"""
