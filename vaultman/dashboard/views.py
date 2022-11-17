@@ -4,7 +4,7 @@ from django.http import HttpResponseRedirect, JsonResponse
 from django.urls import reverse, reverse_lazy
 from django.contrib import messages
 
-from sqlite3 import IntegrityError
+from django.db.utils import IntegrityError
 
 from .models import User
 # from .forms import User
@@ -27,6 +27,11 @@ def login_form(request):
     if request.method == "POST":
         username = request.POST['username']
         password = request.POST['password']
+        if not username or not password :
+            messages.error(request, f"All fields must be provided", fail_silently=True )
+            return render(request, 'dashboard/login.html')
+
+
         user = authenticate(request, username=username, password=password)
 
         if user is not None:
@@ -52,8 +57,15 @@ def register_form(request):
         username = request.POST["username"]
         email = request.POST["email"]
 
+        # can't be empty field
         password = request.POST["password"]
         confirmation = request.POST["confirmation"]
+
+        # not accepting empty fields
+        if not username or not email or not password or not confirmation:
+            messages.error(request, "ALL fields must be submitteed", fail_silently=True )
+
+            return render(request, 'dashboard/login.html')
         if password != confirmation:
             messages.error(request, "Passwords MUST match", fail_silently=True )
 
@@ -64,8 +76,8 @@ def register_form(request):
             user.save()
         except IntegrityError:
             messages.error(request, f"{username} is already taken", fail_silently=True )
-
             return render(request, 'dashboard/login.html')
+
         login(request, user)
         messages.success(request, f"Succesful registration. Welcome {username}", fail_silently=True )
 

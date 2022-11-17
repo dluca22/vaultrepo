@@ -2,4 +2,23 @@
 
 {% block body %}
 {% include "vault/sidebar.html" %}
+
+<section id="main" class="">
+    <div class="bg-red-200 ">
+       {% for login in login %}
+        {{login}}
+       {%empty%}
+       <p>there are no logins here</p>
+       {%endfor%}
+    </div>
+</section>
+<div id="forms" class="w-36">
+    <form action="{%url 'vault:add_new'%}">
+        {%csrf_token%}
+        {{form}}
+        <input type="submit" name="add_login" class="btn btn-teal">
+    </form>
+
+
+</div>
 {% endblock body %}

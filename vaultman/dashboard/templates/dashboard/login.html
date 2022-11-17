@@ -12,8 +12,8 @@ Login
 <div class="">
     <!-- login/register box -->
     <span>
-        <button id="toggle_login" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Login</button>
-        <button id="toggle_register" class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded">Register</button>
+        <button id="toggle_login" class="btn btn-green" rounded">Login</button>
+        <button id="toggle_register" class="btn btn-yellow">Register</button>
     </span>
     <div id="login_form" class="">
         <!-- login -->
@@ -22,7 +22,7 @@ Login
             {%csrf_token%}
             <input autofocus type="text" name="username" placeholder="Username">
             <input type="password" name="password" placeholder="Password">
-            <input type="submit" value="Login" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+            <input type="submit" value="Login" class="btn btn-blue">
         </form>
 
 
@@ -35,7 +35,7 @@ Login
         <input type="text" name="email" placeholder="email">    <!-- register -->
         <input type="password" name="password" placeholder="Password">    <!-- register -->
         <input type="password" name="confirmation" placeholder="Confirm Password">    <!-- register -->
-        <input type="submit", value="Register" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+        <input type="submit", value="Register" class="btn btn-red">
         </form>
     </div>
 

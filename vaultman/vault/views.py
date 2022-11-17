@@ -23,7 +23,11 @@ def index(request):
 
 def add_new(request):
     """add <str:type> per aggiungere sia login che note"""
-    pass
+    if request.method == "POST":
+        return
+    else:
+        HttpResponseRedirect(reverse('vault:index'))
+
 
 def get_password(request):
     """ fare controllo se il login è protected presentare richiesta pin"""
