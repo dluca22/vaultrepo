@@ -3,22 +3,23 @@
 {% block body %}
 {% include "vault/sidebar.html" %}
 
-<section id="main" class="">
-    <div class="bg-red-200 ">
-       {% for login in login %}
-        {{login}}
+<section id="main" class="w-40">
+    <div class="">
+       {% for login in logins %}
+        {% include "vault/login_box.html" %}
        {%empty%}
        <p>there are no logins here</p>
        {%endfor%}
     </div>
 </section>
-<div id="forms" class="w-36">
-    <form action="{%url 'vault:add_new'%}">
+
+<section id="forms" class="w-28">
+    <form id ="login_form" action="{%url 'vault:add_new'%}" method="post">
         {%csrf_token%}
         {{form}}
         <input type="submit" name="add_login" class="btn btn-teal">
     </form>
 
 
-</div>
+</section>
 {% endblock body %}

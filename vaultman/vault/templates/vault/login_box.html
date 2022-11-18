@@ -1,0 +1,29 @@
+{%load static%}
+
+
+<!-- <div class="login-box" style="background-color: login.folder.color ;"> -->
+<div class="my-2 mx-5 rounded-md p-3 flex flex-col border border-teal-600 w-80 hover:bg-teal-500 hover:bg-opacity-20 hover:cursor-pointer" id="{{login.hex}}" data-type="login">
+    <div class="mx-auto" ><b>Title: </b>
+         {{login.title | title}}
+        </div>
+    <div>
+
+        <div class="flex justify-around ">
+            <div class="username-copy flex flex-col items-center m-3 hover:opacity-70 hover:cursor-pointer">
+                    <p class="italic border-b-2 border-teal-500 leading-3 ">
+                        {% if not login.username %}
+                            " "
+                        {%else%}
+                            {{login.username}}
+                        {%endif%}
+                    </p>
+
+                <p class="text-xs text-teal-800 opacity-80 " >User</p>
+            </div>
+
+            <button class="btn btn-gray  p-1"{% if not login.password %}disabled{%endif%}>Pswd</button>
+
+            <!-- TODO don't include value of password, listen for click and send request to backend and add to clipboard -->
+        </div>
+    </div>
+</div>

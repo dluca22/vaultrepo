@@ -24,7 +24,23 @@ def index(request):
 def add_new(request):
     """add <str:type> per aggiungere sia login che note"""
     if request.method == "POST":
-        return
+        prefix = "https://"
+        login_form = LoginForm(request.POST)
+
+        if login_form.is_valid():
+            uri = login_form.instance.uri
+            # if uri was inserted, if add prefix if it is not already presetn
+            if uri:
+                if not prefix in uri:
+                    uri = prefix + uri
+
+            login_form.instance.owner = request.user
+            # print(f" dopo : {entry_form.instance}")
+            print(f"  : {login_form.cleaned_data}")
+            login_form.save()
+
+        return HttpResponseRedirect(reverse('vault:index'))
+
     else:
         HttpResponseRedirect(reverse('vault:index'))
 
