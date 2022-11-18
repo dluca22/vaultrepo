@@ -11,34 +11,34 @@ Login
 
 <div class="">
     <!-- login/register box -->
-    <span>
+    <div class="flex flex-row justify-around">
         <button id="toggle_login" class="btn btn-green" rounded">Login</button>
         <button id="toggle_register" class="btn btn-yellow">Register</button>
-    </span>
-    <div id="login_form" class="">
+    </div>
+    <div id="login_form" class="flex flex-col items-center">
         <!-- login -->
-        <p>login</p>
-        <form action="{%url 'dashboard:login'%}" method="post">
+        <p>Log in</p>
+        <form action="{%url 'dashboard:login'%}" method="post" class="">
             {%csrf_token%}
-            <input autofocus type="text" name="username" placeholder="Username">
-            <input type="password" name="password" placeholder="Password">
+            <div><input autofocus type="text" name="username" placeholder="Username"></div>
+            <div><input type="password" name="password" placeholder="Password"></div>
             <input type="submit" value="Login" class="btn btn-blue">
         </form>
 
 
     </div>
-    <div id="register_form" class="hidden">
+    <div id="register_form" class="hidden flex flex-col items-center">
         <p>register</p>
         <form action="{%url 'dashboard:register'%}" method="post">
+            {{ form.non_field_errors }}
             {%csrf_token%}
-        <input autofocus type="text" name="username" placeholder="Username">    <!-- register -->
-        <input type="text" name="email" placeholder="email">    <!-- register -->
-        <input type="password" name="password" placeholder="Password">    <!-- register -->
-        <input type="password" name="confirmation" placeholder="Confirm Password">    <!-- register -->
+        <div><input autofocus type="text" name="username" placeholder="Username"></div>
+        <div><input type="text" name="email" placeholder="email"></div>
+        <div><input type="password" name="password" placeholder="Password"></div>
+        <div><input type="password" name="confirmation" placeholder="Confirm Password"></div>
         <input type="submit", value="Register" class="btn btn-red">
         </form>
     </div>
 
 </div>
-<script src="{%static 'dashboard/dashboard-script.js'%}"></script>
 {% endblock body %}

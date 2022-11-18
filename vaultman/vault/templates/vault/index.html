@@ -1,5 +1,11 @@
 {% extends "theme/base.html" %}
 
+{% block title %}
+vault
+
+{% endblock title %}
+vault
+
 {% block body %}
 {% include "vault/sidebar.html" %}
 
@@ -14,6 +20,7 @@
 </section>
 
 <section id="forms" class="w-28">
+    <h1 class="text-sm text-red-700">dividere la form e aggiungere condizionale per protected only if pin present</h1>
     <form id ="login_form" action="{%url 'vault:add_new'%}" method="post">
         {%csrf_token%}
         {{form}}

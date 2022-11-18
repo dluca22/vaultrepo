@@ -82,4 +82,4 @@ def register_form(request):
         messages.success(request, f"Succesful registration. Welcome {username}", fail_silently=True )
 
         return HttpResponseRedirect(reverse('vault:index'))
-    pass
+    

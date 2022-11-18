@@ -6,7 +6,7 @@ class LoginForm(ModelForm):
 
     class Meta:
         model= Login
-        fields = ('title', 'username', 'password', 'note', 'folder', 'protected', 'favorite', 'uri')
+        fields = ('title', 'username', 'password', 'note', 'folder', 'protected', 'favorite', 'uri',)
         widgets = {
             'password': PasswordInput(render_value=True),
             'note': Textarea(attrs={'rows':6, 'placeholder':"Add notes here..."}),

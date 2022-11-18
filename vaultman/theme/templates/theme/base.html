@@ -8,11 +8,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     {% tailwind_css %}
+    <script src="{%static 'vault/script.js'%}"></script>
+    <script src="{%static 'dashboard/dashboard-script.js'%}"></script>
 </head>
 
 <body class="flex flex-col bg-gray-50 font-sans w-screen">
 
-    <nav class="w-screen bg-teal-600 inline-flex px-2 sm:px-4 py-2.5 h-14">
+    <nav class="w-screen bg-teal-600 inline-flex px-2 sm:px-4 py-2.5 h-14 pb">
         <div class="container flex flex-wrap items-center justify-between mx-auto">
 
             <h2 class="text-3xl font-bold "><a href="{%url 'vault:index'%}">Key vault</a></h2>
@@ -27,12 +29,14 @@
         </div>
     </nav>
     {% if messages %}
-    {% for message in messages %}
-    {{message}}
-    {%endfor%}
-
+    <div class="h-10 mx-auto">
+        {% for message in messages %}
+            {{message}}
+        {%endfor%}
+    </div>
     {%endif%}
-    <div class="flex flex-row bg-gray-300 h-screen w-screen">
+
+    <div class="flex flex-row justify-center bg-gray-300 h-screen mt-5">
 
         {% block body %}
 

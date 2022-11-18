@@ -1,0 +1,50 @@
+{% extends "theme/base.html" %}
+{% block title %} {{title}}{% endblock title %}
+
+{% block body %}
+
+<div class="container ">
+    <div class="row"><span>title</span> <span>folder</span></div>
+    <div class="row"><span>Username</span> <span>Password</span><span>(View)</span> <span>(gen pw)</span></div>
+    <div class="row"><span>url</span></div>
+    <div class="row"><span>note</span></div>
+
+    <div><span>Save</span></div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <div class="mx-auto my-auto">
+    <div class="my-5">
+        <a href="{%url 'vault:index'%}" class="btn btn-red">Home</a>
+        <input type="checkbox" name="fav" id="">
+    </div>
+<div>
+
+        <form action="" method="post">
+
+            {%csrf_token%}
+            {{edit_form.as_p}}
+            <input type="submit" class="btn btn-green" value="Edit">
+        </form>
+</div>
+
+</div> -->
+
+{% endblock body %}

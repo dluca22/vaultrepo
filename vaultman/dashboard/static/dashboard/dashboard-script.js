@@ -1,4 +1,14 @@
 document.addEventListener("DOMContentLoaded", () => {
+    const url = new URL(document.URL);
+  // triggers this script only on dashboard path
+
+//   if path is instance of /dashboard/login OR /register, starts login_page/register function
+  if (url.pathname == "/dashboard/login" || url.pathname == "/dashboard/register") {
+    login_or_register();
+  }
+});
+
+function login_or_register(){
   const login_form = document.querySelector("#login_form");
   const login_toggle = document.querySelector("#toggle_login");
 
@@ -13,4 +23,4 @@ document.addEventListener("DOMContentLoaded", () => {
     login_form.classList.add("hidden");
     register_form.classList.remove("hidden");
   });
-});
+};

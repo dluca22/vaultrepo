@@ -2,14 +2,14 @@
 
 
 <!-- <div class="login-box" style="background-color: login.folder.color ;"> -->
-<div class="my-2 mx-5 rounded-md p-3 flex flex-col border border-teal-600 w-80 hover:bg-teal-500 hover:bg-opacity-20 hover:cursor-pointer" id="{{login.hex}}" data-type="login">
+<div class="login_box " id="{{login.id}}" data-type="login">
     <div class="mx-auto" ><b>Title: </b>
          {{login.title | title}}
         </div>
     <div>
 
         <div class="flex justify-around ">
-            <div class="username-copy flex flex-col items-center m-3 hover:opacity-70 hover:cursor-pointer">
+            <div class="username-copy flex flex-col items-center m-3 hover:opacity-50 hover:cursor-pointer">
                     <p class="italic border-b-2 border-teal-500 leading-3 ">
                         {% if not login.username %}
                             " "
@@ -20,8 +20,17 @@
 
                 <p class="text-xs text-teal-800 opacity-80 " >User</p>
             </div>
+            {% if login.password %}
+                {% if login.protected %}
+                <button value="protected" class="copy-passw btn btn-gray p-1">Pswd</button>
 
-            <button class="btn btn-gray  p-1"{% if not login.password %}disabled{%endif%}>Pswd</button>
+                {%else%}
+                <button value="clear" class="copy-passw btn btn-gray p-1">Pswd</button>
+
+                {%endif%}
+            {%else%}
+            <p>no passw</p>
+            {%endif%}
 
             <!-- TODO don't include value of password, listen for click and send request to backend and add to clipboard -->
         </div>
