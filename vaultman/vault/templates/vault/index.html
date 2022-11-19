@@ -11,7 +11,7 @@ vault
 
 <section id="main" class="w-40">
     <div class="">
-        
+
        {% for login in logins %}
         {% include "vault/login_box.html" %}
        {%empty%}
@@ -30,4 +30,7 @@ vault
 
 
 </section>
+<div id="modals">
+   {% include "vault/modals.html" %}
+</div>
 {% endblock body %}

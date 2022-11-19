@@ -44,33 +44,45 @@ function copy_password(e){
     if (status == "clear"){
         var pin = false
     }else if (status == "protected"){
-        var pin = prompt("insert PIN")
+        // pin = "1111"
+        const pin_box = this.querySelector('.pin_box')
+        pin_box.classList.remove('hidden')
+        const pin_form = pin_box.querySelector('form')
+        pin_form.addEventListener('mouseenter', (e)=>{
+            e.stopImmediatePropagation();
+            e.preventDefault();
+
+            pin_form.addEventListener('submit', (e) => {
+                e.preventDefault()
+                var pin = pin_box.querySelector('input[name="pin"]').value;
+                pin_box.classList.add('hidden')
+            })
+        })
     }
-    console.log(pin);
-    fetch(`password/${id}`, {
-        method : "POST",
-        headers: {
-            "X-CSRFToken": getCookie('csrftoken'),
-                "Content-type": "application/json",
-        },
-        mode : "same-origin",
-        body : JSON.stringify(pin),
-    })
-    .then((response) => response.json())
-    .then((data) => {
-        if (data.success) {
-            // LATER add flashy message if success, or error message if not
-            // if request successful, adds content to clipboard
-            navigator.clipboard.writeText(data.content);
-            console.log("PW copied");
-        } else if (data.denied) {
-            alert(data.message);
-        }
-    }).catch(function(){
-        // catches errors in fetch promise request (only on fail of execution like unavailable service)
-        // TODO flash message on page
-        console.log("error on password fetch request")
-    });
+    // fetch(`password/${id}`, {
+    //     method : "POST",
+    //     headers: {
+    //         "X-CSRFToken": getCookie('csrftoken'),
+    //             "Content-type": "application/json",
+    //     },
+    //     mode : "same-origin",
+    //     body : JSON.stringify(pin),
+    // })
+    // .then((response) => response.json())
+    // .then((data) => {
+    //     if (data.success) {
+    //         // LATER add flashy message if success, or error message if not
+    //         // if request successful, adds content to clipboard
+    //         navigator.clipboard.writeText(data.content);
+    //         console.log("PW copied");
+    //     } else if (data.denied) {
+    //         alert(data.message);
+    //     }
+    // }).catch(function(){
+    //     // catches errors in fetch promise request (only on fail of execution like unavailable service)
+    //     // TODO flash message on page
+    //     console.log("error on password fetch request")
+    // });
 
 }
 
