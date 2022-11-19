@@ -3,31 +3,43 @@
 
 <!-- <div class="login-box" style="background-color: login.folder.color ;"> -->
 <div class="login_box " id="{{login.id}}" data-type="login">
-    <div class="mx-auto" ><b>Title: </b>
-         {{login.title | title}}
-        </div>
+    <div class="mx-auto"><b>Title: </b>
+        {{login.title | title}}
+    </div>
     <div>
 
         <div class="flex justify-around ">
             <div class="username-copy flex flex-col items-center m-3 hover:opacity-50 hover:cursor-pointer">
-                    <p class="italic border-b-2 border-teal-500 leading-3 ">
-                        {% if not login.username %}
-                            " "
-                        {%else%}
-                            {{login.username}}
-                        {%endif%}
-                    </p>
+                <p class="italic border-b-2 border-teal-500 leading-3 ">
+                    {% if not login.username %}
+                    " "
+                    {%else%}
+                    {{login.username}}
+                    {%endif%}
+                </p>
 
-                <p class="text-xs text-teal-800 opacity-80 " >User</p>
+                <p class="text-xs text-teal-800 opacity-80 ">User</p>
             </div>
             {% if login.password %}
-                {% if login.protected %}
-                <button value="protected" class="copy-passw btn btn-gray p-1">Pswd</button>
+            {% if login.protected == True %}
+            <button value="protected" class="copy-passw btn btn-gray p-1">Pswd</button>
+            <!-- <div class="fixed hidden inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full" id="my-modal">
+                insert pin
+                <input type="text" name="pin" id="">
+                <button class="getpin btn btn-gray">PIN</button>
+            </div>-->
+            <div class="hidden pin_box flex ">
+                <form action="">
 
-                {%else%}
-                <button value="clear" class="copy-passw btn btn-gray p-1">Pswd</button>
+                    <input autofocus type="text" name="pin" placeholder="PIN">
+                    <input type="submit" value="OK">
+                </form>
+            </div>
 
-                {%endif%}
+            {%else%}
+            <button value="clear" class="copy-passw btn btn-gray p-1">Pswd</button>
+
+            {%endif%}
             {%else%}
             <p>no passw</p>
             {%endif%}

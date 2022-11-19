@@ -53,7 +53,8 @@ def get_password(request, id):
     #LATER  id = int(id, 16)
     # gets the pin from request, if it is not protected, pin is set to false by client.js
     pin = json.loads(request.body)
-    user = User.objects.get(request.user)
+    user_pin = str(request.user.pin)
+    print(type(pin), type(user_pin))
 
     # try if login is existing
     try:
@@ -69,10 +70,12 @@ def get_password(request, id):
     # if login is protected and pin wasn't provided (may change and just compare if pin is equal to User.pin)
     if login.protected and not pin:
         return JsonResponse({"denied":"unauthorized", "message":"PIN required for this element"})
-    # LATER elif login.protected and pin != (request.user).pin
+    elif login.protected and pin != user_pin:
+        return JsonResponse({"denied":"unauthorized", "message":"Incorrect PIN"})
+    else:
 
-    password = login.password
-    return JsonResponse({"success": "successful request", "content": password})
+        password = login.password
+        return JsonResponse({"success": "successful request", "content": password})
 
 
 def login_content(request, id):

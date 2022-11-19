@@ -38,15 +38,15 @@ function view_login(event){
 
 function copy_password(e){
     e.stopPropagation()
-    console.log(e.currentTarget);
     const id = this.getAttribute('id')
     const status = e.currentTarget.value
 
     if (status == "clear"){
-        pin = false
+        var pin = false
     }else if (status == "protected"){
-        pin = "1111"
+        var pin = prompt("insert PIN")
     }
+    console.log(pin);
     fetch(`password/${id}`, {
         method : "POST",
         headers: {
