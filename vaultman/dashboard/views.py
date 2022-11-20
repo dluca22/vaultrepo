@@ -11,6 +11,7 @@ from .models import User
 
 def dashboard(request):
     """index file for the dashboard, display all user's stats and user settings like pin, email change, password change"""
+    return render(request, 'dashboard/userpage.html')
 
     pass
 
@@ -20,7 +21,7 @@ def edit(request, field):
     pass
 
 def login_form(request):
-
+    """ logs in a user if correct + message , else sends message in the same form"""
     if request.method == "GET":
         return render(request, 'dashboard/login.html')
 
@@ -47,12 +48,13 @@ def login_form(request):
 
 def logout_user(request):
     logout(request)
-    """add logout funct to log user out and reroute to index page """
+    """ logs out current user and redirects to login page"""
     return HttpResponseRedirect(reverse('dashboard:login'))
 
     pass
 
 def register_form(request):
+    """ register a new user"""
     if request.method == "POST":
         username = request.POST["username"]
         email = request.POST["email"]
@@ -82,4 +84,3 @@ def register_form(request):
         messages.success(request, f"Succesful registration. Welcome {username}", fail_silently=True )
 
         return HttpResponseRedirect(reverse('vault:index'))
-    

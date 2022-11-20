@@ -9,27 +9,22 @@ vault
 {% block body %}
 {% include "vault/sidebar.html" %}
 
-<section id="main" class="w-40">
+<div id="main" class="flex-grow">
     <div class="">
-
-       {% for login in logins %}
-        {% include "vault/login_box.html" %}
-       {%empty%}
-       <p>there are no logins here</p>
-       {%endfor%}
+        <button id="show_login_form" class="btn btn-green">New Login</button>
+        <button id="show_note_form" class="btn btn-red opacity-20">New Note</button>
     </div>
-</section>
 
-<section id="forms" class="w-28">
-    <h1 class="text-sm text-red-700">dividere la form e aggiungere condizionale per protected only if pin present</h1>
-    <form id ="login_form" action="{%url 'vault:add_new'%}" method="post">
-        {%csrf_token%}
-        {{form}}
-        <input type="submit" name="add_login" class="btn btn-teal">
-    </form>
+        {% for login in logins %}
+        {% include "vault/login_box.html" %}
+        {%empty%}
+        <p>there are no logins here</p>
+        {%endfor%}
 
 
-</section>
+</div>
+
+
 <div id="modals">
    {% include "vault/modals.html" %}
 </div>

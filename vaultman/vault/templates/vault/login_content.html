@@ -3,22 +3,88 @@
 
 {% block body %}
 
-<div class="container ">
-    <div class="row"><span>title</span> <span>folder</span></div>
-    <div class="row"><span>Username</span> <span>Password</span><span>(View)</span> <span>(gen pw)</span></div>
-    <div class="row"><span>url</span></div>
-    <div class="row"><span>note</span></div>
 
-    <div><span>Save</span></div>
+<div class="max-w-screen-2xl mx-auto mt-4">
+    <main class="container mx-auto max-w-full bg-white h-screen px-4 pb-4">
+        <edit_form.method="post" action="" class="flex gap-4 bg-white rounded py-4 px-8 w-full pb-40 h-full flex-col overflow-y-scroll">
+            {% csrf_token %}
+            <div class="border-b-gray-100 pb-4 border-b-2 flex items-center justify-between">
+                <div class="">
+                    <h3 class="font-semibold text-blue-500 text-2xl">Editing {{ title }}</h3>
+                    <div class="flex gap-1 items-center">
+                        <label class="font-light text-blue-500">Starred:</label>
+                        {{ edit_form.star }}
+                    </div>
+                </div>
+                <button id="pwsdGenBtn" class="bg-blue-600 relative text-white h-8 text-xs px-4 rounded drop-shadow-sm">Password Generator
+                    <p id="genPswdMsg" class="hidden text-xs absolute -bottom-10 w-max rounded-lg p-2 bg-slate-600 text-blue-200">Copied Password</p>
+                </button>
+
+            </div>
+
+            <div class="flex gap-12 px-4 w-fill justify-center flex-wrap">
+                <div class="flex-1">
+                    <section class="flex flex-1 flex-col w-full text-blue-600 font-medium">
+                        <label for="id_name">Name:</label>
+                        {{ edit_form.title }}
+                    </section>
+
+                    <section class="flex flex-col w-full text-blue-600 font-medium">
+                        <label for="id_username">Username:</label>
+                        {{ edit_form.username }}
+                     </section>
+
+                    <section class="flex flex-col w-full text-blue-600 font-medium">
+                        <label for="id_password">Password</label>
+                        <div class="flex items-center gap-2">
+                            <input type="password" name="password" value="{{ decryptedPassword }}" class="bg-slate-200 border-blue-300 font-normal w-full" maxlength="512" required="" id="id_password">
+                            <div class="flex gap-2 text-gray-600 relative">
+                                <i id="showPass" class="fa-solid fa-eye cursor-pointer" title="Show Password"></i>
+                                <i id="copyPswd" class="fa-solid fa-copy cursor-pointer" title="Copy Password"></i>
+                                <p id="copyMsg" class="hidden text-xs absolute -left-8 -bottom-10 w-max rounded-lg p-2 bg-slate-600 text-blue-200">Copied Password</p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="flex flex-col w-full text-blue-600 font-medium">
+                        <label for="id_username">Notes:</label>
+                        {{ edit_form.note }}
+                    </section>
+                </div>
+
+                <div class="flex-1">
+                    <section class="flex flex-col w-full text-blue-600 font-medium">
+                        <label for="id_folder">Folder:</label>
+                        {{ edit_form.folder }}
+                    </section>
+
+                    <section class="flex flex-col w-full text-blue-600 font-medium">
+                        <label for="id_email">Email:</label>
+                        <input type="email" name="email" value="{{ decryptedEmail }}" class="bg-slate-200 border-blue-300 lg:w-full font-normal" maxlength="128" id="id_email">
+                    </section>
+
+
+
+                    <section class="flex flex-col w-full text-blue-600 font-medium">
+                        <label for="id_piority">Piority:</label>
+                        {{ edit_form.piority }}
+                    </section>
+
+                    <section class="flex flex-col w-full text-blue-600 font-medium">
+                        <label for="id_url">Url:</label>
+                        {{ edit_form.url }}
+                    </section>
+                </div>
+            </div>
+
+            <div class="w-fill flex justify-center gap-8 mt-4">
+                <button class="px-12 py-2 bg-blue-400 hover:bg-blue-600 w-fit rounded-md text-white font-bold" type="submit">Save</button>
+                <a href="{{ request.META.HTTP_REFERER }}" class="px-12 py-2 bg-blue-400 hover:bg-blue-600 w-fit rounded-md text-white font-bold">Back</a>
+            </div>
+
+        </edit_form.
+    </main>
 </div>
-
-
-
-
-
-
-
-
 
 
 
@@ -37,12 +103,12 @@
     </div>
 <div>
 
-        <form action="" method="post">
+        <edit_form.action="" method="post">
 
             {%csrf_token%}
-            {{edit_form.as_p}}
+            {{edit_edit_form.as_p}}
             <input type="submit" class="btn btn-green" value="Edit">
-        </form>
+        </edit_form.
 </div>
 
 </div> -->

@@ -4,7 +4,7 @@
 <!-- <div class="login-box" style="background-color: login.folder.color ;"> -->
 <div class="login_box " id="{{login.id}}" data-type="login">
     <div class="mx-auto"><b>Title: </b>
-        {{login.title | title}}
+        {{login.title | title}}, {{login.id}}
     </div>
     <div>
 
@@ -28,14 +28,14 @@
                 <input type="text" name="pin" id="">
                 <button class="getpin btn btn-gray">PIN</button>
             </div>-->
-            
+
 
             {%else%}
             <button value="clear" class="copy-passw btn btn-gray p-1">Pswd</button>
 
             {%endif%}
             {%else%}
-            <p>no passw</p>
+            <button class="btn btn-red">//</button>
             {%endif%}
 
             <!-- TODO don't include value of password, listen for click and send request to backend and add to clipboard -->

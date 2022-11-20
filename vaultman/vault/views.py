@@ -54,7 +54,6 @@ def get_password(request, id):
     # gets the pin from request, if it is not protected, pin is set to false by client.js
     pin = json.loads(request.body)
     user_pin = str(request.user.pin)
-    print(type(pin), type(user_pin))
 
     # try if login is existing
     try:
