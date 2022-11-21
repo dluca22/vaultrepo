@@ -1,0 +1,46 @@
+{% extends "theme/base.html" %}
+{% load static %}
+
+{% block title %} {{request.user | capfirst}}{% endblock title %}
+
+{% block body %}
+
+<div class="flex justify-center mt-14">
+    <p class="text-4xl text-teal-500">Hello: <span class="text-teal-700">{{request.user |capfirst}}</span></p>
+</div>
+<div class="mt-24 bg-yellow-400 flex items-center">
+    <div class=" w-1/4">
+        <p class="font-bold">Settings</p>
+        <ul>
+            <li>change PIN</li>
+            <li>change MasterPassword</li>
+            <li>change email</li>
+        </ul>
+
+
+    </div>
+</div>
+<div class="mt-24 bg-red-400 ">
+
+    <div class="flex justify-center w-full ">
+        <div class="border-2 p-4 m-6 w-1/2 ">number of logins</div>
+        <div class="border-2 p-4 m-6 w-1/2">number of notes</div>
+    </div>
+    <p class="w-full ">Folders</p>
+    <div class="flex">
+        <div class="w-1/4">folder1</div>
+        <div class="w-1/4">folder2</div>
+        <div class="w-1/4">folder3</div>
+        <div class="w-1/4">folder4</div>
+    </div>
+
+    <div class="flex">
+        <span>Last access:</span><span>dd:hh:mm</span>
+    </div>
+</div>
+
+<div id="modals">
+    {%include 'dashboard/modals.html'%}
+</div>
+
+{% endblock body %}

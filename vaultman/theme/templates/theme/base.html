@@ -12,7 +12,7 @@
     <script src="{%static 'dashboard/dashboard-script.js'%}"></script>
 </head>
 
-<body class="flex flex-col bg-gray-50 font-sans w-screen">
+<body class="overflow-hidden bg-gray-50 font-sans min-h-screen max-w-full">
 
     <nav class="w-screen bg-teal-600 inline-flex px-2 sm:px-4 py-2.5 h-14 pb">
         <div class="container flex flex-wrap items-center justify-between mx-auto">
@@ -28,15 +28,21 @@
             </ul>
         </div>
     </nav>
-    {% if messages %}
-    <div class="h-10 mx-auto">
-        {% for message in messages %}
-            {{message}}
-        {%endfor%}
-    </div>
+    <!-- messages div hidden if not messages, else can display it using Js.  -->
+    <div id="message-box" class="h-10 mt-2 -mb-3 bg-blue-600 flex justify-center
+    {% if not messages %}
+        hidden
     {%endif%}
+    ">
+        {% if  messages %}
+            {% for message in messages %}
+                {{message}}
+            {%endfor%}
+        {%endif%}
 
-    <div class="bg-gray-300 h-screen mt-5 flex mx-auto ">
+    </div>
+
+    <div class="bg-gray-300 h-screen mt-5 ">
 
         {% block body %}
 

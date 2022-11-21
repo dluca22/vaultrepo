@@ -1,31 +1,35 @@
 {% extends "theme/base.html" %}
 
-{% block title %}
-vault
-
-{% endblock title %}
-vault
+{% block title %} vault {% endblock title %}
 
 {% block body %}
-{% include "vault/sidebar.html" %}
 
-<div id="main" class="flex-grow">
-    <div class="">
-        <button id="show_login_form" class="btn btn-green">New Login</button>
-        <button id="show_note_form" class="btn btn-red opacity-20">New Note</button>
+<div class="flex ">
+
+    {% include "vault/sidebar.html" %}
+
+    <!-- main col in index with +items btn and the content boxes -->
+    <div id="main" class="">
+        <div class="">
+            <button id="show_login_form" class="btn btn-green">New Login</button>
+            <button id="show_note_form" class="btn btn-red opacity-20">New Note</button>
+        </div>
+
+        <!-- div for the col containing the item boxes -->
+        <div>
+            {% for login in logins %}
+            {% include "vault/login_box.html" %}
+            {%empty%}
+            <p>there are no logins here</p>
+            {%endfor%}
+
+        </div>
+
     </div>
 
-        {% for login in logins %}
-        {% include "vault/login_box.html" %}
-        {%empty%}
-        <p>there are no logins here</p>
-        {%endfor%}
 
-
-</div>
-
-
-<div id="modals">
-   {% include "vault/modals.html" %}
+    <div id="modals">
+        {% include "vault/modals.html" %}
+    </div>
 </div>
 {% endblock body %}
