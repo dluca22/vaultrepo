@@ -1,46 +1,71 @@
 {% extends "theme/base.html" %}
 {% load static %}
 
-{% block title %} {{request.user | capfirst}}{% endblock title %}
+{% block title %} {{user | capfirst}}{% endblock title %}
 
 {% block body %}
 
 <div class="flex justify-center mt-14">
     <p class="text-4xl text-teal-500">Hello: <span class="text-teal-700">{{request.user |capfirst}}</span></p>
 </div>
-<div class="mt-24 bg-yellow-400 flex items-center">
-    <div class=" w-1/4">
-        <p class="font-bold">Settings</p>
-        <ul>
-            <li>change PIN</li>
-            <li>change MasterPassword</li>
-            <li>change email</li>
-        </ul>
+
+{% if not user.pin %}
+<div class="flex flex-col items-center bg-yellow-200 border-2 rounded-lg w-2/4 mx-auto mt-3 p-2">
+    <p class="text-yellow-800 font-bold">Remember to set a PIN to enable content Protection</p>
+
+    <button id="set_pin" class="btn btn-yellow">Set PIN</li>
+
+</div>
+
+{%endif%}
 
 
+<div id="test" class="flex w-full">
+
+    <div class="mt-24 bg-yellow-400 flex-col flex-shrink ">
+
+            <p class="font-bold">Settings</p>
+
+            {{user.pin}}
+
+            <ul>
+                <li id="update_password" class="btn">change MasterPassword</li>
+                <li id="update_email" class="btn">change email</li>
+               {% if user.pin %}
+               <li id="update_pin" class="btn">change PIN</li>
+
+
+               {%endif%}
+            </ul>
+
+    </div>
+    <div class="mt-24 bg-red-400 flex-grow px-36">
+
+        <div class="flex justify-center">
+            <div class="border-2 p-4 m-6 w-1/2 ">number of logins</div>
+            <div class="border-2 p-4 m-6 w-1/2">number of notes</div>
+        </div>
+        <p class="">Folders</p>
+        <div class="flex my-8">
+            <div class="flex-1">folder1</div>
+            <div class="flex-1">folder2</div>
+            <div class="flex-1">folder3</div>
+            <div class="flex-1">folder4</div>
+        </div>
+
+        <div class="flex justify-end">
+            <span class="font-bold">Last access:</span><span>dd:hh:mm</span>
+        </div>
     </div>
 </div>
-<div class="mt-24 bg-red-400 ">
 
-    <div class="flex justify-center w-full ">
-        <div class="border-2 p-4 m-6 w-1/2 ">number of logins</div>
-        <div class="border-2 p-4 m-6 w-1/2">number of notes</div>
-    </div>
-    <p class="w-full ">Folders</p>
-    <div class="flex">
-        <div class="w-1/4">folder1</div>
-        <div class="w-1/4">folder2</div>
-        <div class="w-1/4">folder3</div>
-        <div class="w-1/4">folder4</div>
-    </div>
-
-    <div class="flex">
-        <span>Last access:</span><span>dd:hh:mm</span>
-    </div>
-</div>
 
 <div id="modals">
-    {%include 'dashboard/modals.html'%}
+    {%include 'dashboard/dashboard_modals.html'%}
+</div>
+<div id="temp">
+
+
 </div>
 
 {% endblock body %}

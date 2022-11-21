@@ -84,3 +84,56 @@ def register_form(request):
         messages.success(request, f"Succesful registration. Welcome {username}", fail_silently=True )
 
         return HttpResponseRedirect(reverse('vault:index'))
+
+def edit_pin(request):
+    if request.method == "POST":
+
+        user = request.user
+        master_password = request.POST['master_password']
+        old_pin = request.POST['old_pin']
+        new_pin = request.POST['new_pin']
+        confirmation = request.POST['confirm_pin']
+
+
+        # if check password failed (using hashed check comparison)
+        if not user.check_password(master_password):
+            messages.error(request, 'Master Password was incorrect',fail_silently=True)
+            return HttpResponseRedirect(reverse('dashboard:dashboard'))
+        # if the user user PIN check fails TODO add hashing to this too
+        elif old_pin != user.pin:
+            messages.error(request, 'Current PIN was incorrect',fail_silently=True)
+            return HttpResponseRedirect(reverse('dashboard:dashboard'))
+
+        # if pin and confirmation don't match, or pin is more than 4 digits
+        elif new_pin != confirmation or len(new_pin) > 4:
+            messages.error(request, 'New PIN check failed',fail_silently=True)
+            return HttpResponseRedirect(reverse('dashboard:dashboard'))
+        # if new PIN is the same as old PIN
+        elif new_pin == old_pin:
+            messages.warning(request, 'PIN not updated: it was the same as the current one',fail_silently=True)
+            return HttpResponseRedirect(reverse('dashboard:dashboard'))
+
+        # if clears all confitions
+        else:
+            print("success")
+            user.pin = new_pin
+            user.save()
+            messages.success(request, 'PIN updated',fail_silently=True)
+
+            return HttpResponseRedirect(reverse('dashboard:dashboard'))
+
+def set_pin(request):
+    if request.method == "POST":
+
+        user = request.user
+        new_pin = request.POST['new_pin']
+
+        if len(new_pin) > 4:
+            messages.error(request, 'PIN must be 4 digit only',fail_silently=True)
+
+            return HttpResponseRedirect(reverse('dashboard:dashboard'))
+        user.pin = new_pin
+        user.save()
+
+        messages.success(request, 'PIN set',fail_silently=True)
+        return HttpResponseRedirect(reverse('dashboard:dasPINNhboard'))

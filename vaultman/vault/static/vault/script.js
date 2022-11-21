@@ -21,6 +21,7 @@ function vault_page() {
 
       e.stopPropagation();
     });
+    // if a there is a class selector for .copy-password
     if (login.querySelector(".copy-passw") !== null) {
       login
         .querySelector(".copy-passw")

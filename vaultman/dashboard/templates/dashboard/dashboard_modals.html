@@ -1,0 +1,41 @@
+{% load static %}
+
+
+<div id="pin_update_modal" class="fixed grid inset-0 bg-gray-700 bg-opacity-50">
+
+    <div id="pin_update_form" class="relative my-auto mx-auto p-8
+     rounded-lg bg-yellow-100 bg-opacity-80
+    text-yellow-800 font-bold">
+        <form action="{%url 'dashboard:edit_pin'%}" method="post" class="flex flex-col items-center">
+            {%csrf_token%}
+            <p>== Enter your password and current PIN ==</p>
+            <input class="mb-1 rounded-lg" type="text" name="master_password"
+                        placeholder="Your Master Password">
+            <input class="mb-1 rounded-lg" type="text" name="old_pin" maxlength="4" placeholder="Your current PIN">
+
+            <p>== Enter your new PIN ==</p>
+
+            <input class="mb-1 rounded-lg" type="text" name="new_pin" maxlength="4"
+                        placeholder="Insert 4 digits...">
+            <input class="mb-1 rounded-lg" type="text" name="confirm_pin" maxlength="4" placeholder="Insert new PIN again...">
+
+            <input type="submit" value="Update PIN" class="btn btn-yellow mt-4 bg-yellow-600">
+        </form>
+    </div>
+</div>
+
+<div id="pin_set_modal" class="fixed hidden inset-0 bg-gray-600 bg-opacity-50">
+
+    <div id="pin_set_form" class="relative my-auto mx-auto p-8
+    rounded-lg bg-yellow-200 bg-opacity-80
+    text-yellow-800 font-bold">
+        <form action="{%url 'dashboard:set_pin'%}" method="post" class="flex flex-col items-center">
+            {%csrf_token%}
+            <p>== Enter your new PIN ==</p>
+
+            <input class="my-1 rounded-lg" type="text" name="new_pin" maxlength="4" placeholder="Insert 4 digits...">
+            <input type="submit" value="Set PIN" class="btn btn-blue">
+
+        </form>
+    </div>
+</div>
