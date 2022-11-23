@@ -2,7 +2,7 @@
 
 
 <!-- <div class="login-box" style="background-color: login.folder.color ;"> -->
-<div class="login_box " id="{{login.id}}" data-type="login">
+<div class="login_box " id="{{login.id}}" data-type="login" data-protection="{% if login.protected == True %}locked{%else%}unlocked{%endif%}">
     <div class="mx-auto"><b>Title: </b>
         {{login.title}}, {{login.id}}
     </div>
@@ -21,21 +21,13 @@
                 <p class="text-xs text-teal-800 opacity-80 ">User</p>
             </div>
             {% if login.password %}
-            {% if login.protected == True %}
-            <button value="protected" class="copy-passw btn btn-gray p-1">Pswd</button>
-            <!-- <div class="fixed hidden inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full" id="my-modal">
-                insert pin
-                <input type="text" name="pin" id="">
-                <button class="getpin btn btn-gray">PIN</button>
-            </div>-->
 
+            <img class="copy-passw
+            {% if login.protected == True %} opacity-30{%endif%}
+            " src="{%static 'icons/key.svg'%}" alt="password">
 
             {%else%}
-            <button value="clear" class="copy-passw btn btn-gray p-1">Pswd</button>
-
-            {%endif%}
-            {%else%}
-            <button class="btn btn-red">//</button>
+            <img class="opacity-5" src="{%static 'icons/key.svg'%}" alt="password">
             {%endif%}
 
             <!-- TODO don't include value of password, listen for click and send request to backend and add to clipboard -->

@@ -12,6 +12,8 @@ from .models import Login, History ,Folder
 from dashboard.models import User
 from .forms import LoginForm, FolderForm
 
+from .utils import password_generator
+
 
 # Create your views here.
 
@@ -86,7 +88,7 @@ def login_content(request, id):
         edit_form = LoginForm(request.POST, instance=login)
 
         if edit_form.is_valid():
-            if old_password != edit_form.instance.password:
+            if old_password != edit_form.instance.password and old_password != None:
                 History.objects.create(old_passw=old_password, login=login)
             edit_form.save()
 
@@ -104,15 +106,14 @@ def login_content(request, id):
 
     }
 
-
-
-
     return render(request, 'vault/login_content.html', context=context)
 
-def edit(request, id):
-    """edita il field """
-    # MAYBE convertire id a hex ??
-    pass
+def generate_password(request, size):
+
+    passw = password_generator(size)
+    print(passw)
+    return JsonResponse({"success":'password generated', 'password': passw})
+
 
 
 def delete(request,id):

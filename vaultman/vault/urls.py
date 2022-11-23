@@ -10,4 +10,6 @@ urlpatterns = [
     path("login/<int:id>", views.login_content, name="login_content"),
     path("delete/<int:id>", views.delete, name="delete"),
 
+    path('generate_password/<int:size>', views.generate_password, name="generator"),
+
 ]
