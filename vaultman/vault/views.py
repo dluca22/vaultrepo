@@ -80,12 +80,32 @@ def get_password(request, id):
 def login_content(request, id):
     """change id to hex"""
     login = Login.objects.get(id=id)
-    print(login)
-    edit_form = LoginForm(instance=login)
+    old_password = login.password
+
+    if request.method == "POST":
+        edit_form = LoginForm(request.POST, instance=login)
+
+        if edit_form.is_valid():
+            if old_password != edit_form.instance.password:
+                History.objects.create(old_passw=old_password, login=login)
+            edit_form.save()
+
+            messages.success(request, 'successful edit', fail_silently=True)
+            return HttpResponseRedirect(reverse('vault:login_content', args=[id]))
+
+    elif request.method == "GET":
+        edit_form = LoginForm(instance=login)
+
     context = {
         'title': login.title,
-        'edit_form':edit_form
+        'item_id': id,
+        'edit_form':edit_form,
+        'history': login.has_history
+
     }
+
+
+
 
     return render(request, 'vault/login_content.html', context=context)
 

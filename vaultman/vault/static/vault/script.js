@@ -3,9 +3,15 @@ document.addEventListener("DOMContentLoaded", function () {
   const base_path = url.pathname.split("/")[1];
 
   //   on access if not autheticated, will be redirected to login page
-  if (base_path == "") {
+  if (url.pathname == "/") {
+    console.log("FUNZIONA ANCORA");
     vault_page();
-  } /* else if (base_path == "new_element") {
+  } else if (url.pathname.includes('login/')){
+    login_content_page()
+  }
+
+
+  /* else if (base_path == "new_element") {
     new_element_page();
   }*/
 });
@@ -92,6 +98,29 @@ function fetch_password(id, pin) {
     });
 }
 
+// ===================================================================================
+function login_content_page(){
+    const delete_item = document.querySelector('#delete_item')
+    const generate_username = document.querySelector('#generate_username')
+    const generate_password = document.querySelector('#generate_password')
+    const see_password_toggle = document.querySelector('#see_password_toggle')
+
+
+    see_password_toggle.addEventListener('click', () =>{
+        const passw_field = document.querySelector('#id_password');
+        passw_field.getAttribute('type') == "password" ? passw_field.setAttribute('type', "text") : passw_field.setAttribute('type', "password");
+    })
+
+    generate_username.addEventListener('click', () =>{
+        const username_field = document.querySelector('#id_username')
+    fetch('https://randomuser.me/api/?inc=login')
+    .then((response)=>response.json())
+    .then((data)=> username_field.value = data.results[0].login.username)
+    })
+}
+// ===================================================================================
+
+
 function getCookie(name) {
   let cookieValue = null;
   if (document.cookie && document.cookie !== "") {
@@ -107,3 +136,13 @@ function getCookie(name) {
   }
   return cookieValue;
 }
+
+
+
+
+// fetch request per username generator
+
+/*
+fetch('https://randomuser.me/api/?inc=login').then((response)=>response.json()).then((data)=> console.log(data.results[0].login.username))
+
+*/

@@ -22,6 +22,9 @@ class Login(models.Model):
 
     def __str__(self):
         return self.title
+    @property
+    def has_history(self):
+        return History.objects.filter(login=self)
 
 class History(models.Model):
     id = models.BigAutoField(primary_key=True)
