@@ -21,8 +21,13 @@ from .utils import password_generator
 def index(request):
 
     login_form = LoginForm()
+    folder_form = FolderForm()
     logins = Login.objects.filter(owner=request.user).order_by('title')
-    context = {'logins':logins, 'form':login_form}
+    folders = (request.user).folders.all()
+    context = {'logins':logins,
+                'form':login_form,
+                 'folder_form': folder_form,
+                 'folders': folders}
     return render(request, 'vault/index.html', context=context)
 
 def add_new(request):
@@ -46,7 +51,7 @@ def add_new(request):
         return HttpResponseRedirect(reverse('vault:index'))
 
     else:
-        HttpResponseRedirect(reverse('vault:index'))
+        return HttpResponseRedirect(reverse('vault:index'))
 
 # or @csrf_protect (cambia behavior on rejection)
 @requires_csrf_token
@@ -120,3 +125,16 @@ def delete(request,id):
     """cancella l'elemento """
     # MAYBE convertire id a hex ??
     pass
+
+
+def new_folder(request):
+    if request.method == "POST":
+        form = FolderForm(request.POST)
+
+        if form.is_valid():
+            form.instance.owner = request.user
+            print(form.cleaned_data)
+            form.save()
+
+        return HttpResponseRedirect(reverse('vault:index'))
+

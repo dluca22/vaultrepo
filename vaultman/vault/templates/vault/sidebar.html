@@ -10,12 +10,18 @@
 
         <p>Favorites</p>
         <hr class="my-4">
-        <p class="font-bold">Folders</p>
+        <div class="flex justify-around">
+            <span class="font-bold">Folders</span>
+            <button class="btn btn-green p-1 py-0">+</button>
+        </div>
+        {% if folders %}
         <ul>
-            <li>folder1</li>
-            <li>folder2</li>
-            <li>folder3</li>
+           {% for folder in folders %}
+            <li class="font-bold" style="color: {{folder.color}};">{{folder}}</li>
+           {%endfor%}
         </ul>
+
+        {%endif%}
         <hr class="my-4">
         <p>TrashCan</p>
     </div>

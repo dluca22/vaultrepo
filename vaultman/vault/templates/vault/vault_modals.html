@@ -16,7 +16,8 @@
 
 <div id="new_login_modal" class="fixed hidden inset-0 bg-gray-600 bg-opacity-50 "">
     <div class=" relative my-auto mx-auto p-5 hover:shadow-lg rounded-2xl bg-white">
-    <form id="login_form" action="{%url 'vault:add_new'%}" method="post" class="p-6 flex flex-col items-apart">
+        <form id="login_form" action="{%url 'vault:add_new'%}" method="post"
+        class="p-6 flex flex-col items-apart">
         {%csrf_token%}
         <span class="flex justify-end gap-4">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
@@ -46,7 +47,11 @@
 
             <div>
                 <p>Username</p>
-                {{form.username}} <span class="btn btn-green">gen</span>
+                <div class="flex items-center">
+                    {{form.username}}
+                    <img id="generate_username" src="{% static 'icons/random.svg' %}" alt="randomize"
+                        class=" w-8 h-8 bg-yellow-500 rounded-full m-1">
+                </div>
             </div>
 
         </div>
@@ -54,7 +59,26 @@
 
             <div>
                 <p>Password</p>
-                {{form.password}} <span class="btn btn-blue">gen</span>
+                <div class="flex items-center ">
+                    {{form.password}}
+                    <img id="see_password_toggle" src="{% static 'icons/eye.svg' %}" alt="see toggle"
+                        class=" w-8 h-8 bg-blue-500 rounded-full mx-2">
+
+                    <div class="bg-green-200 bg-opacity-50 flex p-2 border border-green-600 rounded-lg">
+                        <img id="generate_password" src="{% static 'icons/random.svg' %}" alt="randomize"
+                            class=" w-8 h-8 bg-green-500 rounded-full m-1">
+                            <input
+                            class="rounded-lg text-right border-green-600 p-0 w-12"
+
+                            type="number"
+                            placeholder="size"
+                            step="1"
+                            min="3"
+                            max="24"
+                            id="size"/>
+                    </div>
+
+                </div>
             </div>
 
         </div>
@@ -66,18 +90,10 @@
             </div>
 
         </div>
-        <div class="flex items-center justify-between">
+        <div class="flex items-center justify-end gap-2between">
             <p>Folder: </p>
             {{form.folder}}
 
-
-
-            <div>
-
-
-
-
-            </div>
 
         </div>
         <div class="flex items-end gap-4 ">
@@ -92,7 +108,6 @@
 
         <input type="submit" name="add_login" class="btn btn-teal ">
     </form>
-
 
 </div>
 
@@ -121,36 +136,14 @@
         </div>
     </div> -->
 <script>
-    const pin_modal = document.querySelector('#pin_modal');
-    const pin_form = pin_modal.querySelector('form');
-    const pin_input = pin_form.querySelector('#pin_input');
 
 
 
-    const new_login = document.querySelector('#show_login_form');
-
-    new_login.addEventListener('click', () => {
-        // get login modal  and show as grid
-        const modal = document.querySelector('#new_login_modal')
-        const form = modal.querySelector('form')
-
-        modal.style.display = "grid"
-
-        // if user clicks anywhere outside the white box, closes the modal(inset) and reset form
-        modal.addEventListener('click', (e) => {
-            if (e.target == modal) {
-                modal.style.display = "none";
-                form.reset()
-            }
-        }, false)
 
 
-    })
 
-    function close_modal(e) {
-        console.log(event)
-        console.log(event.currentTarget)
-    }
+
+
 </script>
 
 
@@ -168,4 +161,29 @@
 
 
 
+</div>
+
+
+<!-- new folder modal -->
+
+<div id="new_folder_modal" class="fixed hidden inset-0 bg-gray-600 bg-opacity-50 ">
+    <div class="relative my-auto mx-auto p-5 border-2 border-violet-500 shadow-lg rounded-md bg-gray-200 ">
+        <header class="flex relative -top-5 justify-center
+         bg-violet-200  border-2 border-t-0 rounded-b-lg border-violet-500
+         text-violet-900 font-bold "> New Folder</header>
+        <form action="new_folder" method="post">
+            {%csrf_token%}
+
+
+            </header>
+            {{folder_form.name}}
+            <div class="text-violet-700 text-lg flex items-center my-1">
+                {{folder_form.color.label}}{{folder_form.color}}
+            </div>
+            <div>
+                <input type="submit" class="btn btn-green bg-violet-600 p-1 my-1">
+            </div>
+        </form>
+
+    </div>
 </div>

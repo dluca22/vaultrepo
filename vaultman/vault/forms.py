@@ -17,6 +17,10 @@ class FolderForm(ModelForm):
     class Meta:
         model = Folder
         fields = ('name', 'color',)
-        # widgets = {
-        #     'color': Textarea(attrs={'type':"color"})
-        # }
+        widgets = {
+            'name': TextInput(attrs={'placeholder':"Folder Name...", 'class':'rounded-lg border-2 border-violet-500'}),
+            'color': TextInput(attrs={'type':"color", 'class':'h-12'})
+        }
+        labels = {
+            'color': "Choose Folder color: "
+        }

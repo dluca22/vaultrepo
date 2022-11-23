@@ -42,6 +42,14 @@ function vault_page() {
     const modal = document.querySelector("#new_login_modal");
     modal.style.display = "grid";
 
+    // 3 function buttons for form fields
+    const generate_username = document.querySelector("#generate_username");
+    const generate_password = document.querySelector("#generate_password");
+    const pw_visibility_toggle = document.querySelector("#see_password_toggle");
+    pw_visibility_toggle.addEventListener("click", toggle_visibility);
+    generate_username.addEventListener("click", random_username);
+    generate_password.addEventListener("click", random_password); /*end event listener for password generator */
+
     // if user clicks anywhere outside the white box, closes the modal(inset) and reset form inside it
     modal.addEventListener("click", close_modal, false);
   });
@@ -123,41 +131,16 @@ function login_content_page() {
   const delete_item = document.querySelector("#delete_item");
   const generate_username = document.querySelector("#generate_username");
   const generate_password = document.querySelector("#generate_password");
-  const see_password_toggle = document.querySelector("#see_password_toggle");
+  const pw_visibility_toggle = document.querySelector("#see_password_toggle");
 
   // click on view/hide password field that converts input type from "password" to "text"
-  see_password_toggle.addEventListener("click", () => {
-    const passw_field = document.querySelector("#id_password");
-    // ternary operator to change the attribute
-    passw_field.getAttribute("type") == "password"
-      ? passw_field.setAttribute("type", "text")
-      : passw_field.setAttribute("type", "password");
-  });
+  pw_visibility_toggle.addEventListener("click", toggle_visibility);
 
   // fetch request to external api that generates random person, then getting the login.username field from the request
-  generate_username.addEventListener("click", () => {
-    const username_field = document.querySelector("#id_username");
-    fetch("https://randomuser.me/api/?inc=login")
-      .then((response) => response.json())
-      .then((data) => (username_field.value = data.results[0].login.username));
-  });
+  generate_username.addEventListener("click", random_username);
 
   // fetch request to function to generate password from util function
-  generate_password.addEventListener("click", () => {
-    // get the input value for the size
-    const sizeInput = document.querySelector("#size").value;
-    // if no size was set, default to 10 char
-    const size = sizeInput ? sizeInput : 10;
-
-    // NOTE add / to go to the absolute path of the app (else would be /login/generate_password)
-    // goes to 8000/generate_password/<size>
-    fetch(`/generate_password/${size}`)
-      .then((response) => response.json())
-      .then((data) => {
-        const password_input = document.querySelector("#id_password");
-        password_input.value = data.password;
-      });
-  }); /*end event listener for password generator */
+  generate_password.addEventListener("click", random_password); /*end event listener for password generator */
 
   // if div for password_history is present
   if (document.querySelector("#password_history")) {
@@ -188,6 +171,37 @@ function close_modal(e) {
   }
 }
 
+// ===================================================================================
+function random_username() {
+    const username_field = document.querySelector("#id_username");
+    fetch("https://randomuser.me/api/?inc=login")
+      .then((response) => response.json())
+      .then((data) => (username_field.value = data.results[0].login.username));
+  }
+// ===================================================================================
+function random_password() {
+    // get the input value for the size
+    const sizeInput = document.querySelector("#size").value;
+    // if no size was set, default to 10 char
+    const size = sizeInput ? sizeInput : 10;
+
+    // NOTE add / to go to the absolute path of the app (else would be /login/generate_password)
+    // goes to 8000/generate_password/<size>
+    fetch(`/generate_password/${size}`)
+      .then((response) => response.json())
+      .then((data) => {
+        const password_input = document.querySelector("#id_password");
+        password_input.value = data.password;
+      });
+  }
+// ===================================================================================
+function toggle_visibility() {
+    const passw_field = document.querySelector("#id_password");
+    // ternary operator to change the attribute
+    passw_field.getAttribute("type") == "password"
+      ? passw_field.setAttribute("type", "text")
+      : passw_field.setAttribute("type", "password");
+  }
 // ===================================================================================
 
 function getCookie(name) {
