@@ -136,4 +136,4 @@ def set_pin(request):
         user.save()
 
         messages.success(request, 'PIN set',fail_silently=True)
-        return HttpResponseRedirect(reverse('dashboard:dasPINNhboard'))
+        return HttpResponseRedirect(reverse('dashboard:dashboard'))
