@@ -37,10 +37,11 @@ function vault_page() {
 
   //   event listener on "New Login" button
     const new_login = document.querySelector("#show_login_form");
+    // TODO controllare se la dichiarazione delle variabili DENTRO all'event listener è meglio piuttosto che fuori, in caso che ogni click debba ri controllare il document e creare le variabili
     new_login.addEventListener("click", () => {
     // get new_login_modal  and show as grid
-    const modal = document.querySelector("#new_login_modal");
-    modal.style.display = "grid";
+    const login_modal = document.querySelector("#new_login_modal");
+    login_modal.style.display = "grid";
 
     // 3 function buttons for form fields
     const generate_username = document.querySelector("#generate_username");
@@ -51,8 +52,21 @@ function vault_page() {
     generate_password.addEventListener("click", random_password); /*end event listener for password generator */
 
     // if user clicks anywhere outside the white box, closes the modal(inset) and reset form inside it
-    modal.addEventListener("click", close_modal, false);
+    login_modal.addEventListener("click", close_modal, false);
   });
+
+//   const search_form = document.querySelector('#search_form')
+//   search_form.addEventListener('enter')
+
+//   event listener on "+ Folder"
+
+  const new_folder = document.querySelector('#new_folder');
+  const folder_modal = document.querySelector('#new_folder_modal');
+  new_folder.addEventListener('click', () =>{
+    folder_modal.style.display = "grid";
+
+    folder_modal.addEventListener('click', close_modal)
+  })
 }
 
 function view_login(event) {
@@ -202,6 +216,8 @@ function toggle_visibility() {
       ? passw_field.setAttribute("type", "text")
       : passw_field.setAttribute("type", "password");
   }
+
+
 // ===================================================================================
 
 function getCookie(name) {

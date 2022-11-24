@@ -7,21 +7,30 @@
             <li><button value="notes">notes</button></li>
         </ul>
         <hr class="my-4">
+        <form action="{%url 'vault:index'%}" id="search_form">
+            <input type="search" class="flex rounded-lg w-40" name="q" id="search_text">
+        </form>
+        <hr class="my-4">
 
-        <p>Favorites</p>
+        <a href="{%url 'vault:index'%}?fav=true">Favorites</a>
         <hr class="my-4">
         <div class="flex justify-around">
             <span class="font-bold">Folders</span>
-            <button class="btn btn-green p-1 py-0">+</button>
+            <button id="new_folder" class="btn btn-green p-1 py-0">+</button>
         </div>
         {% if folders %}
         <ul>
            {% for folder in folders %}
-            <li class="font-bold" style="color: {{folder.color}};">{{folder}}</li>
+            <li class="font-bold btn btn-grey p-1 bg-{{folder.color}}-500">
+                <a href="{% url 'vault:index'%}?folder={{folder}}">{{folder}}</a>
+            </li>
            {%endfor%}
         </ul>
 
         {%endif%}
+        <ul>
+            <li class="font-bold"><a href="{%url 'vault:index'%}?folder=none">No Fo<span class="text-red-500">l</span>der</a></li>
+        </ul>
         <hr class="my-4">
         <p>TrashCan</p>
     </div>

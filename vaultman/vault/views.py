@@ -20,9 +20,26 @@ from .utils import password_generator
 @login_required(login_url=reverse_lazy('dashboard:login'), redirect_field_name=None)
 def index(request):
 
+    folder_query = request.GET.get('folder')
+    favorites = request.GET.get('fav')
+    search = request.GET.get('q')
+
+    if folder_query:
+        if folder_query == "none":
+            logins = Login.objects.filter(folder__isnull=True)
+        else:
+            logins = Login.objects.filter(folder__name=folder_query)
+    elif favorites == "true":
+        logins = Login.objects.filter(favorite=True)
+    elif search:
+        logins = Login.objects.filter(title__icontains=search)
+    else:
+        logins = Login.objects.filter(owner=request.user).order_by('title')
+
+
+
     login_form = LoginForm()
     folder_form = FolderForm()
-    logins = Login.objects.filter(owner=request.user).order_by('title')
     folders = (request.user).folders.all()
     context = {'logins':logins,
                 'form':login_form,

@@ -36,11 +36,24 @@ class History(models.Model):
         return self.old_passw
 
 
+COLOR_CHOICES = (
+    ('teal','TEAL'),
+    ('green','GREEN'),
+    ('emerald','EMERALD'),
+    ('blue', 'BLUE'),
+    ('cyan', 'CYAN'),
+    ('red','RED'),
+    ('orange','ORANGE'),
+    ('black','BLACK'),
+    ('violet','VIOLET'),
+    ('pink','PINK'),
+    ('yellow','YELLOW'),
+)
 
 class Folder(models.Model):
     id = models.BigAutoField(primary_key=True)
     name = models.CharField(max_length=32, blank=False, null=False)
-    color = models.CharField(max_length=8, default='#0081FF')
+    color = models.CharField(max_length=8,choices=COLOR_CHOICES, default='cyan')
     owner = models.ForeignKey(User, on_delete=models.CASCADE, null=False, related_name="folders")
 
     def __str__(self):

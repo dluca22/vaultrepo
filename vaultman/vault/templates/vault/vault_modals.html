@@ -2,11 +2,13 @@
 
 <!-- pin form modal -->
 <div id="pin_modal" class="fixed hidden inset-0 bg-gray-600 bg-opacity-50">
-    <div class="relative my-auto mx-auto p-5 border shadow-lg rounded-md bg-white">
-
+    <div class="relative my-auto mx-auto p-5 border-2 border-green-500 shadow-lg rounded-md bg-green-50">
+        <header class="flex relative -top-5 justify-center
+         bg-green-200  border-2 border-t-0 rounded-b-lg border-green-500
+         text-green-900 font-bold "> Submit PIN</header>
         <form>
-            <input autofocus id="pin_input" type="text" placeholder="PIN" maxlength="4">
-            <input type="submit" value="OK" class="btn btn-blue">
+            <input autofocus id="pin_input" type="text" placeholder="PIN" maxlength="4" class="rounded-lg border-green-500 w-32">
+            <input type="submit" value="OK" class="btn btn-green">
         </form>
     </div>
 </div>
@@ -15,7 +17,10 @@
 <!-- new login modal -->
 
 <div id="new_login_modal" class="fixed hidden inset-0 bg-gray-600 bg-opacity-50 "">
-    <div class=" relative my-auto mx-auto p-5 hover:shadow-lg rounded-2xl bg-white">
+    <div class=" relative my-auto mx-auto p-5 shadow-lg rounded-2xl border-2 border-blue-500 bg-blue-50">
+        <header class="flex relative -top-5 justify-center
+         bg-blue-200  border-2 border-t-0 rounded-b-lg border-blue-500
+         text-blue-900 font-bold "> New Login</header>
         <form id="login_form" action="{%url 'vault:add_new'%}" method="post"
         class="p-6 flex flex-col items-apart">
         {%csrf_token%}
@@ -177,11 +182,11 @@
 
             </header>
             {{folder_form.name}}
-            <div class="text-violet-700 text-lg flex items-center my-1">
+            <div class="text-violet-700 text-lg flex items-center my-1 w-">
                 {{folder_form.color.label}}{{folder_form.color}}
             </div>
-            <div>
-                <input type="submit" class="btn btn-green bg-violet-600 p-1 my-1">
+            <div class="flex justify-end">
+                <input type="submit" class="btn btn-violet p-1 my-1 ">
             </div>
         </form>
 
