@@ -19,17 +19,23 @@
             <button id="new_folder" class="btn btn-green p-1 py-0">+</button>
         </div>
         {% if folders %}
-        <ul>
-           {% for folder in folders %}
-            <li class="font-bold btn btn-grey p-1 bg-{{folder.color}}-500">
-                <a href="{% url 'vault:index'%}?folder={{folder}}">{{folder}}</a>
+
+        <!-- algthough i like the wrap view for the folders, must set that back to list row to add edit functions for name or else add a view for folders -->
+        <ul class="flex flex-wrap">
+            {% for folder in folders%}
+            <li class="font-bold  justify-center p-1 ">
+
+
+                <a href="{% url 'vault:index'%}?folder={{folder}}" class="btn btn-orange p-1 rounded-lg">{{folder}}</a>
             </li>
            {%endfor%}
         </ul>
 
         {%endif%}
-        <ul>
-            <li class="font-bold"><a href="{%url 'vault:index'%}?folder=none">No Fo<span class="text-red-500">l</span>der</a></li>
+        <ul class="flex">
+            <li class="font-bold mx-auto">
+                <a href="{%url 'vault:index'%}?folder=none" class="btn btn-gray p-1 rounded-lg">No Folder</a>
+            </li>
         </ul>
         <hr class="my-4">
         <p>TrashCan</p>

@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import requires_csrf_token
 from django.urls import reverse, reverse_lazy
 from django.http import HttpResponseRedirect, JsonResponse
+from django.db.models.functions import Lower
 
 from django.contrib import messages
 import json
@@ -15,36 +16,42 @@ from .forms import LoginForm, FolderForm
 from .utils import password_generator
 
 
-# Create your views here.
 
 @login_required(login_url=reverse_lazy('dashboard:login'), redirect_field_name=None)
 def index(request):
 
+    # if there is a query for each of these fields
     folder_query = request.GET.get('folder')
     favorites = request.GET.get('fav')
     search = request.GET.get('q')
 
     if folder_query:
+        # if query is from btn "none" category, selects only items not in folder
         if folder_query == "none":
             logins = Login.objects.filter(folder__isnull=True)
+        # else, filter where folder name is the one in the query
         else:
             logins = Login.objects.filter(folder__name=folder_query)
+    # if query is for fav items, selects only those
     elif favorites == "true":
         logins = Login.objects.filter(favorite=True)
+    # if the query is a ?q search request, selects ones where the title contains the word in search (insensitive contains)
     elif search:
         logins = Login.objects.filter(title__icontains=search)
+    # else selects all logins
     else:
         logins = Login.objects.filter(owner=request.user).order_by('title')
 
 
-
+    # builds forms and folder qset and adds to the context
     login_form = LoginForm()
     folder_form = FolderForm()
-    folders = (request.user).folders.all()
-    context = {'logins':logins,
-                'form':login_form,
+    folders = (request.user).folders.all().order_by(Lower('name'))
+    context = {  'logins':logins,
+                 'form':login_form,
                  'folder_form': folder_form,
                  'folders': folders}
+                #  return index page with context
     return render(request, 'vault/index.html', context=context)
 
 def add_new(request):
