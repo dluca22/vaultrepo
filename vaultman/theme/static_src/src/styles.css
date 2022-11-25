@@ -34,6 +34,6 @@
     }
 
     .login_box {
-        @apply my-2 mx-5 rounded-md p-3 flex flex-col border border-teal-600 w-80 hover:bg-teal-500 hover:bg-opacity-20 hover:cursor-pointer;
+        @apply my-2 mx-5 rounded-md p-3 flex flex-col border border-teal-600 w-80 hover:bg-gray-500 hover:bg-opacity-20 hover:cursor-pointer;
     }
 }

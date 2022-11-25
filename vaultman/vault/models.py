@@ -26,6 +26,10 @@ class Login(models.Model):
     def has_history(self):
         return History.objects.filter(login=self)
 
+    @property
+    def folderColor(self):
+        return self.folder.color
+
 class History(models.Model):
     id = models.BigAutoField(primary_key=True)
     old_passw = models.CharField(max_length=80)
@@ -58,4 +62,3 @@ class Folder(models.Model):
 
     def __str__(self):
         return self.name
-   

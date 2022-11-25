@@ -2,9 +2,12 @@
 
 
 <!-- <div class="login-box" style="background-color: login.folder.color ;"> -->
-<div class="login_box " id="{{login.id}}" data-type="login" data-protection="{% if login.protected == True %}locked{%else%}unlocked{%endif%}">
+<div class="login_box
+{% if login.folder %}bg-{{login.folderColor}}-500{%endif%}
+
+" id="{{login.id}}" data-type="login" data-protection="{% if login.protected == True %}locked{%else%}unlocked{%endif%}">
     <div class="mx-auto"><b>Title: </b>
-        {{login.title}}, {{login.id}}
+        {{login.title}},
     </div>
     <div>
 
