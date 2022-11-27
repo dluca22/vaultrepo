@@ -1,6 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
   const url = new URL(document.URL);
-  const base_path = url.pathname.split("/")[1];
 
   //   on access if not autheticated, will be redirected to login page
   if (url.pathname == "/") {
@@ -64,6 +63,7 @@ function vault_page() {
   const folder_modal = document.querySelector('#new_folder_modal');
   new_folder.addEventListener('click', () =>{
     folder_modal.style.display = "grid";
+    folder_modal.querySelector('#id_name').autofocus; /* NOTE DOESN'T WORK */
 
     folder_modal.addEventListener('click', close_modal)
   })
@@ -163,13 +163,50 @@ function login_content_page() {
     const previous_passwords = history.querySelectorAll("li");
     // for each add listener to copy innertext to clipboard
     previous_passwords.forEach((item) => {
-      item.addEventListener("click", (e) => {
+        item.addEventListener("click", (e) => {
         const value = e.target.innerText;
         navigator.clipboard.writeText(value);
         // TODO add popup for confirmation
       });
     });
-  }
+  };
+
+  delete_item.addEventListener('click', (e) => {
+    const id = e.currentTarget.value;
+    const confirm_modal = document.querySelector('#delete_item_confirm')
+    const dismiss = confirm_modal.querySelector('button[value="dismiss"]')
+    const confirm = confirm_modal.querySelector('button[value="confirm"]')
+
+    confirm_modal.style.display = "grid";
+    confirm_modal.addEventListener('click', (e) =>{
+        if (e.target == e.currentTarget || e.target == dismiss){
+            e.currentTarget.style.display = "none"
+        }else if (e.target == confirm){
+            fetch(`/delete/${id}`,{
+                method : "delete",
+                headers: {
+                    "X-CSRFToken": getCookie("csrftoken"),
+                    "Content-type": "application/json",
+                  },
+            })
+            .then((response) => response.json())
+            .then((data) => {
+                if (data.success){
+                    console.log(data.success);
+                    window.location = '/';
+
+
+                }
+                else if (data.denied){
+                    console.log(data.message);
+                }
+            })
+        }
+
+    })
+    dismiss.addEventListener('click', () => confirm_modal.click())
+
+  })
 }
 // ===================================================================================
 

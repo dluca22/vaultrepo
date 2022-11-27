@@ -16,7 +16,7 @@
 
 <!-- new login modal -->
 
-<div id="new_login_modal" class="fixed hidden inset-0 bg-gray-600 bg-opacity-50 "">
+<div id="new_login_modal" class="fixed hidden inset-0 bg-gray-600 bg-opacity-50 ">
     <div class=" relative my-auto mx-auto p-5 shadow-lg rounded-2xl border-2 border-blue-500 bg-blue-50">
         <header class="flex relative -top-5 justify-center
          bg-blue-200  border-2 border-t-0 rounded-b-lg border-blue-500
@@ -24,7 +24,7 @@
         <form id="login_form" action="{%url 'vault:add_new'%}" method="post"
         class="p-6 flex flex-col items-apart">
         {%csrf_token%}
-        <span class="flex justify-end gap-4">
+        <span class="flex justify-end gap-4 items-center">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
                 stroke="currentColor" class="w-8 h-8 text-red-300">
                 <path stroke-linecap="round" stroke-linejoin="round"
@@ -96,6 +96,12 @@
 
         </div>
         <div class="flex items-center justify-end gap-2between">
+           {% if folder %}
+
+           {%else%}
+
+           {%endif%}
+
             <p>Folder: </p>
             {{form.folder}}
 

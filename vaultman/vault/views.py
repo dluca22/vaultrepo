@@ -44,7 +44,7 @@ def index(request):
 
 
     # builds forms and folder qset and adds to the context
-    login_form = LoginForm()
+    login_form = LoginForm(user=request.user)
     folder_form = FolderForm()
     folders = (request.user).folders.all().order_by(Lower('name'))
     context = {  'logins':logins,
@@ -125,7 +125,7 @@ def login_content(request, id):
             return HttpResponseRedirect(reverse('vault:login_content', args=[id]))
 
     elif request.method == "GET":
-        edit_form = LoginForm(instance=login)
+        edit_form = LoginForm(instance=login, user=request.user)
 
     context = {
         'title': login.title,
@@ -143,12 +143,26 @@ def generate_password(request, size):
     print(passw)
     return JsonResponse({"success":'password generated', 'password': passw})
 
+# ===================================================
 
-
+@requires_csrf_token
 def delete(request,id):
     """cancella l'elemento """
-    # MAYBE convertire id a hex ??
-    pass
+    if request.method == "DELETE":
+        try:
+            login = Login.objects.get(id=id)
+        except:
+            return JsonResponse({"denied":'Failed request', "message":"This item doesn't exist!"})
+
+
+        if login.owner == request.user:
+            login.delete()
+            return JsonResponse({"success":"Successful request", "message" : 'deleted successfully'})
+        else:
+            return JsonResponse({"denied":'Failed request', "message" : 'You are not authorized!'})
+
+
+# ===================================================
 
 
 def new_folder(request):
@@ -161,4 +175,5 @@ def new_folder(request):
             form.save()
 
         return HttpResponseRedirect(reverse('vault:index'))
+
 

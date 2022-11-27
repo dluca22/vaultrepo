@@ -3,7 +3,6 @@ from django.forms import ModelForm, Textarea, PasswordInput, Select , TextInput
 
 class LoginForm(ModelForm):
 
-
     class Meta:
         model= Login
         fields = ('title', 'username', 'password', 'note', 'folder', 'protected', 'favorite', 'uri',)
@@ -16,6 +15,16 @@ class LoginForm(ModelForm):
             'folder': Select(attrs={"class":"rounded-lg border-2 "})
         }
 
+    # initialize Form model, pass argument (user=request.user)
+    # from kwargs get 'user', in 'folder' field returns queryset of choices limited by folders owned by current user
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop('user')
+        # LATER control this next line (cos'è?)
+        super(LoginForm, self).__init__(*args,**kwargs)
+        # ?? not set to None
+        self.fields['folder'].initial = 'None'
+        self.fields['folder'].queryset = Folder.objects.filter(owner=user)
+
 class FolderForm(ModelForm):
     class Meta:
         model = Folder
@@ -27,3 +36,4 @@ class FolderForm(ModelForm):
         labels = {
             'color': "Folder color: "
         }
+
