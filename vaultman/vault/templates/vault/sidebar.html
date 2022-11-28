@@ -2,20 +2,15 @@
 
 <sidebar class="w-56 h-96 flex-grow-0 content-around" aria-label="Sidebar">
     <div class="grow overflow-y-auto py-4 px-3 bg-gray-50 rounded ">
-       <div class="flex justify-center">
-        <a href="{%url 'vault:index'%}" class="btn btn-gray p-1">All</a>
-       </div>
-        <ul class="mb-7 flex justify-around " id='view_toggles'>
-            <li><a href="{%url 'vault:index'%}?filter=logins" class="btn btn-green p-1" >logins</a></li>
-            <li><a href="{%url 'vault:index'%}?filter=notes" class="btn btn-red p-1" >notes</a></li>
-        </ul>
-        <hr class="my-4">
+
+
         <form action="{%url 'vault:index'%}" id="search_form">
-            <input type="search" class="flex rounded-lg w-40" name="q" id="search_text" placeholder="&#128269 Search...">
+            <input type="search" class="flex rounded-lg w-40" name="q" id="search_text"
+                placeholder="&#128269 Search...">
         </form>
         <hr class="my-4">
 
-        <a href="{%url 'vault:index'%}?filter=fav">Favorites</a>
+        <a href="{%url 'vault:index'%}?filter=fav" class="btn btn-yellow">Favorites</a>
         <hr class="my-4">
         <div class="flex justify-around">
             <span class="font-bold">Folders</span>
@@ -30,11 +25,12 @@
             <li class="font-bold p-1 flex justify-between">
                 <a href="{% url 'vault:index'%}?folder={{folder}}" class="btn btn-orange p-1 rounded-lg">{{folder}}</a>
 
-                <span><button class="edit-folder btn btn-yellow p-1 rounded-full" value="{{folder.id}}">e</button></span>
+                <span><button class="edit-folder btn btn-yellow p-1 rounded-full"
+                        value="{{folder.id}}">e</button></span>
 
 
             </li>
-           {%endfor%}
+            {%endfor%}
         </ul>
 
         {%endif%}

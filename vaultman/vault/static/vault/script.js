@@ -72,6 +72,70 @@ function vault_page() {
 
     folder_modal.addEventListener('click', close_reset_modal)
   })
+
+  const editFolder_modal = document.querySelector('#edit_folder_modal')
+    const edit_btn = editFolder_modal.querySelector('input[value="Edit"]')
+    const delete_btn = editFolder_modal.querySelector('input[value="Delete"]')
+    const editForm = editFolder_modal.querySelector('form')
+    const folderName_field = editFolder_modal.querySelector('#current_folder_name')
+
+    // select <ul#folder> + select all children <li>
+    const folder_list = document.querySelector('#folders').querySelectorAll('li');
+    folder_list.forEach((folder_item) => {
+        folder_item.querySelector('.edit-folder').addEventListener('click', (e) => {
+            editFolder_modal.style.display = "grid"
+            const id = e.target.value
+            fetch(`/edit_folder/${id}`)
+            .then((response) => response.json())
+            .then((data) => {
+                if (data.success){
+                    folderName_field.value = data.name
+                    editForm.value = data.id
+                }
+            })
+        })
+    })
+
+    editFolder_modal.addEventListener('click', close_modal)
+
+    edit_btn.addEventListener('click', (e) =>{
+        // fetch request to PUT EDIT
+        //not preventdefault so it refreshes
+
+        fetch(`/edit_folder/${editForm.value}`, {
+            method:"PUT",
+            headers: {
+                "X-CSRFToken": getCookie("csrftoken"),
+                "Content-type": "application/json",
+              },
+            body: JSON.stringify(folderName_field.value)
+        })
+        .then((response) => response.json())
+        .then((data) => {
+            console.log(data)
+        })
+    });
+
+    delete_btn.addEventListener('click', (e) =>{
+        // fetch request to DELETE
+        //not preventdefault so it refreshes
+
+        fetch(`/edit_folder/${editForm.value}`, {
+            method:"DELETE",
+            headers: {
+                "X-CSRFToken": getCookie("csrftoken"),
+                "Content-type": "application/json",
+              },
+        })
+        .then((response) => response.json())
+        .then((data) => {
+            console.log(data)
+        })
+    });
+
+
+
+
 }
 
 function view_login(event) {
