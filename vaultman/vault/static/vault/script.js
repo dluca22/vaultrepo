@@ -14,35 +14,40 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 function vault_page() {
+    // gets all login boxes and for each handles the click for entire box or username/ password elements for copy content
   const logins = document.querySelectorAll(".login_box");
+
   logins.forEach((login) => {
+    // clicking on entire box, opens new page with login content
     login.addEventListener("click", view_login, false);
+    // clicking on username, gets the text of the username field and copies to clipboard
     login.querySelector(".username-copy").addEventListener("click", (e) => {
       const username = e.currentTarget.firstElementChild.innerText;
       console.log(username);
       navigator.clipboard.writeText(username);
-
+        // avoid propagation for click listeners under it
       e.stopPropagation();
     });
-    // if a there is a class selector for .copy-password
+
+    // if a there is a class selector for .copy-password (password might not be set)
     if (login.querySelector(".copy-passw") !== null) {
-      login
-        .querySelector(".copy-passw")
-        .addEventListener("click", copy_password.bind(login));
+    //   if login has password set, clicking on the div.copy-passw starts function for get request for the password to be copied into clipboard
+        login.querySelector(".copy-passw").addEventListener("click", copy_password.bind(login));
     }
   });
 
   // index page modal management
 
   //   event listener on "New Login" button
+    // new_login is the button the user clicks to display the modal
     const new_login = document.querySelector("#show_login_form");
-    // TODO controllare se la dichiarazione delle variabili DENTRO all'event listener è meglio piuttosto che fuori, in caso che ogni click debba ri controllare il document e creare le variabili
+    // login modal is the modal itself to be displayed and handled
+    const login_modal = document.querySelector("#new_login_modal");
     new_login.addEventListener("click", () => {
     // get new_login_modal  and show as grid
-    const login_modal = document.querySelector("#new_login_modal");
     login_modal.style.display = "grid";
 
-    // 3 function buttons for form fields
+    // get 3 function buttons for form fields
     const generate_username = document.querySelector("#generate_username");
     const generate_password = document.querySelector("#generate_password");
     const pw_visibility_toggle = document.querySelector("#see_password_toggle");
@@ -51,7 +56,7 @@ function vault_page() {
     generate_password.addEventListener("click", random_password); /*end event listener for password generator */
 
     // if user clicks anywhere outside the white box, closes the modal(inset) and reset form inside it
-    login_modal.addEventListener("click", close_modal, false);
+    login_modal.addEventListener("click", close_reset_modal, false);
   });
 
 //   const search_form = document.querySelector('#search_form')
@@ -65,7 +70,7 @@ function vault_page() {
     folder_modal.style.display = "grid";
     folder_modal.querySelector('#id_name').autofocus; /* NOTE DOESN'T WORK */
 
-    folder_modal.addEventListener('click', close_modal)
+    folder_modal.addEventListener('click', close_reset_modal)
   })
 }
 
@@ -99,7 +104,7 @@ function copy_password(e) {
     // TEMP paused, set all to NO PROTECT, adding function later (callback hell, one )
     // le variables sono in modals.html
     pin_modal.style.display = "grid";
-    pin_modal.addEventListener("click", close_modal, false);
+    pin_modal.addEventListener("click", close_reset_modal, false);
     pin_form.addEventListener("submit", (e) => {
       e.preventDefault();
       var pin = pin_input.value;
@@ -120,7 +125,7 @@ function fetch_password(id, pin) {
       "Content-type": "application/json",
     },
     mode: "same-origin",
-    body: JSON.stringify(pin),
+    body: {'name': JSON.stringify(pin)},
   })
     .then((response) => response.json())
     .then((data) => {
@@ -210,7 +215,7 @@ function login_content_page() {
 }
 // ===================================================================================
 
-function close_modal(e) {
+function close_reset_modal(e) {
     // before was close_modal.bind(modal)   should work the same
   // e.target is where the click event was originated
   // this is the overlay modal itself
@@ -221,6 +226,14 @@ function close_modal(e) {
     form.reset();
   }
 }
+
+// ===================================================================================
+
+function close_modal(e) {
+    if (e.target == this) {
+      this.style.display = "none";
+    }
+  }
 
 // ===================================================================================
 function random_username() {

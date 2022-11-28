@@ -6,8 +6,8 @@
         <a href="{%url 'vault:index'%}" class="btn btn-gray p-1">All</a>
        </div>
         <ul class="mb-7 flex justify-around " id='view_toggles'>
-            <li><a href="{%url 'vault:index'%}" class="btn btn-green p-1" >logins</a></li>
-            <li><a href="{%url 'vault:index'%}" class="btn btn-red p-1" >notes</a></li>
+            <li><a href="{%url 'vault:index'%}?filter=logins" class="btn btn-green p-1" >logins</a></li>
+            <li><a href="{%url 'vault:index'%}?filter=notes" class="btn btn-red p-1" >notes</a></li>
         </ul>
         <hr class="my-4">
         <form action="{%url 'vault:index'%}" id="search_form">
@@ -15,7 +15,7 @@
         </form>
         <hr class="my-4">
 
-        <a href="{%url 'vault:index'%}?fav=true">Favorites</a>
+        <a href="{%url 'vault:index'%}?filter=fav">Favorites</a>
         <hr class="my-4">
         <div class="flex justify-around">
             <span class="font-bold">Folders</span>
@@ -23,13 +23,16 @@
         </div>
         {% if folders %}
 
-        <!-- algthough i like the wrap view for the folders, must set that back to list row to add edit functions for name or else add a view for folders -->
-        <ul class="flex flex-wrap">
+        <!-- list of folders -->
+        <ul id="folders">
             {% for folder in folders%}
-            <li class="font-bold  justify-center p-1 ">
-
-
+            <!-- every li has link to query for filtering items + Edit button and Delete button -->
+            <li class="font-bold p-1 flex justify-between">
                 <a href="{% url 'vault:index'%}?folder={{folder}}" class="btn btn-orange p-1 rounded-lg">{{folder}}</a>
+
+                <span><button class="edit-folder btn btn-yellow p-1 rounded-full" value="{{folder.id}}">e</button></span>
+
+
             </li>
            {%endfor%}
         </ul>

@@ -1,4 +1,4 @@
-{
+{% if login.folder %}bg-{{login.folderColor}}-500{%endif%}{
   "name": "theme",
   "version": "3.4.0",
   "description": "",

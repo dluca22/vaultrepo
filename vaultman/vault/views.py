@@ -22,7 +22,7 @@ def index(request):
 
     # if there is a query for each of these fields
     folder_query = request.GET.get('folder')
-    favorites = request.GET.get('fav')
+    filter = request.GET.get('filter')
     search = request.GET.get('q')
 
     if folder_query:
@@ -33,8 +33,12 @@ def index(request):
         else:
             logins = Login.objects.filter(folder__name=folder_query)
     # if query is for fav items, selects only those
-    elif favorites == "true":
+    elif filter == "fav":
         logins = Login.objects.filter(favorite=True)
+    elif filter == "logins":
+        logins = Login.objects.filter(favorite=True)
+    # elif filter == "notes":
+    #     logins = Note.objects.filter(owner=request.user).order_by('title')
     # if the query is a ?q search request, selects ones where the title contains the word in search (insensitive contains)
     elif search:
         logins = Login.objects.filter(title__icontains=search)
@@ -58,7 +62,7 @@ def add_new(request):
     """add <str:type> per aggiungere sia login che note"""
     if request.method == "POST":
         prefix = "https://"
-        login_form = LoginForm(request.POST)
+        login_form = LoginForm(request.POST, user=request.user)
 
         if login_form.is_valid():
             uri = login_form.instance.uri
@@ -114,7 +118,7 @@ def login_content(request, id):
     old_password = login.password
 
     if request.method == "POST":
-        edit_form = LoginForm(request.POST, instance=login)
+        edit_form = LoginForm(request.POST, instance=login, user=request.user)
 
         if edit_form.is_valid():
             if old_password != edit_form.instance.password and old_password != None:
@@ -157,7 +161,7 @@ def delete(request,id):
 
         if login.owner == request.user:
             login.delete()
-            return JsonResponse({"success":"Successful request", "message" : 'deleted successfully'})
+            return JsonResponse({"success":"Successful requesta", "message" : 'deleted successfully'})
         else:
             return JsonResponse({"denied":'Failed request', "message" : 'You are not authorized!'})
 
@@ -177,3 +181,28 @@ def new_folder(request):
         return HttpResponseRedirect(reverse('vault:index'))
 
 
+def edit_folder(request, id):
+    """from async request GET method returns values of folder if present
+        PUT request, gets body content of input field and assigns to the model
+        DELETE request deletes the db entry"""
+    try:
+        folder = Folder.objects.get(id=id)
+    except:
+        return JsonResponse({"denied":"Folder doesn't exist"})
+
+    if folder.owner != request.user:
+        return JsonResponse({"denied":"You are note the owner"})
+
+    if request.method == "PUT":
+        new_name = json.loads(request.body)
+        folder.name = new_name
+        folder.save()
+        return JsonResponse({"success": "folder edited"})
+
+
+    elif request.method == "DELETE":
+        folder.delete()
+        return JsonResponse({"success": "folder deleted"})
+
+    # else : GET send name and color as json
+    return JsonResponse({"success": "successful request", "name": folder.name, "id": folder.id})
