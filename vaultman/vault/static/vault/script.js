@@ -1,3 +1,6 @@
+
+// ====== LISTENS ON DOM CONTENT LOADED AND BASED ON THE URL TRIGGERS DIFFERENT FUNCTIONS ===
+
 document.addEventListener("DOMContentLoaded", function () {
   const url = new URL(document.URL);
 
@@ -7,15 +10,13 @@ document.addEventListener("DOMContentLoaded", function () {
   } else if (url.pathname.includes("login/")) {
     login_content_page();
   }
-
-  /* else if (base_path == "new_element") {
-    new_element_page();
-  }*/
 });
 
+// ============= JS TO HANDLE THE MAIN PAGE HTML & REQUESTS ===============================================
 function vault_page() {
     // gets all login boxes and for each handles the click for entire box or username/ password elements for copy content
   const logins = document.querySelectorAll(".login_box");
+
 
   logins.forEach((login) => {
     // clicking on entire box, opens new page with login content
@@ -162,6 +163,7 @@ function copy_password(e) {
   if (status == "unlocked") {
     var pin = false;
     fetch_password(id, pin);
+    console.log(id, pin);
   }
   // STOP TEMPOARANEO  ===================================================================================
   else if (status == "locked") {
@@ -189,7 +191,7 @@ function fetch_password(id, pin) {
       "Content-type": "application/json",
     },
     mode: "same-origin",
-    body: {'name': JSON.stringify(pin)},
+    body: JSON.stringify(pin),
   })
     .then((response) => response.json())
     .then((data) => {
@@ -197,7 +199,7 @@ function fetch_password(id, pin) {
         // LATER add flashy message if success, or error message if not
         // if request successful, adds content to clipboard
         navigator.clipboard.writeText(data.content);
-        console.log("PW copied");
+        flash_message("PW copied");
       } else if (data.denied) {
         alert(data.message);
       }
@@ -205,11 +207,11 @@ function fetch_password(id, pin) {
     .catch(function () {
       // catches errors in fetch promise request (only on fail of execution like unavailable service)
       // TODO flash message on page
-      console.log("error on password fetch request");
+      flash_message("error on password fetch request");
     });
 }
 
-// ===================================================================================
+// ============= JS TO HANDLE TO USERPAGE HTML & REQUESTS ===========================================================
 function login_content_page() {
   const delete_item = document.querySelector("#delete_item");
   const generate_username = document.querySelector("#generate_username");
@@ -277,7 +279,9 @@ function login_content_page() {
 
   })
 }
-// ===================================================================================
+
+
+// =========== HELPER FUNCTIONS ================================
 
 function close_reset_modal(e) {
     // before was close_modal.bind(modal)   should work the same
@@ -292,7 +296,6 @@ function close_reset_modal(e) {
 }
 
 // ===================================================================================
-
 function close_modal(e) {
     if (e.target == this) {
       this.style.display = "none";
@@ -306,7 +309,8 @@ function random_username() {
       .then((response) => response.json())
       .then((data) => (username_field.value = data.results[0].login.username));
   }
-// ===================================================================================
+
+  // ===================================================================================
 function random_password() {
     // get the input value for the size
     const sizeInput = document.querySelector("#size").value;
@@ -322,8 +326,10 @@ function random_password() {
         password_input.value = data.password;
       });
   }
-// ===================================================================================
-function toggle_visibility() {
+
+  // ===================================================================================
+// toggle password field visibility
+  function toggle_visibility() {
     const passw_field = document.querySelector("#id_password");
     // ternary operator to change the attribute
     passw_field.getAttribute("type") == "password"
@@ -331,9 +337,38 @@ function toggle_visibility() {
       : passw_field.setAttribute("type", "password");
   }
 
-
 // ===================================================================================
+// flash custom message in the message-box
+function flash_message(message=false){
+    const msgDiv = document.querySelector('#message-box')
+    msgDiv.style.display = "grid";
 
+    setTimeout(function() {
+        msgDiv.style.display = "";
+
+    }, 5000);
+
+    if (message){
+      const customMsg = document.querySelector('#custom-message')
+      customMsg.innerText = message
+      setTimeout(function() {
+        customMsg.innerText = "";
+        }, 5000);
+    }
+}
+// ===================================================================================
+// hide message box
+// function timeout_message(){
+//     const msgDiv = document.querySelector('#message-box')
+//     if( msgDiv.style.display != ""){
+//         setTimeout(function(){
+//             msgDiv.style.display = "";
+//         }, 5000)
+//     }
+
+
+// }
+// ===================================================================================
 function getCookie(name) {
   let cookieValue = null;
   if (document.cookie && document.cookie !== "") {
@@ -350,9 +385,3 @@ function getCookie(name) {
   return cookieValue;
 }
 
-// fetch request per username generator
-
-/*
-fetch('https://randomuser.me/api/?inc=login').then((response)=>response.json()).then((data)=> console.log(data.results[0].login.username))
-
-*/

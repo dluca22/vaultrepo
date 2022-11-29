@@ -34,7 +34,7 @@ def index(request):
             logins = Login.objects.filter(folder__name=folder_query)
     # if query is for fav items, selects only those
     elif filter == "fav":
-        logins = Login.objects.filter(favorite=True)
+        logins = Login.objects.filter(owner=request.user, favorite=True)
     elif filter == "logins":
         logins = Login.objects.filter(favorite=True)
     # elif filter == "notes":

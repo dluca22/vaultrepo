@@ -28,19 +28,31 @@
             </ul>
         </div>
     </nav>
+
+
+    <!-- ------- -->
     <!-- messages div hidden if not messages, else can display it using Js.  -->
-    <div id="message-box" class="h-10 mt-2 -mb-3 bg-blue-600 flex justify-center
+    <div id="message-box" class="absolute flex flex-wrap items-center justify-center p-4 m-2
+    bg-blue-600 rounded-lg right-1 w-52
     {% if not messages %}
-        hidden
+    hidden
     {%endif%}
     ">
         {% if  messages %}
             {% for message in messages %}
-                {{message}}
+                <div class="message">
+                    {{message}}
+                </div>
             {%endfor%}
         {%endif%}
+        <div id="custom-message">
+            
+        </div>
 
     </div>
+
+    <!-- ------- -->
+
 
     <div class="bg-gray-300 h-screen mt-5 ">
 
