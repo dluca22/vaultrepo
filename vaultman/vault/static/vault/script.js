@@ -10,6 +10,7 @@ document.addEventListener("DOMContentLoaded", function () {
   } else if (url.pathname.includes("login/")) {
     login_content_page();
   }
+  timeout_message()
 });
 
 // ============= JS TO HANDLE THE MAIN PAGE HTML & REQUESTS ===============================================
@@ -24,7 +25,6 @@ function vault_page() {
     // clicking on username, gets the text of the username field and copies to clipboard
     login.querySelector(".username-copy").addEventListener("click", (e) => {
       const username = e.currentTarget.firstElementChild.innerText;
-      console.log(username);
       navigator.clipboard.writeText(username);
         // avoid propagation for click listeners under it
       e.stopPropagation();
@@ -92,6 +92,9 @@ function vault_page() {
                 if (data.success){
                     folderName_field.value = data.name
                     editForm.value = data.id
+                    flash_message(data.success, "success")
+                }else if (data.denied){
+                    flash_message(data.denied, "error")
                 }
             })
         })
@@ -196,18 +199,17 @@ function fetch_password(id, pin) {
     .then((response) => response.json())
     .then((data) => {
       if (data.success) {
-        // LATER add flashy message if success, or error message if not
         // if request successful, adds content to clipboard
         navigator.clipboard.writeText(data.content);
         flash_message("PW copied");
       } else if (data.denied) {
-        alert(data.message);
+        flash_message(data.message);
       }
     })
     .catch(function () {
       // catches errors in fetch promise request (only on fail of execution like unavailable service)
       // TODO flash message on page
-      flash_message("error on password fetch request");
+      flash_message("500 - Error on password request.");
     });
 }
 
@@ -308,6 +310,7 @@ function random_username() {
     fetch("https://randomuser.me/api/?inc=login")
       .then((response) => response.json())
       .then((data) => (username_field.value = data.results[0].login.username));
+      flash_message("Username created", "success")
   }
 
   // ===================================================================================
@@ -339,35 +342,34 @@ function random_password() {
 
 // ===================================================================================
 // flash custom message in the message-box
-function flash_message(message=false){
+function flash_message(message, alert){
     const msgDiv = document.querySelector('#message-box')
-    msgDiv.style.display = "grid";
+    msgDiv.classList.remove("hidden");
 
+    const customMsg = document.querySelector('#custom-message')
+
+    alert === "success" ? customMsg.classList.add("text-green-600") : customMsg.classList.add("text-red-600")
+
+    customMsg.innerText = message
     setTimeout(function() {
-        msgDiv.style.display = "";
+    customMsg.innerText = "";
+    msgDiv.classList.add("hidden");
 
     }, 5000);
 
-    if (message){
-      const customMsg = document.querySelector('#custom-message')
-      customMsg.innerText = message
-      setTimeout(function() {
-        customMsg.innerText = "";
-        }, 5000);
-    }
 }
 // ===================================================================================
 // hide message box
-// function timeout_message(){
-//     const msgDiv = document.querySelector('#message-box')
-//     if( msgDiv.style.display != ""){
-//         setTimeout(function(){
-//             msgDiv.style.display = "";
-//         }, 5000)
-//     }
+function timeout_message(){
+    const msgDiv = document.querySelector('#message-box')
+    if( ! msgDiv.classList.contains('hidden')){
+        setTimeout(function(){
+            msgDiv.classList.add("hidden");
+        }, 5000)
+    }
 
 
-// }
+}
 // ===================================================================================
 function getCookie(name) {
   let cookieValue = null;

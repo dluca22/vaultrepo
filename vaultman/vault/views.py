@@ -75,7 +75,7 @@ def add_new(request):
             # print(f" dopo : {entry_form.instance}")
             print(f"  : {login_form.cleaned_data}")
             login_form.save()
-
+            messages.success(request, "New element created!")
         return HttpResponseRedirect(reverse('vault:index'))
 
     else:
@@ -125,7 +125,11 @@ def login_content(request, id):
                 History.objects.create(old_passw=old_password, login=login)
             edit_form.save()
 
-            messages.success(request, 'successful edit', fail_silently=True)
+            messages.success(request, 'Successful edit', fail_silently=True)
+            return HttpResponseRedirect(reverse('vault:login_content', args=[id]))
+        # if messages not valid
+        else:
+            messages.error(request, 'Invalid form', fail_silently=True)
             return HttpResponseRedirect(reverse('vault:login_content', args=[id]))
 
     elif request.method == "GET":
@@ -197,7 +201,9 @@ def edit_folder(request, id):
         new_name = json.loads(request.body)
         folder.name = new_name
         folder.save()
-        return JsonResponse({"success": "folder edited"})
+
+        return JsonResponse({"success":"Folder edited"})
+
 
 
     elif request.method == "DELETE":
@@ -206,3 +212,5 @@ def edit_folder(request, id):
 
     # else : GET send name and color as json
     return JsonResponse({"success": "successful request", "name": folder.name, "id": folder.id})
+
+
