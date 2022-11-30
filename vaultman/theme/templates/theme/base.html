@@ -32,35 +32,15 @@
 
     <!-- ------- -->
     <!-- messages div hidden if not messages, else can display it using Js.  -->
-    <div id="message-box" class="absolute flex flex-wrap items-center justify-center p-4 m-2
-    border-2 border-b-4 border-r-4 border-teal-500 bg-white rounded-lg right-1 w-52
-    font-semibold text-lg text-teal-800
+    <div id="message-box" class="absolute grid  right-1 w-56 font-semibold text-lg">
 
-    {% if not messages %}
-    hidden
-    {%else%}
-    {% for message in messages %}
-        {%if message.tags == 'success' %}
-            text-green-700
-        {%elif message.tags == 'error' %}
-        text-red-700
-        {%endif%}
-
-    {%endfor%}
-
-    {%endif%}
-
-    ">
         {% if messages %}
-        {% for message in messages %}
-        <div class="message">
-            {{message}}
-        </div>
-        {%endfor%}
+            {% for message in messages %}
+                <script>
+                    flash_message("{{message}}", "{{message.tags}}");
+                </script>
+            {%endfor%}
         {%endif%}
-        <div id="custom-message">
-        </div>
-
     </div>
 
     <!-- ------- -->

@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", function () {
   } else if (url.pathname.includes("login/")) {
     login_content_page();
   }
-  timeout_message()
+//   timeout_message()
 });
 
 // ============= JS TO HANDLE THE MAIN PAGE HTML & REQUESTS ===============================================
@@ -26,6 +26,7 @@ function vault_page() {
     login.querySelector(".username-copy").addEventListener("click", (e) => {
       const username = e.currentTarget.firstElementChild.innerText;
       navigator.clipboard.writeText(username);
+      flash_message("Username copied", "success")
         // avoid propagation for click listeners under it
       e.stopPropagation();
     });
@@ -82,24 +83,29 @@ function vault_page() {
 
     // select <ul#folder> + select all children <li>
     const folder_list = document.querySelector('#folders').querySelectorAll('li');
+
+    // GET fetch request to pre fill the edit form with name of the folder
+    // + checks if user is allowed or html has been hacked
     folder_list.forEach((folder_item) => {
         folder_item.querySelector('.edit-folder').addEventListener('click', (e) => {
-            editFolder_modal.style.display = "grid"
             const id = e.target.value
             fetch(`/edit_folder/${id}`)
             .then((response) => response.json())
             .then((data) => {
                 if (data.success){
+                    // if request successful shows div and fills form content with response data
+                    editFolder_modal.style.display = "grid"
                     folderName_field.value = data.name
                     editForm.value = data.id
-                    flash_message(data.success, "success")
                 }else if (data.denied){
-                    flash_message(data.denied, "error")
+                    // if request was denied, shows error message containing response message
+                    flash_message(data.message, "error")
                 }
             })
         })
     })
 
+    // click outside modal triggers close
     editFolder_modal.addEventListener('click', close_modal)
 
     edit_btn.addEventListener('click', (e) =>{
@@ -116,7 +122,13 @@ function vault_page() {
         })
         .then((response) => response.json())
         .then((data) => {
-            console.log(data)
+            // if successful edit, flashes success message
+            if (data.success){
+                flash_message(data.success, "success")
+            }
+            else{
+                console.log(data)
+            }
         })
     });
 
@@ -133,7 +145,13 @@ function vault_page() {
         })
         .then((response) => response.json())
         .then((data) => {
-            console.log(data)
+            // if successful delete, flashes success message
+            if (data.success){
+                flash_message(data.message, "success")
+            }
+            else{
+                console.log(data)
+            }
         })
     });
 
@@ -166,7 +184,6 @@ function copy_password(e) {
   if (status == "unlocked") {
     var pin = false;
     fetch_password(id, pin);
-    console.log(id, pin);
   }
   // STOP TEMPOARANEO  ===================================================================================
   else if (status == "locked") {
@@ -201,9 +218,9 @@ function fetch_password(id, pin) {
       if (data.success) {
         // if request successful, adds content to clipboard
         navigator.clipboard.writeText(data.content);
-        flash_message("PW copied");
+        flash_message("Passw copied", "success");
       } else if (data.denied) {
-        flash_message(data.message);
+        flash_message(data.message, "error");
       }
     })
     .catch(function () {
@@ -325,8 +342,13 @@ function random_password() {
     fetch(`/generate_password/${size}`)
       .then((response) => response.json())
       .then((data) => {
-        const password_input = document.querySelector("#id_password");
-        password_input.value = data.password;
+        if (data.success){
+            flash_message(data.message, "success")
+            const password_input = document.querySelector("#id_password");
+            password_input.value = data.password;
+        }else{
+            flash_message(data.message, "error")
+        }
       });
   }
 
@@ -344,31 +366,48 @@ function random_password() {
 // flash custom message in the message-box
 function flash_message(message, alert){
     const msgDiv = document.querySelector('#message-box')
-    msgDiv.classList.remove("hidden");
+    // msgDiv.classList.remove("hidden");
 
-    const customMsg = document.querySelector('#custom-message')
+    const popup = create_popup(alert)
+    popup.innerText = message
+    msgDiv.append(popup);
 
-    alert === "success" ? customMsg.classList.add("text-green-600") : customMsg.classList.add("text-red-600")
-
-    customMsg.innerText = message
-    setTimeout(function() {
-    customMsg.innerText = "";
-    msgDiv.classList.add("hidden");
-
-    }, 5000);
+    // setTimeout(function() {
+    // msgDiv.firstChild.remove()
+    // }, 5000);
 
 }
 // ===================================================================================
 // hide message box
-function timeout_message(){
-    const msgDiv = document.querySelector('#message-box')
-    if( ! msgDiv.classList.contains('hidden')){
-        setTimeout(function(){
-            msgDiv.classList.add("hidden");
-        }, 5000)
+// function timeout_message(){
+//     const msgDiv = document.querySelector('#message-box')
+//     if( ! msgDiv.classList.contains('hidden')){
+//         setTimeout(function(){
+//             msgDiv.classList.add("hidden");
+//         }, 5000)
+//     }
+
+
+// }
+
+// ===================================================================================
+
+function create_popup(alert){
+    const popup = document.createElement('div');
+    popup.classList.add("flex", "flex-wrap", "items-center" ,"justify-center", "p-4", "m-2", "border-2", "border-b-4", "border-r-4", "rounded-lg")
+    console.log(alert)
+    if (alert === "success"){
+        popup.classList.add("text-green-600", "border-green-600", "bg-green-100")
+        }
+    else if (alert === "error"){
+        popup.classList.add("text-red-500", "border-red-500", "bg-red-100")
+
     }
+    setTimeout(function() {
+       popup.remove()
+        }, 5000);
 
-
+    return popup
 }
 // ===================================================================================
 function getCookie(name) {

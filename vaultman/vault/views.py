@@ -146,10 +146,11 @@ def login_content(request, id):
     return render(request, 'vault/login_content.html', context=context)
 
 def generate_password(request, size):
-
-    passw = password_generator(size)
-    print(passw)
-    return JsonResponse({"success":'password generated', 'password': passw})
+    try:
+        passw = password_generator(size)
+        return JsonResponse({"success":"successful request", "message":'password generated!', 'password': passw})
+    except:
+        return JsonResponse({"denied": "error", "message": 'An unexpected error occurred'})
 
 # ===================================================
 
@@ -181,7 +182,7 @@ def new_folder(request):
             form.instance.owner = request.user
             print(form.cleaned_data)
             form.save()
-
+        messages.success(request, "Folder created", fail_silently=True)
         return HttpResponseRedirect(reverse('vault:index'))
 
 
@@ -189,26 +190,29 @@ def edit_folder(request, id):
     """from async request GET method returns values of folder if present
         PUT request, gets body content of input field and assigns to the model
         DELETE request deletes the db entry"""
+
+    # on fetch get request to get the pre filled field checks if folder exists and if request.user is owner
+    # protection for html hacking
     try:
         folder = Folder.objects.get(id=id)
     except:
-        return JsonResponse({"denied":"Folder doesn't exist"})
+        return JsonResponse({"denied": "request denied", "message":"Folder doesn't exist"})
 
     if folder.owner != request.user:
-        return JsonResponse({"denied":"You are note the owner"})
+        return JsonResponse({"denied":"request denied", "message":"You are not the owner!"})
 
     if request.method == "PUT":
         new_name = json.loads(request.body)
         folder.name = new_name
         folder.save()
 
-        return JsonResponse({"success":"Folder edited"})
+        return JsonResponse({"success":"successful request", "message":"Folder edited"})
 
 
 
     elif request.method == "DELETE":
         folder.delete()
-        return JsonResponse({"success": "folder deleted"})
+        return JsonResponse({"success":"successful request", "message":"folder deleted"})
 
     # else : GET send name and color as json
     return JsonResponse({"success": "successful request", "name": folder.name, "id": folder.id})
