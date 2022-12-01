@@ -10,8 +10,18 @@ document.addEventListener("DOMContentLoaded", function () {
   } else if (url.pathname.includes("login/")) {
     login_content_page();
   }
-//   timeout_message()
-});
+
+//   looks for password fields, append view button and listen for click to run toggle function
+  const pw_fields = document.querySelectorAll('input[type="password"]')
+  pw_fields.forEach((pwF) => {
+    const questo = document.createElement('span')
+    questo.innerText = "Tog"
+
+    pwF.parentNode.append(questo)
+    questo.addEventListener('click', toggle_visibility)
+
+    });
+})
 
 // ============= JS TO HANDLE THE MAIN PAGE HTML & REQUESTS ===============================================
 function vault_page() {
@@ -53,7 +63,6 @@ function vault_page() {
     const generate_username = document.querySelector("#generate_username");
     const generate_password = document.querySelector("#generate_password");
     const pw_visibility_toggle = document.querySelector("#see_password_toggle");
-    pw_visibility_toggle.addEventListener("click", toggle_visibility);
     generate_username.addEventListener("click", random_username);
     generate_password.addEventListener("click", random_password); /*end event listener for password generator */
 
@@ -237,8 +246,7 @@ function login_content_page() {
   const generate_password = document.querySelector("#generate_password");
   const pw_visibility_toggle = document.querySelector("#see_password_toggle");
 
-  // click on view/hide password field that converts input type from "password" to "text"
-  pw_visibility_toggle.addEventListener("click", toggle_visibility);
+
 
   // fetch request to external api that generates random person, then getting the login.username field from the request
   generate_username.addEventListener("click", random_username);
@@ -354,13 +362,15 @@ function random_password() {
 
   // ===================================================================================
 // toggle password field visibility
-  function toggle_visibility() {
-    const passw_field = document.querySelector("#id_password");
-    // ternary operator to change the attribute
-    passw_field.getAttribute("type") == "password"
-      ? passw_field.setAttribute("type", "text")
-      : passw_field.setAttribute("type", "password");
-  }
+
+  function toggle_visibility(e){
+
+             const pw_input = this.parentNode.querySelector('input');
+        pw_input.getAttribute("type") == "password"
+        ? pw_input.setAttribute("type", "text")
+        : pw_input.setAttribute("type", "password");
+
+    }
 
 // ===================================================================================
 // flash custom message in the message-box

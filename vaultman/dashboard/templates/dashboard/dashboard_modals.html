@@ -13,15 +13,20 @@
         <form action="{%url 'dashboard:edit_pin'%}" method="post" class="flex flex-col items-center">
             {%csrf_token%}
             <p>== Enter your password and current PIN ==</p>
-            <input class="mb-1 rounded-lg" type="text" name="master_password"
-                        placeholder="Your Master Password">
-            <input class="mb-1 rounded-lg" type="text" name="old_pin" maxlength="4" placeholder="Your current PIN">
+            <div id="password_check">
+                <input class="mb-1 rounded-lg" type="password" name="master_password"
+                            placeholder="Your Master Password">
+            </div>
+
+            <div id="pin_check"><input class="mb-1 rounded-lg" type="password" name="old_pin" maxlength="4" placeholder="Your current PIN"></div>
 
             <p>== Enter your new PIN ==</p>
 
-            <input class="mb-1 rounded-lg" type="text" name="new_pin" maxlength="4"
-                        placeholder="Insert 4 digits...">
-            <input class="mb-1 rounded-lg" type="text" name="confirm_pin" maxlength="4" placeholder="Insert new PIN again...">
+            <div id="new_pin">
+                <input class="mb-1 rounded-lg" type="password" name="new_pin" maxlength="4"
+                            placeholder="Insert 4 digits...">
+            </div>
+            <div id="pin_confirmation"><input class="mb-1 rounded-lg" type="password" name="confirm_pin" maxlength="4" placeholder="Insert new PIN again..."></div>
 
             <input type="submit" value="Update PIN" class="btn btn-yellow mt-4 bg-yellow-600">
         </form>
@@ -41,7 +46,7 @@
             {%csrf_token%}
             <p>== Enter your new PIN ==</p>
 
-            <input class="my-1 rounded-lg" type="text" name="new_pin" maxlength="4" placeholder="Insert 4 digits...">
+            <input class="my-1 rounded-lg" type="password" name="new_pin" maxlength="4" placeholder="Insert 4 digits...">
             <input type="submit" value="Set PIN" class="btn btn-blue">
 
         </form>
