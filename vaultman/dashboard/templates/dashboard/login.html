@@ -20,8 +20,12 @@ Login
         <p>Log in</p>
         <form action="{%url 'dashboard:login'%}" method="post" class="">
             {%csrf_token%}
-            <div><input autofocus type="text" name="username" placeholder="Username"></div>
-            <div><input type="password" name="password" placeholder="Password"></div>
+            <div>
+                <input autofocus type="text" name="username" placeholder="Username" class="rounded-lg">
+            </div>
+            <div class="flex">
+                <input type="password" name="password" placeholder="Password">
+            </div>
             <input type="submit" value="Login" class="btn btn-blue">
         </form>
 
@@ -34,8 +38,8 @@ Login
             {%csrf_token%}
         <div><input autofocus type="text" name="username" placeholder="Username"></div>
         <div><input type="text" name="email" placeholder="email"></div>
-        <div><input type="password" name="password" placeholder="Password"></div>
-        <div><input type="password" name="confirmation" placeholder="Confirm Password"></div>
+        <div class="flex"><input type="password" name="password" placeholder="Password"></div>
+        <div class="flex"><input type="password" name="confirmation" placeholder="Confirm Password"></div>
         <input type="submit", value="Register" class="btn btn-red">
         </form>
     </div>

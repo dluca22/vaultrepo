@@ -14,11 +14,14 @@ document.addEventListener("DOMContentLoaded", function () {
 //   looks for password fields, append view button and listen for click to run toggle function
   const pw_fields = document.querySelectorAll('input[type="password"]')
   pw_fields.forEach((pwF) => {
-    const questo = document.createElement('span')
-    questo.innerText = "Tog"
+    const toggle = document.createElement('img')
+    toggle.src = '/static/icons/show.svg'
+    toggle.alt = 'password view toggle'
+    toggle.classList.add('w-8', 'h-8', 'bg-blue-500', 'rounded-full', 'm-1')
 
-    pwF.parentNode.append(questo)
-    questo.addEventListener('click', toggle_visibility)
+
+    pwF.parentNode.append(toggle)
+    toggle.addEventListener('click', toggle_visibility)
 
     });
 })
@@ -366,9 +369,17 @@ function random_password() {
   function toggle_visibility(e){
 
              const pw_input = this.parentNode.querySelector('input');
-        pw_input.getAttribute("type") == "password"
-        ? pw_input.setAttribute("type", "text")
-        : pw_input.setAttribute("type", "password");
+        if (pw_input.getAttribute("type") == "password"){
+            pw_input.setAttribute("type", "text")
+            this.src = '/static/icons/hide.svg'
+
+
+        }else{
+            pw_input.setAttribute("type", "password");
+            this.src = '/static/icons/show.svg'
+
+
+        }
 
     }
 
