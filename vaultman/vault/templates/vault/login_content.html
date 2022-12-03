@@ -33,7 +33,7 @@
 
             <div class="flex gap-4 ">
                 <div class="">
-                    <p>Title</p>
+                    <p class="italic ml-2">Title:</p>
                     {{edit_form.title}}
                 </div>
 
@@ -41,7 +41,7 @@
             <div class="flex items-end gap-4 ">
 
                 <div>
-                    <p>Username</p>
+                    <p class="italic ml-2">Username:</p>
                     <div class="flex items-center">
                         {{edit_form.username}}
                         <img id="generate_username" src="{% static 'icons/random.svg' %}" alt="randomize"
@@ -53,8 +53,8 @@
             <div class="flex content-evenly gap-4 ">
 
                 <div>
-                    <p>Password</p>
-                    <div class="flex items-center ">
+                    <p class="italic ml-2">Password:</p>
+                    <div class="flex items-center gap-2">
                         {{edit_form.password}}
 
 
@@ -72,13 +72,13 @@
             <div class="flex items-end gap-4 ">
 
                 <div>
-                    <p>Url</p>
+                    <p class="italic ml-2">Url:</p>
                     {{edit_form.uri}}
                 </div>
 
             </div>
-            <div class="flex items-center justify-end gap-2between">
-                <p>Folder: </p>
+            <div class="flex items-center justify-end gap-2">
+                <p class="italic ml-2">Folder: </p>
                 {{edit_form.folder}}
 
 
@@ -86,7 +86,7 @@
             <div class="flex items-end gap-4 ">
 
                 <div>
-                    <p>Notes</p>
+                    <p class="italic ml-2">Notes:</p>
                     {{edit_form.note}}
                 </div>
 
@@ -98,6 +98,7 @@
     </div>
 
 
+    <!-- side bar -->
 
     <div id="settings" class="ml-6">
         <h3 class="text-lg">Settings:</h3>
@@ -105,19 +106,30 @@
         <button id="delete_item" value="{{item_id}}" class="btn btn-red">Delete Item</button>
 
         {% if history %}
-        <div id="password_history" class="my-2">
-            <p>Previous passwords:</p>
+        <div id="password_history" class="my-2 bg-gray-50 rounded-md self-center ">
 
-            {% for h in history %}
-            <li class="text-blue-600 italic">{{h}} </li>
-            {%endfor%}
+            <p class="flex justify-center rounded-t-md
+                    border-b border-gray-400 bg-gray-200
+                    text-gray-700 font-bold
+                    ">Previous passwords:
+                </p>
 
+            <ul class="list-disc list-inside p-1">
+            {% for old_pw in history %}
+                <li class="italic text-blue-800
+                hover:bg-teal-100  hover:cursor-pointer
+                 my-2">{{old_pw}}</li>
+                {%endfor%}
             </ul>
+
             {%else%}
-            <p class="text-gray-400 my-2">Previous passwords:</p>
+
+            <p class="text-gray-400 my-2 italic">No previous passwords:</p>
         </div>
         {%endif%}
     </div>
+
+    <!-- login content modal -->
 
     <div id="delete_item_confirm" class="fixed hidden inset-0 bg-gray-600 bg-opacity-50 ">
         <div class="relative my-auto mx-auto

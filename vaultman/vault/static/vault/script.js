@@ -308,6 +308,15 @@ function login_content_page() {
     dismiss.addEventListener('click', () => confirm_modal.click())
 
   })
+
+//   if login has password history list
+  if (document.querySelector('#password_history')){
+    document.querySelectorAll('li').forEach((old_passw) =>{
+        old_passw.addEventListener('click', () =>{
+            navigator.clipboard.writeText(old_passw.textContent)
+        })
+    })
+  }
 }
 
 
