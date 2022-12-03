@@ -138,7 +138,7 @@ def login_content(request, id):
     context = {
         'title': login.title,
         'item_id': id,
-        'edit_form':edit_form,
+        'form':edit_form,
         'history': login.has_history
 
     }

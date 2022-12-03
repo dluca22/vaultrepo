@@ -36,4 +36,22 @@
     .login_box {
         @apply my-2 mx-5 rounded-md p-3 flex flex-col border border-teal-600 w-80 h-28 hover:bg-gray-500 hover:bg-opacity-20 hover:cursor-pointer;
     }
+    input[type="text"], input[type="password"], textarea, option, select{
+        @apply text-teal-700;
+    }
+
 }
+
+@layer utilities {
+    @variants responsive {
+      /* Chrome, Safari and Opera */
+      .no-scrollbar::-webkit-scrollbar {
+        display: none;
+      }
+
+      .no-scrollbar {
+        -ms-overflow-style: none;  /* IE and Edge */
+        scrollbar-width: none;  /* Firefox */
+      }
+    }
+  }
