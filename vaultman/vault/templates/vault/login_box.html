@@ -2,42 +2,52 @@
 
 
 <!-- <div class="login-box" style="background-color: login.folder.color ;"> -->
-<div id="{{login.id}}" class="login_box h-28"
- data-type="login" data-protection="{% if login.protected == True %}locked{%else%}unlocked{%endif%}">
- <!-- color accent on left side of box for folder color -->
- <!-- sometimes doesn't get initialized by tailwind until hardcoding the color first, maybe check later for css building -->
- {% if login.folder %}
- <div class="w-2 h-28 rounded-xl overflow-hidden absolute p-0 -m-3
- bg-{{login.folderColor}}-600
+<div id="{{login.id}}" class="login_box" data-type="login"
+    data-protection="{% if login.protected == True %}locked{%else%}unlocked{%endif%}">
 
- opacity-70
- ">
- </div>
+    <!-- sometimes doesn't get initialized by tailwind until hardcoding the color first, maybe check later for css building -->
+    <!-- color accent on left side of box for folder color -->
+    {% if login.folder %}
+    <div class="w-2 h-full rounded-xl overflow-hidden absolute p-0 -m-3
+         bg-{{login.folderColor}}-600 opacity-70">
+    </div>
 
- {%endif%}
+    {%endif%}
 
- <div class="mx-auto"><b>Title: </b>
-        {{login.title}}
+    <div class="mx-auto">
+        <!-- flex div for title and title label -->
+        <div class="flex flex-col items-center">
+            <p class="border-b-2 border-teal-500 font-semibold text-gray-700">{{login.title}}</p>
+            <p class="text-xs text-teal-800 opacity-80 ">Title</p>
+
+
+        </div>
     </div>
     <div>
 
+        <!-- container for username and password -->
         <div class="flex justify-around ">
-            <div class="username-copy flex flex-col items-center m-3 hover:opacity-50 hover:cursor-pointer">
-                <p class="italic border-b-2 border-teal-500 leading-3 ">
+
+            <!-- username container flex-col for username and username label -->
+            <div
+                class="username-copy flex flex-col items-center m-3
+                 border-b-2 border-transparent
+                 hover:opacity-80 hover:border-teal-500">
+                <p class="italic leading-3 ">
                     {% if not login.username %}
                     " "
                     {%else%}
                     {{login.username}}
                     {%endif%}
                 </p>
-
                 <p class="text-xs text-teal-800 opacity-80 ">User</p>
+
             </div>
             {% if login.password %}
 
             <img class="copy-passw
-            {% if login.protected == True %} opacity-30{%endif%}
-            " src="{%static 'icons/key.svg'%}" alt="password">
+                {% if login.protected == True %} opacity-30{%endif%}
+                " src="{%static 'icons/key.svg'%}" alt="password">
 
             {%else%}
             <img class="opacity-5" src="{%static 'icons/key.svg'%}" alt="password">

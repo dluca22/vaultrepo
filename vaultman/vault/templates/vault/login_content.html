@@ -36,13 +36,13 @@
                     ">Previous passwords:
                 </p>
 
-            <ul class="list-disc list-inside p-1">
-            {% for old_pw in history %}
-                <li class="italic text-blue-800
-                hover:bg-teal-100  hover:cursor-pointer
-                 my-2">{{old_pw}}</li>
-                {%endfor%}
-            </ul>
+                <ul class="list-disc list-inside p-1">
+                    {% for old_pw in history %}
+                    <li class="italic text-blue-800
+                    hover:bg-teal-100  hover:cursor-pointer
+                    my-2">{{old_pw}}</li>
+                    {%endfor%}
+                </ul>
 
             {%else%}
 

@@ -3,8 +3,10 @@
 @tailwind utilities;
 
 
+
 /* extend also for breakpoint https://www.youtube.com/watch?v=Nez7G5sQz0k  */
 @layer components {
+    /* custom buttons classes */
     .btn {
         @apply py-2 px-4 font-bold tracking-wide rounded shadow-sm text-white
     }
@@ -33,16 +35,27 @@
         @apply bg-violet-500 hover:bg-violet-700;
     }
 
+    /* style for login boxes */
     .login_box {
-        @apply my-2 mx-5 rounded-md p-3 flex flex-col border border-teal-600 w-80 h-28 hover:bg-gray-500 hover:bg-opacity-20 hover:cursor-pointer;
+        @apply  relative flex flex-col
+        my-2 mx-5 rounded-md p-3  w-80
+        border border-teal-600 hover:bg-gray-500 hover:bg-opacity-20
+        hover:cursor-pointer;
     }
+    /* all form inputs have font teal */
     input[type="text"], input[type="password"], textarea, option, select{
         @apply text-teal-700;
     }
 
 }
 
+@layer base{
+
+    }
+
+
 @layer utilities {
+    /* hides scrollbars keeping scroll function */
     @variants responsive {
       /* Chrome, Safari and Opera */
       .no-scrollbar::-webkit-scrollbar {
@@ -53,5 +66,36 @@
         -ms-overflow-style: none;  /* IE and Edge */
         scrollbar-width: none;  /* Firefox */
       }
+
+        /* scrollbar styling gor Chrome Safari and Opera */
+    /* width */
+    .scrollable::-webkit-scrollbar {
+        width: 13px;
+        }
+
+    /* Track */
+    .scrollable::-webkit-scrollbar-track {
+        background: rgba(104, 168, 163, 0.2);
+        border-radius: 10px;
+        }
+
+    /* Handle */
+    .scrollable::-webkit-scrollbar-thumb {
+        background: rgba(13, 148, 136, 0.3);
+        border-radius: 10px;
+        }
+
+        /* Handle on hover */
+    .scrollable::-webkit-scrollbar-thumb:hover {
+        background: rgba(13, 148, 136, 0.7);
+        opacity: 0.3;
+        }
+
+        /* Firefox only has limited customization for just width and color*/
+    .scrollable{
+        scrollbar-width: 13px;
+        /* firefox scrollbar-color : <color thumb> <color track> */
+        scrollbar-color: rgba(13, 148, 136, 0.3) rgba(104, 168, 163, 0.2);
     }
   }
+}
