@@ -47,7 +47,7 @@ function userpage(){
                 }
             }, false)
         })
-      }
+      } //if user has NOT yet added pin, set pin button will be displayed
       else if(document.querySelector("#set_pin")) {
         document.querySelector("#set_pin").addEventListener('click', () =>{
             const pin_set_modal = document.querySelector('#pin_set_modal')
@@ -63,4 +63,28 @@ function userpage(){
             }, false)
         })
       }
+
+      const delete_account = document.querySelector('#delete_account')
+      delete_account.addEventListener('click', () => {
+        const modal = document.querySelector('#delete_account_modal')
+        modal.style.display = "grid";
+        modal.addEventListener('click', close_reset_modal, false);
+        
+
+      })
+}
+
+
+// ===================== HELPER FUNCTIONS ======================================
+
+function close_reset_modal(e) {
+    // before was close_modal.bind(modal)   should work the same
+  // e.target is where the click event was originated
+  // this is the overlay modal itself
+  // if click is on the overlay modal (e.g. NOT in the actual form box), it will be dismissed and reset the form
+  if (e.target == this) {
+    const form = this.querySelector("form");
+    this.style.display = "none";
+    form.reset();
+  }
 }

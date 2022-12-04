@@ -30,6 +30,8 @@ class Login(models.Model):
     def folderColor(self):
         return self.folder.color
 
+
+
 class History(models.Model):
     id = models.BigAutoField(primary_key=True)
     old_passw = models.CharField(max_length=80)

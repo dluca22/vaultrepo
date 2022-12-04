@@ -38,24 +38,33 @@
                {%endif%}
             </ul>
             <hr class="my-3">
-            <button class="btn btn-red ">Delete Account</button>
+            <button id="delete_account" class="btn btn-red ">Delete Account</button>
 
     </div>
-    <div class="mt-24 bg-red-400 flex-grow px-36">
+    <div class="mt-24 bg-red-400 flex flex-col flex-grow px-36 justify-center items-center">
 
-        <div class="flex justify-center">
-            <div class="border-2 p-4 m-6 w-1/2 ">number of logins</div>
-        </div>
-        <p class="">Folders</p>
-        <div class="flex my-8">
-            <div class="flex-1">folder1</div>
-            <div class="flex-1">folder2</div>
-            <div class="flex-1">folder3</div>
-            <div class="flex-1">folder4</div>
+        <div class="flex flex-col justify-center items-center border-2 p-4 m-6 w-1/2">
+                <p>Number of logins:</p>
+                <p class="text-5xl ">{{user.num_logins}}</p>
         </div>
 
-        <div class="flex justify-end">
-            <span class="font-bold">Last access:</span><span>dd:hh:mm</span>
+
+        <div id="folder-sect" class="flex flex-col justify-center items-center border-2 p-4 m-6 w-1/2">
+
+            <p >Folders: {{user.num_folders}} </p>
+            <div class="flex gap-2 my-8">
+               {% for folder in folders %}
+               <a href="{% url 'vault:index'%}?folder={{folder}}" class="btn bg-{{folder.color}}-600 p-1 rounded-lg">{{folder}}</a>
+
+
+               {%endfor%}
+            </div>
+        </div>
+
+        <div class="self-end">
+            <span class="font-bold mr-2">Last access: </span>
+            <!-- django date & time template formatting (this example: "3rd, Dec 2022, 10:12 a.m." ) -->
+            <span>{{user.last_login |date:"jS, M Y, h:m a"}}</span>
         </div>
     </div>
 </div>

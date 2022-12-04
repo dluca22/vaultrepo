@@ -11,7 +11,10 @@ from .models import User
 
 def dashboard(request):
     """index file for the dashboard, display all user's stats and user settings like pin, email change, password change"""
-    return render(request, 'dashboard/userpage.html')
+
+    folders = request.user.folders.all()
+    context = {'folders': folders}
+    return render(request, 'dashboard/userpage.html', context=context)
 
     pass
 
@@ -136,4 +139,22 @@ def set_pin(request):
         user.save()
 
         messages.success(request, 'PIN set',fail_silently=True)
+        return HttpResponseRedirect(reverse('dashboard:dashboard'))
+
+
+def delete_account(request):
+    if request.method == "POST":
+        username = request.POST['username']
+        email = request.POST['email']
+        password = request.POST['password']
+
+        username_match = username == request.user.username
+        email_match = email== request.user.email
+        pw_match = request.user.check_password(password)
+        if username_match and email_match and pw_match:
+            request.user.delete()
+            messages.success(request, "Account deleted.")
+            return HttpResponseRedirect(reverse('dashboard:login'))
+
+        messages.error(request, "Not deleted. Form did not match.")
         return HttpResponseRedirect(reverse('dashboard:dashboard'))
