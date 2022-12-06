@@ -15,32 +15,34 @@ Login
         <button id="toggle_login" class="btn btn-green" rounded">Login</button>
         <button id="toggle_register" class="btn btn-yellow">Register</button>
     </div>
-    <div id="login_form" class="flex flex-col items-center">
+    <div id="login_form" class="flex flex-col items-center gap-2">
         <!-- login -->
-        <p>Log in</p>
-        <form action="{%url 'dashboard:login'%}" method="post" class="">
+        <p class="text-lg font-bold">Log-in</p>
+        <form action="{%url 'dashboard:login'%}" method="post" class=" flex flex-col gap-2">
             {%csrf_token%}
             <div>
                 <input autofocus type="text" name="username" placeholder="Username" class="rounded-lg">
             </div>
             <div class="flex">
-                <input type="password" name="password" placeholder="Password">
+                <input type="password" name="password" placeholder="Password" class="rounded-lg">
+
             </div>
-            <input type="submit" value="Login" class="btn btn-blue">
+            <input type="submit" value="Login" class="btn btn-blue flex mx-auto">
         </form>
 
 
     </div>
-    <div id="register_form" class="hidden flex flex-col items-center">
-        <p>register</p>
-        <form action="{%url 'dashboard:register'%}" method="post">
+    <div id="register_form" class=" hidden flex flex-col items-center gap-2">
+        <p class="text-lg font-bold">Register</p>
+        <form action="{%url 'dashboard:register'%}" method="post" class="flex flex-col gap-2">
             {{ form.non_field_errors }}
             {%csrf_token%}
-        <div><input autofocus type="text" name="username" placeholder="Username"></div>
-        <div><input type="text" name="email" placeholder="email"></div>
-        <div class="flex"><input type="password" name="password" placeholder="Password"></div>
-        <div class="flex"><input type="password" name="confirmation" placeholder="Confirm Password"></div>
-        <input type="submit", value="Register" class="btn btn-red">
+        <div><input autofocus type="text" name="username" placeholder="Username" class="rounded-lg"></div>
+        <div><input type="text" name="email" placeholder="Email" class="rounded-lg"></div>
+        <div class="flex"><input type="password" name="password" placeholder="Password" class="rounded-lg"></div>
+        <div class="flex"><input type="password" name="confirmation" placeholder="Confirm Password" class="rounded-lg"></div>
+
+        <input type="submit", value="Register" class="btn btn-red flex  mx-auto">
         </form>
     </div>
 

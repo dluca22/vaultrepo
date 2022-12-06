@@ -377,7 +377,7 @@ function random_password() {
 
   function toggle_visibility(e){
 
-             const pw_input = this.parentNode.querySelector('input');
+        const pw_input = this.parentNode.querySelector('input');
         if (pw_input.getAttribute("type") == "password"){
             pw_input.setAttribute("type", "text")
             this.src = '/static/icons/hide.svg'
