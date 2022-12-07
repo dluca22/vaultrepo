@@ -100,7 +100,7 @@ function vault_page() {
     // + checks if user is allowed or html has been hacked
     folder_list.forEach((folder_item) => {
         folder_item.querySelector('.edit-folder').addEventListener('click', (e) => {
-            const id = e.currentTarget.getAttribute('data-folder')
+            const id16 = e.currentTarget.getAttribute('data-folder')
 
 
             fetch(`/edit_folder/${id}`)
