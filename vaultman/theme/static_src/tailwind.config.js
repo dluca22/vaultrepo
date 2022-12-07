@@ -42,7 +42,15 @@ module.exports = {
         // '../../**/*.py'
     ],
     theme: {
-        extend: {},
+        extend: {
+            backgroundImage: (theme) => ({
+                'tile': "url('/static/images/tile-bg.png')",
+                'darktile': "url('/static/images/dark-tile-bg.png')",
+                'wallpaper': "url('/static/images/wallpaper.png')",
+                // 'hex': "url('/static/images/hex.png')",
+                // 'darkhex': "url('/static/images/dark-hex-sm.png')",
+            })
+        },
     },
     plugins: [
         /**

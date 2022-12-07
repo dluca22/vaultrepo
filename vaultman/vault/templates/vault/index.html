@@ -4,23 +4,31 @@
 
 {% block body %}
 
-<sidebar class="w-64 h-max-screen flex-shrink-0  m-9 justify-around" aria-label="Sidebar">
+<sidebar class=" w-8/12 md:w-64 h-max-screen flex-shrink-0  m-9
+justify-around
+" aria-label="Sidebar">
 
     {% include "vault/sidebar.html" %}
 </sidebar>
 
 <!-- main col in index with +items btn and the content boxes -->
-<div id="main" class="flex flex-col w-8/12 flex-shrink-0
+<div id="main" class="flex flex-col w-8/12 flex-shrink-0 md:max-h-screen
 flex-grow-1 items-center">
 
-    <button id="show_login_form" class="btn btn-green ">New Login</button>
+    <button id="show_login_form" class="btn btn-green mb-3">New Login</button>
 
     <!-- div for the col containing the item boxes -->
-    <div class="scrollable vault-content overflow-y-auto h-2/5 overflow-x-hidden">
+    <div class="scrollable vault-content
+    
+    overflow-y-auto h-2/5 overflow-x-hidden
+    flex flex-col items-center md:w-8/12">
         {% for login in logins %}
         {% include "vault/login_box.html" %}
         {%empty%}
-        <p>there are no logins here</p>
+        <div class="flex justify-center items-center h-48">
+            <p class="text-2xl">There are no logins here</p>
+
+        </div>
         {%endfor%}
 
     </div>

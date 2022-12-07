@@ -2,7 +2,7 @@
 
 
 <!-- <div class="login-box" style="background-color: login.folder.color ;"> -->
-<div id="{{login.id}}" class="login_box" data-type="login"
+<div id="{{login.id}}" class="login_box bg-white" data-type="login"
     data-protection="{% if login.protected == True %}locked{%else%}unlocked{%endif%}">
 
     <!-- sometimes doesn't get initialized by tailwind until hardcoding the color first, maybe check later for css building -->
@@ -26,7 +26,7 @@
     <div>
 
         <!-- container for username and password -->
-        <div class="flex justify-around ">
+        <div class="flex justify-around flex-wrap overflow-hidden ">
 
             <!-- username container flex-col for username and username label -->
             <div

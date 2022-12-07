@@ -5,10 +5,9 @@
 
 {% block body %}
 
-<div class="flex justify-center">
+<div class="flex justify-center bg-white bg-opacity-70 w-full h-full ">
     <div id="item_content">
 
-        <div class="text-4xl">ID: {{item_id}}</div>
         <form id="login_form" action="{%url 'vault:login_content' item_id%}" method="post"
             class="p-6 flex flex-col items-apart">
             {%csrf_token%}

@@ -5,66 +5,76 @@
 
 {% block body %}
 
-<div class="flex justify-center mt-14">
-    <p class="text-4xl text-teal-500">Hello: <span class="text-teal-700">{{request.user |capfirst}}</span></p>
-</div>
+<div class="flex flex-col w-full px-8">
+    <div class="flex justify-center items-center">
+        <p class="text-4xl text-teal-500">Hello: <span class="text-teal-700">{{request.user |capfirst}}</span></p>
+    </div>
 
-{% if not user.pin %}
-<div class="flex flex-col items-center bg-yellow-200 border-2 rounded-lg w-2/4 mx-auto mt-3 p-2">
-    <p class="text-yellow-800 font-bold">Remember to set a PIN to enable content Protection</p>
+    {% if not user.pin %}
+    <div class="flex flex-col bg-yellow-200 border-2 rounded-lg w-2/4 mx-auto mt-3 p-2">
+        <p class="text-yellow-800 font-bold">Remember to set a PIN to enable content Protection</p>
 
-    <button id="set_pin" class="btn btn-yellow">Set PIN</li>
-
-</div>
-
-{%endif%}
-
-
-<div id="test" class="flex w-full">
-
-    <div class="mt-24 bg-yellow-400 flex-col flex-shrink ">
-
-            <p class="font-bold">Settings</p>
-
-            {{user.pin}}
-
-            <ul>
-                <li id="update_password" class="btn">change MasterPassword</li>
-                <li id="update_email" class="btn">change email</li>
-               {% if user.pin %}
-               <li id="update_pin" class="btn">change PIN</li>
-
-
-               {%endif%}
-            </ul>
-            <hr class="my-3">
-            <button id="delete_account" class="btn btn-red ">Delete Account</button>
+        <button id="set_pin" class="btn btn-yellow">Set PIN</li>
 
     </div>
-    <div class="mt-24 bg-red-400 flex flex-col flex-grow px-36 justify-center items-center">
 
-        <div class="flex flex-col justify-center items-center border-2 p-4 m-6 w-1/2">
-                <p>Number of logins:</p>
-                <p class="text-5xl ">{{user.num_logins}}</p>
-        </div>
+    {%endif%}
 
 
-        <div id="folder-sect" class="flex flex-col justify-center items-center border-2 p-4 m-6 w-1/2">
+    <div class="flex w-full my-10">
 
-            <p >Folders: {{user.num_folders}} </p>
-            <div class="flex gap-2 my-8">
-               {% for folder in folders %}
-               <a href="{% url 'vault:index'%}?folder={{folder}}" class="btn bg-{{folder.color}}-600 p-1 rounded-lg">{{folder}}</a>
+        <sidebar class="flex flex-col flex-shrink items-center
+        bg-teal-50 border border-teal-400 rounded-tl-lg rounded-bl-lg ">
+
+                <p class="flex w-full justify-center font-bold mx-auto py-2
+                 bg-teal-100 text-teal-900">Settings</p>
 
 
-               {%endfor%}
+
+                <ul class="flex flex-col gap-2 p-2">
+                    <li id="update_password" class="btn btn-violet">Change Password</li>
+                    <li id="update_email" class="btn btn-blue">Change email</li>
+                   {% if user.pin %}
+                   <li id="update_pin" class="btn btn-yellow">Change PIN</li>
+
+
+                   {%endif%}
+                </ul>
+
+
+                <button id="delete_account" class="btn btn-red mt-auto mb-5">Delete Account</button>
+
+        </sidebar>
+        <div class=" flex flex-col flex-grow
+        justify-center items-center p-3
+        bg-teal-50 border border-teal-300 border-l-0 rounded-tr-lg rounded-br-lg">
+
+            <div class="flex flex-col justify-center items-center  p-4 m-6 w-1/2
+             bg-teal-200 border-2 border-teal-300 rounded-lg">
+                    <p>Number of logins:</p>
+                    <p class="text-5xl ">{{user.num_logins}}</p>
             </div>
-        </div>
 
-        <div class="self-end">
-            <span class="font-bold mr-2">Last access: </span>
-            <!-- django date & time template formatting (this example: "3rd, Dec 2022, 10:12 a.m." ) -->
-            <span>{{user.last_login |date:"jS, M Y, h:m a"}}</span>
+
+            <div id="folder-section" class="flex flex-col justify-center items-center p-4 m-6 w-1/2
+             bg-teal-200 border-2 border-teal-300 rounded-lg">
+
+                <div class="text-xl"><span>Folders: </span> <span class="font-bold">{{user.num_folders}} </span></div>
+
+                <div class="flex flex-wrap gap-2 my-8">
+                   {% for folder in folders %}
+                   <a href="{% url 'vault:index'%}?folder={{folder}}" class="btn bg-{{folder.color}}-600 p-1 rounded-lg">{{folder}}</a>
+
+
+                   {%endfor%}
+                </div>
+            </div>
+
+            <div class="self-end">
+                <span class="font-bold mr-2">Last access: </span>
+                <!-- django date & time template formatting (this example: "3rd, Dec 2022, 10:12 a.m." ) -->
+                <span class="border-b-2 border-teal-600">{{user.last_login |date:"jS, M Y, h:m a"}}</span>
+            </div>
         </div>
     </div>
 </div>

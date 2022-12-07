@@ -12,7 +12,9 @@
     <script src="{%static 'dashboard/dashboard-script.js'%}"></script>
 </head>
 
-<body class=" bg-gray-50 font-sans overflow-hidden flex flex-col ">
+<body class=" bg-gray-50 font-sans flex flex-col
+overflow-x-hidden w-screen">
+
 
     <nav class="flex w-screen h-14 items-center justify-around
     bg-teal-600  px-2 sm:px-4 py-2
@@ -23,8 +25,8 @@
         </div>
         <ul class="flex  w-5/12 justify-end">
             {% if user.is_authenticated %}
-            <li class="mx-2 font-bold"><a href="{%url 'dashboard:dashboard'%}">{{request.user | capfirst}}</a></li>
-            <li class="mx-2"><a href="{%url 'dashboard:logout'%}">Logout</a></li>
+            <li class="mx-2 font-bold hover:underline hover:text-white"><a href="{%url 'dashboard:dashboard'%}">{{request.user | capfirst}}</a></li>
+            <li class="mx-2 hover:underline hover:text-white"><a href="{%url 'dashboard:logout'%}">Logout</a></li>
             {%else%}
             <li class="mx-2"><a href="{%url 'dashboard:login'%}">Login</a></li>
             {%endif%}
@@ -49,13 +51,20 @@
 
     <!-- ------- -->
 
+<div id="bg" class="bg-tile">
 
-    <div class=" mt-5 flex w-screen">
+    <div class="z-10 mt-8 mb-1 flex md:flex-row flex-col items-center md:items-start
+    md:max-h-full w-screen ">
 
-        {% block body %}
+    {% block body %}
 
-        {% endblock body %}
+    {% endblock body %}
     </div>
+</div>
+
+
+       {% include "theme/footer.html" %}
+
 
 </body>
 
