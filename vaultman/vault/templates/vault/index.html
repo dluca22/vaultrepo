@@ -4,31 +4,32 @@
 
 {% block body %}
 
-<div class="flex ">
+<sidebar class="w-64 h-max-screen flex-shrink-0  m-9 justify-around" aria-label="Sidebar">
 
     {% include "vault/sidebar.html" %}
+</sidebar>
 
-    <!-- main col in index with +items btn and the content boxes -->
-    <div id="main" class="">
-        <div class="flex justify-end">
-            <button id="show_login_form" class="btn btn-green">New Login</button>
-        </div>
+<!-- main col in index with +items btn and the content boxes -->
+<div id="main" class="flex flex-col w-8/12 flex-shrink-0
+flex-grow-1 items-center">
 
-        <!-- div for the col containing the item boxes -->
-        <div class="scrollable vault-content overflow-y-auto h-2/5 overflow-x-hidden">
-            {% for login in logins %}
-            {% include "vault/login_box.html" %}
-            {%empty%}
-            <p>there are no logins here</p>
-            {%endfor%}
+    <button id="show_login_form" class="btn btn-green ">New Login</button>
 
-        </div>
+    <!-- div for the col containing the item boxes -->
+    <div class="scrollable vault-content overflow-y-auto h-2/5 overflow-x-hidden">
+        {% for login in logins %}
+        {% include "vault/login_box.html" %}
+        {%empty%}
+        <p>there are no logins here</p>
+        {%endfor%}
 
     </div>
+</div>
 
 
-    <div id="modals">
-        {% include "vault/vault_modals.html" %}
-    </div>
+
+<div id="modals" class="z-10">
+    {% include "vault/vault_modals.html" %}
+</div>
 </div>
 {% endblock body %}

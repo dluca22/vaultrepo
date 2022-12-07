@@ -148,7 +148,7 @@ def login_content(request, id):
 def generate_password(request, size):
     try:
         passw = password_generator(size)
-        return JsonResponse({"success":"successful request", "message":'password generated!', 'password': passw})
+        return JsonResponse({"success":"successful request", "message":'Password generated!', 'password': passw})
     except:
         return JsonResponse({"denied": "error", "message": 'An unexpected error occurred'})
 

@@ -12,27 +12,31 @@
     <script src="{%static 'dashboard/dashboard-script.js'%}"></script>
 </head>
 
-<body class=" bg-gray-50 font-sans overflow-hidden">
+<body class=" bg-gray-50 font-sans overflow-hidden flex flex-col ">
 
-    <nav class="w-screen bg-teal-600  px-2 sm:px-4 py-2 h-14">
-        <div class="container flex flex-wrap items-center justify-between mx-auto">
-
+    <nav class="flex w-screen h-14 items-center justify-around
+    bg-teal-600  px-2 sm:px-4 py-2
+    w-min-screen
+    ">
+        <div class="flex w-3/12">
             <h2 class="text-3xl font-bold "><a href="{%url 'vault:index'%}">Key vault</a></h2>
-            <ul class="inline-flex justify-end">
-                {% if user.is_authenticated %}
-                <li class="mx-2 font-bold"><a href="{%url 'dashboard:dashboard'%}">{{request.user | capfirst}}</a></li>
-                <li class="mx-2"><a href="{%url 'dashboard:logout'%}">Logout</a></li>
-                {%else%}
-                <li class="mx-2"><a href="{%url 'dashboard:login'%}">Login</a></li>
-                {%endif%}
-            </ul>
         </div>
+        <ul class="flex  w-5/12 justify-end">
+            {% if user.is_authenticated %}
+            <li class="mx-2 font-bold"><a href="{%url 'dashboard:dashboard'%}">{{request.user | capfirst}}</a></li>
+            <li class="mx-2"><a href="{%url 'dashboard:logout'%}">Logout</a></li>
+            {%else%}
+            <li class="mx-2"><a href="{%url 'dashboard:login'%}">Login</a></li>
+            {%endif%}
+        </ul>
     </nav>
 
 
     <!-- ------- -->
-    <!-- messages div hidden if not messages, else can display it using Js.  -->
-    <div id="message-box" class="absolute grid right-1 w-56 font-semibold text-lg gap-2">
+    <!--box containing messages handled via Js absolute position top right Z-index above all-->
+    <!-- django messages also trigger the Js custom function  -->
+    <div id="message-box" class="absolute grid right-1 w-56 gap-2 mt-16 z-20
+    font-semibold text-lg ">
 
         {% if messages %}
             {% for message in messages %}
@@ -46,7 +50,7 @@
     <!-- ------- -->
 
 
-    <div class=" mt-5 ">
+    <div class=" mt-5 flex w-screen">
 
         {% block body %}
 

@@ -1,18 +1,18 @@
 {% load static %}
 
-<sidebar class="w-56 h-96 flex-grow-0 content-around" aria-label="Sidebar">
-    <div class="grow overflow-y-auto py-4 px-3 bg-gray-50 rounded ">
+    <div class="h-1/4 flex flex-col justify-around py-4 px-3 bg-gray-50 rounded ">
 
 
         <form action="{%url 'vault:index'%}" id="search_form">
-            <input type="search" class="flex rounded-lg w-40" name="q" id="search_text"
+            <input type="search" class="flex rounded-lg w-full" name="q" id="search_text"
                 placeholder="&#128269 Search...">
         </form>
-        <hr class="my-4">
 
-        <a href="{%url 'vault:index'%}" class="btn btn-gray">All</a>
-        <a href="{%url 'vault:index'%}?filter=fav" class="btn btn-yellow">Favorites</a>
-        <hr class="my-4">
+        <div class="flex justify-around my-6">
+
+            <a href="{%url 'vault:index'%}" class="btn btn-gray">All</a>
+            <a href="{%url 'vault:index'%}?filter=fav" class="btn btn-yellow">Favorites</a>
+        </div>
         <div class="flex justify-around">
             <span class="font-bold">Folders</span>
             <button id="new_folder" class="btn btn-green p-1 py-0">+</button>
@@ -43,4 +43,3 @@
         <hr class="my-4">
         <p>TrashCan</p>
     </div>
-</sidebar>
