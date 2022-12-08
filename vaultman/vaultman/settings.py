@@ -145,5 +145,6 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+ENCRYPT_KEY = b'Rgv2TZeSXXpqlYcSMcEj9W9VnLyWvh7ZdaVW-BdZkH8='
 
 # NPM_BIN_PATH = '/home/xliuk/.nvm/versions/node/v18.12.0/bin/npm'

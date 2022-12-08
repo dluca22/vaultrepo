@@ -14,6 +14,7 @@ from dashboard.models import User
 from .forms import LoginForm, FolderForm
 
 from .utils import password_generator
+from .encrypt_util import encrypt, decrypt
 
 
 
@@ -64,16 +65,17 @@ def add_new(request):
         prefix = "https://"
         login_form = LoginForm(request.POST, user=request.user)
 
+        tit = request.POST['title']
+        print("tit " + tit)
         if login_form.is_valid():
             uri = login_form.instance.uri
-            # if uri was inserted, if add prefix if it is not already presetn
+
             if uri:
                 if not prefix in uri:
                     uri = prefix + uri
-
+            login_form.instance.password = encrypt(login_form.instance.password)
+            login_form.instance.note = encrypt(login_form.instance.note)
             login_form.instance.owner = request.user
-            # print(f" dopo : {entry_form.instance}")
-            print(f"  : {login_form.cleaned_data}")
             login_form.save()
             messages.success(request, "New element created!")
         return HttpResponseRedirect(reverse('vault:index'))
@@ -134,6 +136,11 @@ def login_content(request, id):
 
     elif request.method == "GET":
         edit_form = LoginForm(instance=login, user=request.user)
+
+        # encrypt / decrypt funziona ma devo trovare come inserirlo nella form
+
+        note = decrypt(login.note)
+        print(note)
 
     context = {
         'title': login.title,
