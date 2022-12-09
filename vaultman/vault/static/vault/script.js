@@ -83,7 +83,6 @@ function vault_page() {
   const folder_modal = document.querySelector("#new_folder_modal");
   new_folder.addEventListener("click", () => {
     folder_modal.style.display = "grid";
-    folder_modal.querySelector("#id_name").autofocus; /* NOTE DOESN'T WORK */
 
     folder_modal.addEventListener("click", close_reset_modal);
   });
@@ -106,7 +105,7 @@ function vault_page() {
       folder_item
         .querySelector(".edit-folder")
         .addEventListener("click", (e) => {
-          const id16 = e.currentTarget.getAttribute("data-folder");
+          const id = e.currentTarget.getAttribute("data-folder");
 
           fetch(`/edit_folder/${id}`)
             .then((response) => response.json())
