@@ -15,7 +15,8 @@ def encrypt(field):
         return encrypt_field
     except Exception as e:
         logging.getLogger("error_logger").error(traceback.format_exc())
-        return None
+        # return None (if error returns the field itself in case is "null" or invalid field
+        return field
 
 
 def decrypt(field):
@@ -26,4 +27,5 @@ def decrypt(field):
         return decode_field
     except Exception as e:
         logging.getLogger("error_logger").error(traceback.format_exc())
-        return None
+        # return None
+        return field

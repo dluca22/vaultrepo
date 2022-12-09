@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.core.validators import MinLengthValidator
 
+from vault.encrypt_util import decrypt
 
 
 
@@ -23,3 +24,7 @@ class User(AbstractUser):
     @property
     def num_folders(self):
         return self.folders.all().count()
+
+    @property
+    def get_pin(self):
+        return decrypt(self.pin)

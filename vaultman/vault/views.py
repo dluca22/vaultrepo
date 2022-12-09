@@ -29,7 +29,7 @@ def index(request):
     if folder_query:
         # if query is from btn "none" category, selects only items not in folder
         if folder_query == "none":
-            logins = Login.objects.filter(folder__isnull=True)
+            logins = Login.objects.filter(folder__isnull=True, owner=request.user)
         # else, filter where folder name is the one in the query
         else:
             logins = Login.objects.filter(folder__name=folder_query)
@@ -42,7 +42,7 @@ def index(request):
     #     logins = Note.objects.filter(owner=request.user).order_by('title')
     # if the query is a ?q search request, selects ones where the title contains the word in search (insensitive contains)
     elif search:
-        logins = Login.objects.filter(title__icontains=search)
+        logins = Login.objects.filter(title__icontains=search, owner=request.user)
     # else selects all logins
     else:
         logins = Login.objects.filter(owner=request.user).order_by('title')
@@ -62,21 +62,26 @@ def index(request):
 def add_new(request):
     """add <str:type> per aggiungere sia login che note"""
     if request.method == "POST":
-        prefix = "https://"
+
         login_form = LoginForm(request.POST, user=request.user)
 
-        tit = request.POST['title']
-        print("tit " + tit)
         if login_form.is_valid():
+            # get uri field from form
             uri = login_form.instance.uri
-
+            prefix = "https://"
+            # if uri is not none check if has prefix, else add it, then encrypt and add it to the login.instance
             if uri:
                 if not prefix in uri:
                     uri = prefix + uri
+                login_form.instance.uri = encrypt(uri)
+
+            # encrypt also password and note then save
             login_form.instance.password = encrypt(login_form.instance.password)
             login_form.instance.note = encrypt(login_form.instance.note)
+
             login_form.instance.owner = request.user
             login_form.save()
+            # send message then redirect to index
             messages.success(request, "New element created!")
         return HttpResponseRedirect(reverse('vault:index'))
 
@@ -90,7 +95,8 @@ def get_password(request, id):
     #LATER  id = int(id, 16)
     # gets the pin from request, if it is not protected, pin is set to false by client.js
     pin = json.loads(request.body)
-    user_pin = str(request.user.pin)
+    # TODO convert to @property so that it can be decrypted from models.py
+    user_pin = decrypt(request.user.pin)
 
     # try if login is existing
     try:
@@ -101,7 +107,7 @@ def get_password(request, id):
     if request.user != login.owner:
         return JsonResponse({"denied":"unauthorized", "message":"You are not the owner"})
 
-    # TODO add decryption
+
 
     # if login is protected and pin wasn't provided (may change and just compare if pin is equal to User.pin)
     if login.protected and not pin:
@@ -110,21 +116,29 @@ def get_password(request, id):
         return JsonResponse({"denied":"unauthorized", "message":"Incorrect PIN"})
     else:
 
-        password = login.password
+        password = decrypt(login.password)
         return JsonResponse({"success": "successful request", "content": password})
 
 
 def login_content(request, id):
     """change id to hex"""
     login = Login.objects.get(id=id)
+    # decrypt old password to compare for changes
     old_password = login.password
 
     if request.method == "POST":
         edit_form = LoginForm(request.POST, instance=login, user=request.user)
 
         if edit_form.is_valid():
-            if old_password != edit_form.instance.password and old_password != None:
+
+            # only save NOT null passwords to history
+            if decrypt(old_password) != edit_form.instance.password and old_password != None:
+                # if cleartext old password is not equal to the new password, store login.password(not decrypted) in the history model
                 History.objects.create(old_passw=old_password, login=login)
+
+            edit_form.instance.password = encrypt(edit_form.instance.password)
+            edit_form.instance.uri = encrypt(edit_form.instance.uri)
+            edit_form.instance.note = encrypt(edit_form.instance.note)
             edit_form.save()
 
             messages.success(request, 'Successful edit', fail_silently=True)
@@ -135,12 +149,15 @@ def login_content(request, id):
             return HttpResponseRedirect(reverse('vault:login_content', args=[id]))
 
     elif request.method == "GET":
+        # decrypt the fields before running instances of login (uses _meta attribute to compile form)
+        # login = login.decrypted (this property does not work, does not return a model instance but a dictionary)
+        login.password = decrypt(login.password)
+        login.uri = decrypt(login.uri)
+        login.note = decrypt(login.note)
+
+        # 'user' **kwargs is used to return the folder instance beloging to the user
         edit_form = LoginForm(instance=login, user=request.user)
 
-        # encrypt / decrypt funziona ma devo trovare come inserirlo nella form
-
-        note = decrypt(login.note)
-        print(note)
 
     context = {
         'title': login.title,

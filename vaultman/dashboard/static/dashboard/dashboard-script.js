@@ -69,9 +69,25 @@ function userpage(){
         const modal = document.querySelector('#delete_account_modal')
         modal.style.display = "grid";
         modal.addEventListener('click', close_reset_modal, false);
-        
+    });
 
-      })
+    /* also worked without formal declaration, i guess it grabs the ID from the page to add the eventlistener */
+        const change_email = document.querySelector('#change_email')
+        change_email.addEventListener('click', () => {
+        const modal = document.querySelector('#change_email_modal')
+        modal.style.display = "grid";
+        modal.addEventListener('click', close_reset_modal, false);
+      });
+
+
+        const change_masterPassword = document.querySelector('#update_password')
+        change_masterPassword.addEventListener('click', () => {
+        const modal = document.querySelector('#change_masterPassword_modal')
+        modal.style.display = "grid";
+        modal.addEventListener('click', close_reset_modal, false);
+      });
+
+
 }
 
 

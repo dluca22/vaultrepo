@@ -1,4 +1,3 @@
-
 // ====== LISTENS ON DOM CONTENT LOADED AND BASED ON THE URL TRIGGERS DIFFERENT FUNCTIONS ===
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -11,26 +10,23 @@ document.addEventListener("DOMContentLoaded", function () {
     login_content_page();
   }
 
-//   looks for password fields, append view button and listen for click to run toggle function
-  const pw_fields = document.querySelectorAll('input[type="password"]')
+  //   looks for password fields, append view button and listen for click to run toggle function
+  const pw_fields = document.querySelectorAll('input[type="password"]');
   pw_fields.forEach((pwF) => {
-    const toggle = document.createElement('img')
-    toggle.src = '/static/icons/show.svg'
-    toggle.alt = 'password view toggle'
-    toggle.classList.add('w-8', 'h-8', 'bg-blue-500', 'rounded-full', 'm-1')
+    const toggle = document.createElement("img");
+    toggle.src = "/static/icons/show.svg";
+    toggle.alt = "password view toggle";
+    toggle.classList.add("w-8", "h-8", "bg-blue-600", "rounded-full", "m-1");
 
-
-    pwF.parentNode.append(toggle)
-    toggle.addEventListener('click', toggle_visibility)
-
-    });
-})
+    pwF.parentNode.append(toggle);
+    toggle.addEventListener("click", toggle_visibility);
+  });
+});
 
 // ============= JS TO HANDLE THE MAIN PAGE HTML & REQUESTS ===============================================
 function vault_page() {
-    // gets all login boxes and for each handles the click for entire box or username/ password elements for copy content
+  // gets all login boxes and for each handles the click for entire box or username/ password elements for copy content
   const logins = document.querySelectorAll(".login_box");
-
 
   logins.forEach((login) => {
     // clicking on entire box, opens new page with login content
@@ -39,26 +35,28 @@ function vault_page() {
     login.querySelector(".username-copy").addEventListener("click", (e) => {
       const username = e.currentTarget.firstElementChild.innerText;
       navigator.clipboard.writeText(username);
-      flash_message("Username copied", "success")
-        // avoid propagation for click listeners under it
+      flash_message("Username copied", "success");
+      // avoid propagation for click listeners under it
       e.stopPropagation();
     });
 
     // if a there is a class selector for .copy-password (password might not be set)
     if (login.querySelector(".copy-passw") !== null) {
-    //   if login has password set, clicking on the div.copy-passw starts function for get request for the password to be copied into clipboard
-        login.querySelector(".copy-passw").addEventListener("click", copy_password.bind(login));
+      //   if login has password set, clicking on the div.copy-passw starts function for get request for the password to be copied into clipboard
+      login
+        .querySelector(".copy-passw")
+        .addEventListener("click", copy_password.bind(login));
     }
   });
 
   // index page modal management
 
   //   event listener on "New Login" button
-    // new_login is the button the user clicks to display the modal
-    const new_login = document.querySelector("#show_login_form");
-    // login modal is the modal itself to be displayed and handled
-    const login_modal = document.querySelector("#new_login_modal");
-    new_login.addEventListener("click", () => {
+  // new_login is the button the user clicks to display the modal
+  const new_login = document.querySelector("#show_login_form");
+  // login modal is the modal itself to be displayed and handled
+  const login_modal = document.querySelector("#new_login_modal");
+  new_login.addEventListener("click", () => {
     // get new_login_modal  and show as grid
     login_modal.style.display = "grid";
 
@@ -67,111 +65,113 @@ function vault_page() {
     const generate_password = document.querySelector("#generate_password");
     const pw_visibility_toggle = document.querySelector("#see_password_toggle");
     generate_username.addEventListener("click", random_username);
-    generate_password.addEventListener("click", random_password); /*end event listener for password generator */
+    generate_password.addEventListener(
+      "click",
+      random_password
+    ); /*end event listener for password generator */
 
     // if user clicks anywhere outside the white box, closes the modal(inset) and reset form inside it
     login_modal.addEventListener("click", close_reset_modal, false);
   });
 
-//   const search_form = document.querySelector('#search_form')
-//   search_form.addEventListener('enter')
+  //   const search_form = document.querySelector('#search_form')
+  //   search_form.addEventListener('enter')
 
-//   event listener on "+ Folder"
+  //   event listener on "+ Folder"
 
-  const new_folder = document.querySelector('#new_folder');
-  const folder_modal = document.querySelector('#new_folder_modal');
-  new_folder.addEventListener('click', () =>{
+  const new_folder = document.querySelector("#new_folder");
+  const folder_modal = document.querySelector("#new_folder_modal");
+  new_folder.addEventListener("click", () => {
     folder_modal.style.display = "grid";
-    folder_modal.querySelector('#id_name').autofocus; /* NOTE DOESN'T WORK */
+    folder_modal.querySelector("#id_name").autofocus; /* NOTE DOESN'T WORK */
 
-    folder_modal.addEventListener('click', close_reset_modal)
-  })
+    folder_modal.addEventListener("click", close_reset_modal);
+  });
 
-  const editFolder_modal = document.querySelector('#edit_folder_modal')
-    const edit_btn = editFolder_modal.querySelector('input[value="Edit"]')
-    const delete_btn = editFolder_modal.querySelector('input[value="Delete"]')
-    const editForm = editFolder_modal.querySelector('form')
-    const folderName_field = editFolder_modal.querySelector('#current_folder_name')
+  const editFolder_modal = document.querySelector("#edit_folder_modal");
+  const edit_btn = editFolder_modal.querySelector('input[value="Edit"]');
+  const delete_btn = editFolder_modal.querySelector('input[value="Delete"]');
+  const editForm = editFolder_modal.querySelector("form");
+  const folderName_field = editFolder_modal.querySelector(
+    "#current_folder_name"
+  );
 
-    // select <ul#folder> + select all children <li>
-    const folder_list = document.querySelector('#folders').querySelectorAll('li');
+  // select <ul#folder> + select all children <li>
+  if (document.querySelector("#folders")) {
+    const folder_list = document.querySelector("#folders").querySelectorAll("li");
 
     // GET fetch request to pre fill the edit form with name of the folder
     // + checks if user is allowed or html has been hacked
     folder_list.forEach((folder_item) => {
-        folder_item.querySelector('.edit-folder').addEventListener('click', (e) => {
-            const id16 = e.currentTarget.getAttribute('data-folder')
+      folder_item
+        .querySelector(".edit-folder")
+        .addEventListener("click", (e) => {
+          const id16 = e.currentTarget.getAttribute("data-folder");
 
-
-            fetch(`/edit_folder/${id}`)
+          fetch(`/edit_folder/${id}`)
             .then((response) => response.json())
             .then((data) => {
-                if (data.success){
-                    // if request successful shows div and fills form content with response data
-                    editFolder_modal.style.display = "grid"
-                    folderName_field.value = data.name
-                    editForm.value = data.id
-                }else if (data.denied){
-                    // if request was denied, shows error message containing response message
-                    flash_message(data.message, "error")
-                }
-            })
-        })
-    })
+              if (data.success) {
+                // if request successful shows div and fills form content with response data
+                editFolder_modal.style.display = "grid";
+                folderName_field.value = data.name;
+                editForm.value = data.id;
+              } else if (data.denied) {
+                // if request was denied, shows error message containing response message
+                flash_message(data.message, "error");
+              }
+            });
+        });
+    });
 
     // click outside modal triggers close
-    editFolder_modal.addEventListener('click', close_modal)
+    editFolder_modal.addEventListener("click", close_modal);
 
-    edit_btn.addEventListener('click', (e) =>{
-        // fetch request to PUT EDIT
-        //not preventdefault so it refreshes
+    edit_btn.addEventListener("click", (e) => {
+      // fetch request to PUT EDIT
+      //not preventdefault so it refreshes
 
-        fetch(`/edit_folder/${editForm.value}`, {
-            method:"PUT",
-            headers: {
-                "X-CSRFToken": getCookie("csrftoken"),
-                "Content-type": "application/json",
-              },
-            body: JSON.stringify(folderName_field.value)
-        })
+      fetch(`/edit_folder/${editForm.value}`, {
+        method: "PUT",
+        headers: {
+          "X-CSRFToken": getCookie("csrftoken"),
+          "Content-type": "application/json",
+        },
+        body: JSON.stringify(folderName_field.value),
+      })
         .then((response) => response.json())
         .then((data) => {
-            // if successful edit, flashes success message
-            if (data.success){
-                flash_message(data.success, "success")
-            }
-            else{
-                console.log(data)
-            }
-        })
+          // if successful edit, flashes success message
+          if (data.success) {
+            flash_message(data.success, "success");
+          } else {
+            console.log(data);
+          }
+        });
     });
 
-    delete_btn.addEventListener('click', (e) =>{
-        // fetch request to DELETE
-        //not preventdefault so it refreshes
+    delete_btn.addEventListener("click", (e) => {
+      // fetch request to DELETE
+      //not preventdefault so it refreshes
 
-        fetch(`/edit_folder/${editForm.value}`, {
-            method:"DELETE",
-            headers: {
-                "X-CSRFToken": getCookie("csrftoken"),
-                "Content-type": "application/json",
-              },
-        })
+      fetch(`/edit_folder/${editForm.value}`, {
+        method: "DELETE",
+        headers: {
+          "X-CSRFToken": getCookie("csrftoken"),
+          "Content-type": "application/json",
+        },
+      })
         .then((response) => response.json())
         .then((data) => {
-            // if successful delete, flashes success message
-            if (data.success){
-                flash_message(data.message, "success")
-            }
-            else{
-                console.log(data)
-            }
-        })
+          // if successful delete, flashes success message
+          if (data.success) {
+            flash_message(data.message, "success");
+          } else {
+            console.log(data);
+          }
+        });
     });
-
-
-
-
+  }
 }
 
 function view_login(event) {
@@ -251,13 +251,14 @@ function login_content_page() {
   const generate_password = document.querySelector("#generate_password");
   const pw_visibility_toggle = document.querySelector("#see_password_toggle");
 
-
-
   // fetch request to external api that generates random person, then getting the login.username field from the request
   generate_username.addEventListener("click", random_username);
 
   // fetch request to function to generate password from util function
-  generate_password.addEventListener("click", random_password); /*end event listener for password generator */
+  generate_password.addEventListener(
+    "click",
+    random_password
+  ); /*end event listener for password generator */
 
   // if div for password_history is present
   if (document.querySelector("#password_history")) {
@@ -266,66 +267,60 @@ function login_content_page() {
     const previous_passwords = history.querySelectorAll("li");
     // for each add listener to copy innertext to clipboard
     previous_passwords.forEach((item) => {
-        item.addEventListener("click", (e) => {
+      item.addEventListener("click", (e) => {
         const value = e.target.innerText;
         navigator.clipboard.writeText(value);
         // TODO add popup for confirmation
       });
     });
-  };
+  }
 
-  delete_item.addEventListener('click', (e) => {
+  delete_item.addEventListener("click", (e) => {
     const id = e.currentTarget.value;
-    const confirm_modal = document.querySelector('#delete_item_confirm')
-    const dismiss = confirm_modal.querySelector('button[value="dismiss"]')
-    const confirm = confirm_modal.querySelector('button[value="confirm"]')
+    const confirm_modal = document.querySelector("#delete_item_confirm");
+    const dismiss = confirm_modal.querySelector('button[value="dismiss"]');
+    const confirm = confirm_modal.querySelector('button[value="confirm"]');
 
     confirm_modal.style.display = "grid";
-    confirm_modal.addEventListener('click', (e) =>{
-        if (e.target == e.currentTarget || e.target == dismiss){
-            e.currentTarget.style.display = "none"
-        }else if (e.target == confirm){
-            fetch(`/delete/${id}`,{
-                method : "delete",
-                headers: {
-                    "X-CSRFToken": getCookie("csrftoken"),
-                    "Content-type": "application/json",
-                  },
-            })
-            .then((response) => response.json())
-            .then((data) => {
-                if (data.success){
-                    console.log(data.success);
-                    window.location = '/';
-
-
-                }
-                else if (data.denied){
-                    console.log(data.message);
-                }
-            })
-        }
-
-    })
-    dismiss.addEventListener('click', () => confirm_modal.click())
-
-  })
-
-//   if login has password history list
-  if (document.querySelector('#password_history')){
-    document.querySelectorAll('li').forEach((old_passw) =>{
-        old_passw.addEventListener('click', () =>{
-            navigator.clipboard.writeText(old_passw.textContent)
+    confirm_modal.addEventListener("click", (e) => {
+      if (e.target == e.currentTarget || e.target == dismiss) {
+        e.currentTarget.style.display = "none";
+      } else if (e.target == confirm) {
+        fetch(`/delete/${id}`, {
+          method: "delete",
+          headers: {
+            "X-CSRFToken": getCookie("csrftoken"),
+            "Content-type": "application/json",
+          },
         })
-    })
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.success) {
+              console.log(data.success);
+              window.location = "/";
+            } else if (data.denied) {
+              console.log(data.message);
+            }
+          });
+      }
+    });
+    dismiss.addEventListener("click", () => confirm_modal.click());
+  });
+
+  //   if login has password history list
+  if (document.querySelector("#password_history")) {
+    document.querySelectorAll("li").forEach((old_passw) => {
+      old_passw.addEventListener("click", () => {
+        navigator.clipboard.writeText(old_passw.textContent);
+      });
+    });
   }
 }
-
 
 // =========== HELPER FUNCTIONS ================================
 
 function close_reset_modal(e) {
-    // before was close_modal.bind(modal)   should work the same
+  // before was close_modal.bind(modal)   should work the same
   // e.target is where the click event was originated
   // this is the overlay modal itself
   // if click is on the overlay modal (e.g. NOT in the actual form box), it will be dismissed and reset the form
@@ -338,76 +333,69 @@ function close_reset_modal(e) {
 
 // ===================================================================================
 function close_modal(e) {
-    if (e.target == this) {
-      this.style.display = "none";
-    }
+  if (e.target == this) {
+    this.style.display = "none";
   }
+}
 
 // ===================================================================================
 function random_username() {
-    const username_field = document.querySelector("#id_username");
-    fetch("https://randomuser.me/api/?inc=login")
-      .then((response) => response.json())
-      .then((data) => (username_field.value = data.results[0].login.username));
-      flash_message("Username created", "success")
-  }
+  const username_field = document.querySelector("#id_username");
+  fetch("https://randomuser.me/api/?inc=login")
+    .then((response) => response.json())
+    .then((data) => (username_field.value = data.results[0].login.username));
+  flash_message("Username created", "success");
+}
 
-  // ===================================================================================
+// ===================================================================================
 function random_password() {
-    // get the input value for the size
-    const sizeInput = document.querySelector("#size").value;
-    // if no size was set, default to 10 char
-    const size = sizeInput ? sizeInput : 10;
+  // get the input value for the size
+  const sizeInput = document.querySelector("#size").value;
+  // if no size was set, default to 10 char
+  const size = sizeInput ? sizeInput : 10;
 
-    // NOTE add / to go to the absolute path of the app (else would be /login/generate_password)
-    // goes to 8000/generate_password/<size>
-    fetch(`/generate_password/${size}`)
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.success){
-            flash_message(data.message, "success")
-            const password_input = document.querySelector("#id_password");
-            password_input.value = data.password;
-        }else{
-            flash_message(data.message, "error")
-        }
-      });
-  }
+  // NOTE add / to go to the absolute path of the app (else would be /login/generate_password)
+  // goes to 8000/generate_password/<size>
+  fetch(`/generate_password/${size}`)
+    .then((response) => response.json())
+    .then((data) => {
+      if (data.success) {
+        flash_message(data.message, "success");
+        const password_input = document.querySelector("#id_password");
+        password_input.value = data.password;
+      } else {
+        flash_message(data.message, "error");
+      }
+    });
+}
 
-  // ===================================================================================
+// ===================================================================================
 // toggle password field visibility
 
-  function toggle_visibility(e){
-
-        const pw_input = this.parentNode.querySelector('input');
-        if (pw_input.getAttribute("type") == "password"){
-            pw_input.setAttribute("type", "text")
-            this.src = '/static/icons/hide.svg'
-
-
-        }else{
-            pw_input.setAttribute("type", "password");
-            this.src = '/static/icons/show.svg'
-
-
-        }
-
-    }
+function toggle_visibility(e) {
+  const pw_input = this.parentNode.querySelector("input");
+  if (pw_input.getAttribute("type") == "password") {
+    pw_input.setAttribute("type", "text");
+    this.src = "/static/icons/hide.svg";
+  } else {
+    pw_input.setAttribute("type", "password");
+    this.src = "/static/icons/show.svg";
+  }
+}
 
 // ===================================================================================
 // flash custom message in the message-box
-function flash_message(message, alert){
-    const msgDiv = document.querySelector('#message-box')
-    // msgDiv.classList.remove("hidden");
+function flash_message(message, alert) {
+  const msgDiv = document.querySelector("#message-box");
+  // msgDiv.classList.remove("hidden");
 
-    const popup = create_popup(alert)
-    popup.innerText = message
-    msgDiv.append(popup);
+  const popup = create_popup(alert);
+  popup.innerText = message;
+  msgDiv.append(popup);
 
-    // setTimeout(function() {
-    // msgDiv.firstChild.remove()
-    // }, 5000);
-
+  // setTimeout(function() {
+  // msgDiv.firstChild.remove()
+  // }, 5000);
 }
 // ===================================================================================
 // hide message box
@@ -419,27 +407,35 @@ function flash_message(message, alert){
 //         }, 5000)
 //     }
 
-
 // }
 
 // ===================================================================================
 
-function create_popup(alert){
-    const popup = document.createElement('div');
-    popup.classList.add("flex", "flex-wrap", "items-center" ,"justify-center", "p-4", "m-2", "border-2", "border-b-4", "border-r-4", "rounded-lg")
-    console.log(alert)
-    if (alert === "success"){
-        popup.classList.add("text-green-600", "border-green-600", "bg-green-100")
-        }
-    else if (alert === "error"){
-        popup.classList.add("text-red-500", "border-red-500", "bg-red-100")
+function create_popup(alert) {
+  const popup = document.createElement("div");
+  popup.classList.add(
+    "flex",
+    "flex-wrap",
+    "items-center",
+    "justify-center",
+    "p-4",
+    "m-2",
+    "border-2",
+    "border-b-4",
+    "border-r-4",
+    "rounded-lg"
+  );
+  console.log(alert);
+  if (alert === "success") {
+    popup.classList.add("text-green-600", "border-green-600", "bg-green-100");
+  } else if (alert === "error") {
+    popup.classList.add("text-red-500", "border-red-500", "bg-red-100");
+  }
+  setTimeout(function () {
+    popup.remove();
+  }, 5000);
 
-    }
-    setTimeout(function() {
-       popup.remove()
-        }, 5000);
-
-    return popup
+  return popup;
 }
 // ===================================================================================
 function getCookie(name) {
@@ -457,4 +453,3 @@ function getCookie(name) {
   }
   return cookieValue;
 }
-

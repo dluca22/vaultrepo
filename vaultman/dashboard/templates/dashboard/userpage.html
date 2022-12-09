@@ -20,11 +20,13 @@
 
     {%endif%}
 
+    {{user.get_pin}}
+    {{user.pin}}
 
     <div class="flex w-full my-10">
 
         <sidebar class="flex flex-col flex-shrink items-center
-        bg-teal-50 border border-teal-400 rounded-tl-lg rounded-bl-lg ">
+        bg-teal-50 border border-teal-400 rounded-tl-lg rounded-bl-lg">
 
                 <p class="flex w-full justify-center font-bold mx-auto py-2
                  bg-teal-100 text-teal-900">Settings</p>
@@ -33,7 +35,7 @@
 
                 <ul class="flex flex-col gap-2 p-2">
                     <li id="update_password" class="btn btn-violet">Change Password</li>
-                    <li id="update_email" class="btn btn-blue">Change email</li>
+                    <li id="change_email" class="btn btn-green">Change email</li>
                    {% if user.pin %}
                    <li id="update_pin" class="btn btn-yellow">Change PIN</li>
 
@@ -49,6 +51,10 @@
         justify-center items-center p-3
         bg-teal-50 border border-teal-300 border-l-0 rounded-tr-lg rounded-br-lg">
 
+            <div class="flex flex-col items-center">
+                <p class="italic text-lg border-b border-teal-600">{{user.email}}</p>
+                <p class="text-small text-teal-600">Email</p>
+            </div>
             <div class="flex flex-col justify-center items-center  p-4 m-6 w-1/2
              bg-teal-200 border-2 border-teal-300 rounded-lg">
                     <p>Number of logins:</p>

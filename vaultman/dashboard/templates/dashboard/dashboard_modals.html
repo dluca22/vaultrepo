@@ -4,11 +4,11 @@
 <!-- template for the form to update PIN (linked to #update_pin button only showing if a PIN is already set) -->
 
 <!-- overlay wrapper -->
-<div id="pin_update_modal" class="fixed hidden inset-0 bg-gray-700 bg-opacity-50">
+<div id="pin_update_modal" class="fixed hidden z-10 inset-0 bg-gray-700 bg-opacity-50">
 
     <!-- form div -->
     <div id="pin_update_form" class="relative my-auto mx-auto p-8
-     rounded-lg bg-yellow-100 bg-opacity-80
+     rounded-lg bg-yellow-100 bg-opacity-80 shadow-2xl
     text-yellow-800 font-bold">
         <form action="{%url 'dashboard:edit_pin'%}" method="post" class="flex flex-col items-center">
             {%csrf_token%}
@@ -39,17 +39,17 @@
 
 <!-- template for the form to SET PIN () -->
 <!-- overlay wrapper -->
-<div id="pin_set_modal" class="fixed hidden inset-0 bg-gray-600 bg-opacity-50">
+<div id="pin_set_modal" class="fixed hidden z-10 inset-0 bg-gray-600 bg-opacity-50">
 
     <!-- form div -->
     <div id="pin_set_form" class="relative my-auto mx-auto p-8
-    rounded-lg bg-yellow-200 bg-opacity-80
+    rounded-lg bg-yellow-200 bg-opacity-80 shadow-2xl
     text-yellow-800 font-bold">
         <form action="{%url 'dashboard:set_pin'%}" method="post" class="flex flex-col items-center">
             {%csrf_token%}
-            <p>== Enter your PIN ==</p>
+            <p>== Enter new PIN ==</p>
 
-            <input class="my-1 rounded-lg" type="password" name="new_pin" maxlength="4" placeholder="Insert 4 digits...">
+            <div class="flex"><input class="my-1 rounded-lg" type="password" name="new_pin" maxlength="4" placeholder="Insert 4 digits..."></div>
             <input type="submit" value="Set PIN" class="btn btn-blue">
 
         </form>
@@ -57,30 +57,81 @@
 </div>
 
 <!-- template for the form to change password -->
+<div id="change_masterPassword_modal" class="fixed hidden z-10 inset-0 bg-gray-600 bg-opacity-50">
+    <div id="delete_form" class="relative my-auto mx-auto p-4
+    rounded-lg bg-violet-200 bg-opacity-80 shadow-2xl
+    text-violet-800 font-bold
+    w-fit flex flex-col items-center gap-2">
+
+        <p class="text-2xl">== Change Master Password ==</p>
+        <p>Insert Email, PIN and current password for confirmation</p>
+        <form action="{% url 'dashboard:change_masterpassword' %}" method="post"
+        class="flex flex-col gap-2">
+            {%csrf_token%}
+            <input type="email" name="email" placeholder="Email" class="rounded-lg">
+            <div id="pin_check" class="flex">
+                <input class="mb-1 rounded-lg" type="password" name="pin" maxlength="4" placeholder="PIN">
+            </div>
+
+            <div class="flex">
+                <input type="password" name="current_password" placeholder="Current Password" class="rounded-lg">
+            </div>
+
+            <p>Submit your new password</p>
+            <div class="flex">
+                <input type="password" name="new_password" placeholder="New Password" class="rounded-lg">
+            </div>
+            <div class="flex">
+                <input type="password" name="confirmation" placeholder="Confirm Password" class="rounded-lg">
+            </div>
+            <input type="submit" class="btn btn-violet flex mx-auto" value="Change Master Password">
+        </form>
+
+    </div>
+</div>
 
 
 <!-- template for the form to change email -->
 
+<div id="change_email_modal" class="fixed hidden z-10 inset-0 bg-gray-600 bg-opacity-50">
+    <div id="delete_form" class="relative my-auto mx-auto p-4
+    rounded-lg bg-green-200 bg-opacity-80 shadow-2xl
+    text-green-800 font-bold
+    w-fit flex flex-col items-center gap-2 ">
 
-
-<!-- template for the form to DELETE account -->
-<div id="delete_account_modal" class="fixed hidden inset-0 bg-gray-600 bg-opacity-50">
-    <div id="delete_form" class="relative my-auto mx-auto p-8
-    rounded-lg bg-red-200 bg-opacity-80
-    text-red-800 font-bold
-    w-1/3 flex flex-wrap justify-center gap-2">
-
-        <p class="text-2xl">== Are you sure? ==</p>
-        <p class="text-xs ">This action is irreversible, please enter your username, email and password to confirm deletion</p>
-        <form action="{% url 'dashboard:delete_account' %}" method="post"
-        class="flex flex-col gap-2 w-3/4 ">
+        <p class="text-2xl">== Change user Email ==</p>
+        <form action="{% url 'dashboard:change_email' %}" method="post"
+        class="flex flex-col gap-2">
             {%csrf_token%}
-            <input type="text" name="username" placeholder="Username" class="rounded-lg">
-            <input type="text" name="email" placeholder="Email" class="rounded-lg">
+            <input type="email" name="email" placeholder="New Email" class="rounded-lg">
+            <p class="flex justify-centertext-sm mb-1">Confirm with password</p>
             <div class="flex">
                 <input type="password" name="password" placeholder="Master Password" class="rounded-lg">
             </div>
-            <input type="submit" class="btn btn-red w-3/4 mx-auto" value="Delete Account">
+            <input type="submit" class="btn btn-green flex mx-auto" value="Change Email">
+        </form>
+
+    </div>
+</div>
+
+<!-- template for the form to DELETE account -->
+<div id="delete_account_modal" class="fixed hidden z-10 inset-0 bg-gray-600 bg-opacity-50">
+    <div id="delete_form" class="relative my-auto mx-auto p-4
+    rounded-lg bg-red-300 bg-opacity-90 shadow-2xl
+    text-red-800 font-bold
+     w-1/3 flex flex-col items-center gap-2">
+
+        <p class="text-2xl">== Are you sure? ==</p>
+        <p class="flex flex-wrap w-2/3 text-sm ">This action is irreversible, please enter your username, email and password to confirm deletion</p>
+        <form action="{% url 'dashboard:delete_account' %}" method="post"
+        class="flex flex-col gap-2 ">
+            {%csrf_token%}
+            <div class="flex"><input type="text" name="username" placeholder="Username" class="rounded-lg"></div>
+            <div class="flex"><input type="text" name="email" placeholder="Email" class="rounded-lg"></div>
+            <div class="flex grow">
+                <input type="password" name="password" placeholder="Master Password" class="rounded-lg">
+            </div>
+            <input type="submit" class="btn btn-red flex mx-auto" value="Delete Account">
         </form>
 
     </div>

@@ -1,5 +1,6 @@
 from .models import Login , Folder
 from django.forms import ModelForm, Textarea, PasswordInput, Select , TextInput
+from .encrypt_util import encrypt, decrypt
 
 class LoginForm(ModelForm):
 
@@ -24,6 +25,8 @@ class LoginForm(ModelForm):
         # ?? not set to None
         self.fields['folder'].initial = 'None'
         self.fields['folder'].queryset = Folder.objects.filter(owner=user)
+
+    
 
 class FolderForm(ModelForm):
     class Meta:

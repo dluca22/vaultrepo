@@ -3,6 +3,7 @@ from django.contrib.auth.models import AbstractUser
 from django.core.validators import MaxValueValidator
 
 from dashboard.models import User
+from .encrypt_util import encrypt, decrypt
 
 
 
@@ -30,6 +31,29 @@ class Login(models.Model):
     def folderColor(self):
         return self.folder.color
 
+    @property
+    def decrypted(self):
+        return { 'title': self.title,
+                'username': self.username,
+                'password': decrypt(self.password),
+                'note': decrypt(self.note),
+                'folder': self.folder,
+                'protected': self.protected,
+                'favorite': self.favorite,
+                'uri' : decrypt(self.uri)
+        }
+    @property
+    def encrypted(self):
+        return { 'title': self.title,
+                'username': self.username,
+                'password': encrypt(self.password),
+                'note': encrypt(self.note),
+                'folder': self.folder,
+                'protected': self.protected,
+                'favorite': self.favorite,
+                'uri' : encrypt(self.uri)
+        }
+
 
 
 class History(models.Model):
@@ -50,7 +74,6 @@ COLOR_CHOICES = (
     ('cyan', 'CYAN'),
     ('red','RED'),
     ('orange','ORANGE'),
-    ('black','BLACK'),
     ('violet','VIOLET'),
     ('pink','PINK'),
     ('yellow','YELLOW'),
