@@ -25,7 +25,9 @@
     <div class="flex flex-col md:flex-row w-full my-10">
 
         <sidebar class="flex flex-col flex-shrink items-center
-        bg-teal-50 border border-teal-400 rounded-tl-lg rounded-bl-lg">
+        bg-teal-50 border border-teal-400
+        rounded-t-lg md:rounded-tr-none
+        md:rounded-tl-lg md:rounded-bl-lg">
 
                 <p class="flex w-full justify-center font-bold mx-auto py-2
                  bg-teal-100 text-teal-900">Settings</p>
@@ -48,21 +50,25 @@
         </sidebar>
         <div class=" flex flex-col flex-grow
         justify-center items-center p-3
-        bg-teal-50 border border-teal-300 md:border-l-0 rounded-tr-lg rounded-br-lg">
+        bg-teal-50 border border-teal-300
+        border-t-0 md:border-t rounded-b-lg md:rounded-bl-none
+        md:border-l-0 md:rounded-tr-lg md:rounded-br-lg">
 
             <div class="flex flex-col items-center">
                 <p class="italic text-lg border-b border-teal-600">{{user.email}}</p>
                 <p class="text-small text-teal-600">Email</p>
             </div>
-            <div class="flex flex-col justify-center items-center  p-4 m-6 w-1/2
-             bg-teal-200 border-2 border-teal-300 rounded-lg">
+            <div class="flex flex-col justify-center items-center
+                        p-4 m-2 md:m-6 w-full md:w-1/2
+                    bg-teal-200 border-2 border-teal-300 rounded-lg">
                     <p>Number of logins:</p>
                     <p class="text-5xl ">{{user.num_logins}}</p>
             </div>
 
 
-            <div id="folder-section" class="flex flex-col justify-center items-center p-4 m-6 w-1/2
-             bg-teal-200 border-2 border-teal-300 rounded-lg">
+            <div id="folder-section" class="flex flex-col justify-center items-center
+                                            p-4 m-2 md:m-6 w-full md:w-1/2
+                                            bg-teal-200 border-2 border-teal-300 rounded-lg">
 
                 <div class="text-xl"><span>Folders: </span> <span class="font-bold">{{user.num_folders}} </span></div>
 

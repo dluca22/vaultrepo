@@ -6,14 +6,15 @@
 {% block body %}
 
 <div class="flex flex-col md:flex-row items-center md:items-start md:justify-around
- bg-white bg-opacity-90 w-full h-full
+ bg-white bg-opacity-90 w-full
 ">
     <div id="item_content" class="w-6/12 flex justify-center">
 
         <form id="login_form" action="{%url 'vault:login_content' item_id%}" method="post"
-            class="p-6 flex flex-col items-apart">
+            class="p-2 md:p-6 flex flex-col flex-col-reverse">
             {%csrf_token%}
-            {% include "vault/custom_form.html" %}
+
+            <div class=" scale-75 md:transform-none">{% include "vault/custom_form.html" %}</div>
             <input type="submit" name="add_login" value="Edit login" class="btn btn-teal mx-auto ">
 
         </form>

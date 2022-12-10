@@ -13,10 +13,11 @@
     </div>
 
     {%endif%}
+
+    <!-- if login favorite, yellow start on top-right of box -->
     {% if login.favorite %}
-    <div class="w-2 h-full rounded-xl overflow-hidden right-0 absolute p-0 -my-3
-    bg-yellow-400 opacity-70">
-    </div>
+
+    <div class="absolute right-1 top-0 text-4xl text-yellow-400">&#9733;</div>
 {%endif%}
 
     <div class="mx-auto">

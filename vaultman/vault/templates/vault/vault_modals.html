@@ -16,13 +16,19 @@
 
 
 <!-- new login modal -->
+<div id="new_login_modal" class="absolute hidden inset-0 bg-gray-600 bg-opacity-50 flex flex-col items-center justify-center ">
 
-<div id="new_login_modal" class="fixed hidden inset-0 bg-gray-600 bg-opacity-50 ">
-    <div class=" relative my-auto mx-auto p-5 shadow-lg rounded-2xl border-2 border-blue-500 bg-blue-50 ">
-        <header class="flex relative -top-5 justify-center
+    <div class=" relative p-2 md:p-5
+    scale-75 md:transform-none
+    shadow-lg rounded-2xl border-2 border-blue-500 bg-blue-50 ">
+
+        <header class="flex relative -top-2 md:-top-5 justify-center
          bg-blue-200  border-2 border-t-0 rounded-b-lg border-blue-500
-         text-blue-900 font-bold "> New Login</header>
-        <form id="login_form" action="{%url 'vault:add_new'%}" method="post" class="p-6 flex flex-col items-apart">
+         text-blue-900 font-bold ">
+            New Login
+        </header>
+
+        <form id="login_form" action="{%url 'vault:add_new'%}" method="post" class="p-6 flex flex-col">
             {%csrf_token%}
             {% include "vault/custom_form.html" %}
 
@@ -33,8 +39,6 @@
     </div>
 
 </div>
-
-
 <!-- new folder modal -->
 
 <div id="new_folder_modal" class="fixed hidden inset-0 bg-gray-600 bg-opacity-50 ">
@@ -43,7 +47,7 @@
          bg-violet-200  border-2 border-t-0 rounded-b-lg border-violet-500
          text-violet-900 font-bold "> New Folder</header>
         </header>
-        <form action="new_folder" method="post">
+        <form action="new_folder" method="post" class="flex">
             {%csrf_token%}
 
 
