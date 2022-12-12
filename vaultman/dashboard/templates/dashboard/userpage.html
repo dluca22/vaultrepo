@@ -57,7 +57,7 @@
         md:border-l-0 md:rounded-tr-lg md:rounded-br-lg">
 
             <div class="flex flex-col items-center">
-                <p class="italic text-lg border-b border-teal-600">{{user.email}}</p>
+                <p class="italic text-lg border-b border-teal-600 dark:text-white">{{user.email}}</p>
                 <p class="text-small text-teal-600">Email</p>
             </div>
             <div class="flex flex-col justify-center items-center
@@ -88,7 +88,7 @@
             <div class="self-end">
                 <span class="font-bold mr-2">Last access: </span>
                 <!-- django date & time template formatting (this example: "3rd, Dec 2022, 10:12 a.m." ) -->
-                <span class="border-b-2 border-teal-600 dark:text-teal-600">{{user.last_login |date:"jS, M Y, h:m a"}}</span>
+                <span class="border-b-2 border-teal-600 dark:text-teal-400">{{user.last_login |date:"jS, M Y, h:m a"}}</span>
             </div>
         </div>
     </div>

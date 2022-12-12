@@ -2,8 +2,6 @@
 
 document.addEventListener("DOMContentLoaded", function () {
   const url = new URL(document.URL);
-  const darkmode = document.querySelector('#darkmode_toggle')
-  darkmode.addEventListener("click", toggle_darkmode, false);
 
   //   on access if not autheticated, will be redirected to login page
   if (url.pathname == "/") {
@@ -23,6 +21,8 @@ document.addEventListener("DOMContentLoaded", function () {
     pwF.parentNode.append(toggle);
     toggle.addEventListener("click", toggle_visibility);
   });
+
+
 });
 
 // ============= JS TO HANDLE THE MAIN PAGE HTML & REQUESTS ===============================================
@@ -455,11 +455,6 @@ function create_popup(alert) {
 }
 // ===================================================================================
 
-function toggle_darkmode(){
-    const body = document.querySelector('body')
-    body.classList.contains("dark") ? body.classList.remove('dark') : body.classList.add('dark')
-}
-// ===================================================================================
 function getCookie(name) {
   let cookieValue = null;
   if (document.cookie && document.cookie !== "") {
