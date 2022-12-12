@@ -227,5 +227,6 @@ def delete_account(request):
             messages.success(request, "Account deleted.")
             return HttpResponseRedirect(reverse('dashboard:login'))
 
-        messages.error(request, "Not deleted. Form did not match.")
+        messages.error(request, "Not deleted.")
+        messages.error(request, "Form did not match.")
         return HttpResponseRedirect(reverse('dashboard:dashboard'))

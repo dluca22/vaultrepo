@@ -24,8 +24,10 @@ class Login(models.Model):
     def __str__(self):
         return self.title
     @property
-    def has_history(self):
+    def passw_history(self):
         return History.objects.filter(login=self)
+        
+
 
     @property
     def folderColor(self):
