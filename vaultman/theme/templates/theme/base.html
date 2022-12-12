@@ -17,7 +17,8 @@ overflow-x-hidden w-screen h-screen">
 
 
     <nav class="flex w-screen h-14 items-center justify-around
-    bg-teal-600  px-2 sm:px-4 py-2
+    bg-teal-600 dark:bg-gray-800 dark:text-white
+     px-2 sm:px-4 py-2
     w-min-screen
     ">
         <div class="flex w-3/12">
@@ -31,6 +32,7 @@ overflow-x-hidden w-screen h-screen">
             {%else%}
             <li class="mx-2"><a href="{%url 'dashboard:login'%}">Login</a></li>
             {%endif%}
+            <li id="darkmode_toggle" class="absolute right-6">T</li>
         </ul>
     </nav>
 
@@ -52,7 +54,7 @@ overflow-x-hidden w-screen h-screen">
 
     <!-- ------- -->
 
-    <div id="bg" class="bg-white h-full flex flex-col justify-between">
+    <div id="bg" class="bg-tile dark:bg-darktile h-full flex flex-col justify-between">
 
         <div class=" mt-8 mb-1 flex md:flex-row flex-col items-center md:items-start
     md:max-h-full w-screen ">
@@ -66,6 +68,23 @@ overflow-x-hidden w-screen h-screen">
 
     {% include "theme/footer.html" %}
 
+    <!-- problem in tailwind, needs initialization of some colors to work by template inhertance btn-{folder.color} -->
+    <div class="hidden">
+        <button class="btn btn-teal"></button>
+        <button class="btn btn-green"></button>
+        <button class="btn btn-emerald"></button>
+        <button class="btn btn-blue"></button>
+        <button class="btn btn-cyan"></button>
+        <button class="btn btn-red"></button>
+        <button class="btn btn-orange"></button>
+        <button class="btn btn-violet"></button>
+        <button class="btn btn-pink"></button>
+        <button class="btn btn-yellow"></button>
+        <div class="bg-red-500"></div>
+        <div class="green-popup"></div>
+        <div class="red-popup"></div>
+        <div class="bg-blue-600"></div>
+    </div>
 
 </body>
 

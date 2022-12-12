@@ -7,41 +7,62 @@
 /* extend also for breakpoint https://www.youtube.com/watch?v=Nez7G5sQz0k  */
 @layer components {
     /* custom buttons classes */
+    /* general button in dark mode has border-4 and offsets border with negative margin 1 */
     .btn {
-        @apply py-2 px-4 font-bold tracking-wide rounded shadow-sm text-white
+        @apply py-1 px-4 font-bold tracking-wide rounded-lg shadow-sm text-white bg-black
+        dark:bg-transparent dark:border-4 dark:hover:opacity-50 ;
     }
     .btn-teal {
-        @apply bg-teal-500 hover:text-teal-800;
-    }
-    .btn-blue {
-        @apply bg-blue-500 hover:bg-blue-700;
+        @apply bg-teal-500 hover:bg-teal-800 dark:text-teal-500 dark:border-teal-500 ;
     }
     .btn-green {
-        @apply bg-green-500 hover:bg-green-700;
+        @apply bg-green-500 hover:bg-green-700 dark:text-green-500 dark:border-green-500 ;
     }
-    .btn-yellow {
-        @apply bg-yellow-500 hover:bg-yellow-700;
+    .btn-emerald {
+        @apply bg-emerald-500 hover:bg-emerald-700 dark:text-emerald-500 dark:border-emerald-500 ;
     }
-    .btn-orange {
-        @apply bg-orange-500 hover:bg-orange-700;
+    .btn-blue {
+        @apply bg-blue-500 hover:bg-blue-700 dark:text-blue-500 dark:border-blue-500 ;
+    }
+    .btn-cyan {
+        @apply bg-blue-500 hover:bg-blue-700 dark:text-cyan-500 dark:border-cyan-500 ;
     }
     .btn-red {
-        @apply bg-red-500 hover:bg-red-700;
+        @apply bg-red-500 hover:bg-red-700 dark:text-red-500 dark:border-red-500 ;
+    }
+    .btn-pink {
+        @apply bg-red-500 hover:bg-red-700 dark:text-pink-500 dark:border-pink-500 ;
+    }
+    .btn-yellow {
+        @apply bg-yellow-500 hover:bg-yellow-700 dark:text-yellow-500 dark:border-yellow-500 ;
+    }
+    .btn-orange {
+        @apply bg-orange-500 hover:bg-orange-700 dark:text-orange-500 dark:border-orange-500 ;
     }
     .btn-gray {
-        @apply bg-gray-500 hover:bg-gray-700;
+        @apply bg-gray-500 hover:bg-gray-700 dark:text-gray-400 dark:border-gray-400 ;
     }
     .btn-violet {
-        @apply bg-violet-500 hover:bg-violet-700;
+        @apply bg-violet-500 hover:bg-violet-700 dark:text-violet-500 dark:border-violet-500 ;
     }
 
     /* style for login boxes */
     .login_box {
         @apply  relative flex flex-col
         my-2 mx-5 rounded-md p-3  w-80
-        border border-teal-600 hover:bg-gray-500 hover:bg-opacity-75
+        border-2 border-teal-600 hover:bg-gray-500 hover:bg-opacity-75
+        dark:bg-neutral-700
+
         hover:cursor-pointer;
     }
+    .green-popup{
+        @apply text-green-600 border-green-500 bg-green-100;
+    }
+    .red-popup{
+        @apply text-red-500 border-red-500 bg-red-100
+    }
+
+
     /* all form inputs have font teal */
     input[type="text"], input[type="password"], textarea, option, select{
         @apply text-teal-700;
@@ -50,7 +71,7 @@
 }
 
 @layer base{
-    
+
 
     }
 

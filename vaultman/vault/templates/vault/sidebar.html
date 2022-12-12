@@ -1,10 +1,13 @@
 {% load static %}
 
-<div class="h-1/4 flex flex-col justify-around py-4 px-3 bg-gray-50 rounded ">
+<div class="h-1/4 flex flex-col justify-around py-4 px-3 rounded-lg
+bg-gray-50
+dark:bg-neutral-800 dark:border-4 dark:border-teal-700">
 
     <div class="rounded-t-md
-    border-b border-gray-400 bg-gray-200
-    text-gray-700 font-bold
+    border-b font-bold
+    border-gray-400 bg-gray-200 text-gray-700
+    dark:bg-gray-600 dark:text-gray-50 dark:border-0
     mb-4 flex justify-center ">Filters :
         <span id="dropdown" class="mx-2 md:hidden">&#9662;</span>
     </div>
@@ -12,28 +15,28 @@
     <div id="filters" class="hidden md:block">
 
         <form action="{%url 'vault:index'%}" id="search_form">
-            <input type="search" class="flex rounded-lg w-full" name="q" id="search_text"
-                placeholder="&#128269 Search...">
+            <input type="search"  name="q" id="search_text"
+                placeholder="&#128269 Search..."
+                class="flex rounded-lg w-full dark:bg-transparent dark:text-white">
         </form>
 
         <div class="flex justify-around my-6">
 
             <a href="{%url 'vault:index'%}" class="btn btn-blue">All</a>
-            <a href="{%url 'vault:index'%}?filter=fav" class="btn btn-yellow">Favorites</a>
+            <a href="{%url 'vault:index'%}?filter=fav" class="btn btn-yellow dark:bg-transparent dark:border-4 dark:border-yellow-500 dark:text-yellow-500">Favorites</a>
         </div>
         <div class="flex justify-around">
             <span class="font-bold">Folders</span>
             <button id="new_folder" class="btn btn-green p-1 py-0">+</button>
         </div>
         {% if folders %}
-
             <!-- list of folders -->
             <ul id="folders" class="flex flex-col gap-2">
                 {% for folder in folders%}
                 <!-- every li has link to query for filtering items + Edit button and Delete button -->
                 <li class="font-bold p-1 flex justify-between">
                     <a href="{% url 'vault:index'%}?folder={{folder}}"
-                        class="btn bg-{{folder.color}}-600 text- p-1 rounded-lg">{{folder}}</a>
+                        class="btn btn-{{folder.color}} p-1 rounded-lg">{{folder}}</a>
                         <!-- bg colors for folders are teal, green, emerald, blue, cyan, red, orange, violet, pink, yellow -->
 
                     <span class="edit-folder" data-folder="{{folder.id}}">
@@ -49,6 +52,7 @@
                 {%endfor%}
             </ul>
 
+           
         {%endif%}
         <ul class="flex">
             <li class="font-bold mx-auto mt-5">
