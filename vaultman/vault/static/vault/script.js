@@ -186,9 +186,7 @@ function view_login(event) {
 function copy_password(e) {
   e.stopPropagation();
 
-  const pin_modal = document.querySelector("#pin_modal");
-  const pin_form = pin_modal.querySelector("form");
-  const pin_input = pin_form.querySelector("#pin_input");
+
   const id = this.getAttribute("id");
 
   // from HTML data-protection attribute
@@ -200,8 +198,10 @@ function copy_password(e) {
   }
   // STOP TEMPOARANEO  ===================================================================================
   else if (status == "locked") {
-    // TEMP paused, set all to NO PROTECT, adding function later (callback hell, one )
-    // le variables sono in modals.html
+    const pin_modal = document.querySelector("#pin_modal");
+    const pin_form = pin_modal.querySelector("form");
+    const pin_input = pin_form.querySelector("#pin_input");
+
     pin_modal.style.display = "grid";
     pin_modal.addEventListener("click", close_reset_modal, false);
     pin_form.addEventListener("submit", (e) => {
@@ -211,7 +211,7 @@ function copy_password(e) {
       console.log(pin);
       pin_modal.style.display = "none";
       fetch_password(id, pin);
-    });
+    }, { once: true });
   }
   // STOP TEMPOARANEO  ===================================================================================
 }
