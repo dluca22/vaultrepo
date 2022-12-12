@@ -2,6 +2,9 @@
 
 document.addEventListener("DOMContentLoaded", function () {
   const url = new URL(document.URL);
+  const darkmode = document.querySelector('#darkmode_toggle')
+  darkmode.addEventListener("click", toggle_darkmode, false);
+  toggle_darkmode()
 
   //   on access if not autheticated, will be redirected to login page
   if (url.pathname == "/") {
@@ -441,7 +444,7 @@ function create_popup(alert) {
   );
   console.log(alert);
   if (alert === "success") {
-    popup.classList.add("text-green-600", "border-green-600", "bg-green-100");
+    popup.classList.add("text-green-600", "border-green-500", "bg-green-100");
   } else if (alert === "error") {
     popup.classList.add("text-red-500", "border-red-500", "bg-red-100");
   }
@@ -450,6 +453,12 @@ function create_popup(alert) {
   }, 5000);
 
   return popup;
+}
+// ===================================================================================
+
+function toggle_darkmode(){
+    const body = document.querySelector('body')
+    body.classList.contains("dark") ? body.classList.remove('dark') : body.classList.add('dark')
 }
 // ===================================================================================
 function getCookie(name) {
