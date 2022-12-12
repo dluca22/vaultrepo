@@ -55,7 +55,7 @@
                         <div class="bg-green-200 bg-opacity-50 flex p-2 border border-green-600 rounded-lg">
                             <img id="generate_password" src="{% static 'icons/random.svg' %}" alt="randomize"
                                 class=" w-8 h-8 bg-green-500 rounded-full m-1">
-                            <input class="rounded-lg text-right border-green-600 p-0 w-12" type="number"
+                            <input class="rounded-lg text-center border-green-600 p-0 w-12" type="number"
                                 placeholder="size" step="1" min="3" max="24" id="size" />
                         </div>
 
@@ -79,7 +79,7 @@
             </div>
             <div class="flex items gap-4 ">
 
-                <div class="flex flex-col">
+                <div class="flex flex-col mb-1">
                     <p class="italic ml-2 font-bold">Notes:</p>
                     {{form.note}}
                 </div>
