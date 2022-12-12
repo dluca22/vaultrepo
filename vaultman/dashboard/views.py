@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.contrib.auth import authenticate, login, logout
-from django.http import HttpResponseRedirect, JsonResponse
+from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
 from django.contrib import messages
 
@@ -11,6 +12,7 @@ from vault.encrypt_util import encrypt, decrypt
 from .models import User
 # from .forms import User
 
+@login_required(login_url=reverse_lazy('dashboard:login'), redirect_field_name=None)
 def dashboard(request):
     """index file for the dashboard, display all user's stats and user settings like pin, email change, password change"""
 

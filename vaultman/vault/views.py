@@ -125,6 +125,7 @@ def get_password(request, id):
 
 # ===================================================
 
+@requires_csrf_token
 def login_content(request, id):
     """GET request shows the Item content in a form, POST request edits the element
     both check wether the Item exists and the user is the owner
