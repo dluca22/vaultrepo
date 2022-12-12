@@ -248,7 +248,6 @@ function login_content_page() {
   const delete_item = document.querySelector("#delete_item");
   const generate_username = document.querySelector("#generate_username");
   const generate_password = document.querySelector("#generate_password");
-  const pw_visibility_toggle = document.querySelector("#see_password_toggle");
 
   // fetch request to external api that generates random person, then getting the login.username field from the request
   generate_username.addEventListener("click", random_username);
@@ -314,6 +313,22 @@ function login_content_page() {
       });
     });
   }
+
+// appends arrow to uri field, arrow.onclick opens URI in the uri_field
+  const uri_field = document.querySelector('input[name="uri"]')
+  const toggle = document.createElement('span')
+// LATER   arrow as HTML code change to icon
+  toggle.innerHTML = "&#10551;"
+//   tailwind classes
+  toggle.classList.add('text-3xl', "font-bold", "text-white", "bg-red-500", "rounded-full", "px-2")
+  uri_field.parentElement.append(toggle)
+  toggle.addEventListener('click', () =>{
+    // check if starts with https else appends to it and open in another blank window
+    const page = uri_field.value.includes('https://') ? uri_field.value : "https://" + uri_field.value
+    window.open(page, "_blank");
+
+  })
+
 }
 
 // =========== HELPER FUNCTIONS ================================
