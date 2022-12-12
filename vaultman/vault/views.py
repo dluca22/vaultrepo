@@ -161,6 +161,7 @@ def login_content(request, id):
     elif request.method == "POST":
         """ edit request, if password changed, stores the old password in History table """
         old_password = login.password
+        old_password_clear = decrypt(old_password)
         edit_form = LoginForm(request.POST, instance=login, user=request.user)
 
         if edit_form.is_valid():
@@ -169,10 +170,9 @@ def login_content(request, id):
 
             new_pw = edit_form.instance.password
             #
-            if new_pw:
-                if decrypt(old_password) != new_pw and old_password:
-                    # if cleartext old password is not equal to the new password, store login.password(not decrypted) in the history model
-                    History.objects.create(old_passw=old_password, login=login)
+            if old_password_clear != new_pw and old_password_clear != "" :
+                # if cleartext old password is not equal to the new password, store login.password(not decrypted) in the history model
+                History.objects.create(old_passw=old_password, login=login)
 
             edit_form.instance.password = encrypt(edit_form.instance.password)
             uri = format_uri(edit_form.instance.uri)
