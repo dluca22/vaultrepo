@@ -7,6 +7,9 @@ from django.conf import settings
 
 
 def encrypt(field):
+    if not field:
+        field = ""
+
     try:
         field = str(field)
         cipher_field = Fernet(settings.ENCRYPT_KEY)

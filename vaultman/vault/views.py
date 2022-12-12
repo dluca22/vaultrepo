@@ -13,10 +13,11 @@ from .models import Login, History ,Folder
 from dashboard.models import User
 from .forms import LoginForm, FolderForm
 
-from .utils import password_generator
+from .utils import password_generator, format_uri
 from .encrypt_util import encrypt, decrypt
 
 
+# ===================================================
 
 @login_required(login_url=reverse_lazy('dashboard:login'), redirect_field_name=None)
 def index(request):
@@ -59,6 +60,10 @@ def index(request):
                 #  return index page with context
     return render(request, 'vault/index.html', context=context)
 
+
+# ===================================================
+
+
 def add_new(request):
     """add <str:type> per aggiungere sia login che note"""
     if request.method == "POST":
@@ -67,15 +72,14 @@ def add_new(request):
 
         if login_form.is_valid():
             # get uri field from form
-            uri = login_form.instance.uri
-            prefix = "https://"
-            # if uri is not none check if has prefix, else add it, then encrypt and add it to the login.instance
-            if uri:
-                if not prefix in uri:
-                    uri = prefix + uri
-                login_form.instance.uri = encrypt(uri)
+            uri = format_uri(login_form.instance.uri)
+            login_form.instance.uri = encrypt(uri)
+
 
             # encrypt also password and note then save
+            # if field is "None", encrypt empty space ""
+            passw = login_form.instance.password
+            note = login_form.instance.note
             login_form.instance.password = encrypt(login_form.instance.password)
             login_form.instance.note = encrypt(login_form.instance.note)
 
@@ -88,6 +92,8 @@ def add_new(request):
     else:
         return HttpResponseRedirect(reverse('vault:index'))
 
+# ===================================================
+
 # or @csrf_protect (cambia behavior on rejection)
 @requires_csrf_token
 def get_password(request, id):
@@ -97,12 +103,12 @@ def get_password(request, id):
     pin = json.loads(request.body)
     # TODO convert to @property so that it can be decrypted from models.py
     user_pin = decrypt(request.user.pin)
-
+    print("call")
     # try if login is existing
     try:
         login = Login.objects.get(id=id)
     except:
-        return JsonResponse({"denied":"Failed request", "message":"This item doesn't exist!"})
+        return JsonResponse({"denied":"Failed request", "message":"This item does not exist!"})
 
     if request.user != login.owner:
         return JsonResponse({"denied":"unauthorized", "message":"You are not the owner"})
@@ -110,34 +116,67 @@ def get_password(request, id):
 
 
     # if login is protected and pin wasn't provided (may change and just compare if pin is equal to User.pin)
-    if login.protected and not pin:
-        return JsonResponse({"denied":"unauthorized", "message":"PIN required for this element"})
-    elif login.protected and pin != user_pin:
+    if login.protected and pin != user_pin:
         return JsonResponse({"denied":"unauthorized", "message":"Incorrect PIN"})
     else:
 
         password = decrypt(login.password)
         return JsonResponse({"success": "successful request", "content": password})
 
+# ===================================================
 
 def login_content(request, id):
-    """change id to hex"""
-    login = Login.objects.get(id=id)
-    # decrypt old password to compare for changes
-    old_password = login.password
+    """GET request shows the Item content in a form, POST request edits the element
+    both check wether the Item exists and the user is the owner
+    """
+    # TODO change id to hex
 
-    if request.method == "POST":
+    try:
+        login = Login.objects.get(id=id, owner=request.user)
+    except:
+        messages.error(request, "Unauthorized: You are not the owner", fail_silently=True)
+        return HttpResponseRedirect(reverse('vault:index'))
+
+    if request.method == "GET":
+        # decrypt the fields before running instances of login (uses _meta attribute to compile form)
+        # login = login.decrypted (this property does not work, does not return a model instance but a dictionary)
+        login.password = decrypt(login.password)
+        login.uri = decrypt(login.uri)
+        login.note = decrypt(login.note)
+
+        # 'user' **kwargs is used to return the folder instance beloging to the user
+        edit_form = LoginForm(instance=login, user=request.user)
+
+        context = {
+            'title': login.title,
+            'item_id': id,
+            'form':edit_form,
+            'history': [decrypt(str(old_pw)) for old_pw in login.passw_history]
+
+        }
+        return render(request, 'vault/login_content.html', context=context)
+
+    # decrypt old password to compare for changes
+
+    elif request.method == "POST":
+        """ edit request, if password changed, stores the old password in History table """
+        old_password = login.password
         edit_form = LoginForm(request.POST, instance=login, user=request.user)
 
         if edit_form.is_valid():
 
-            # only save NOT null passwords to history
-            if decrypt(old_password) != edit_form.instance.password and old_password != None:
-                # if cleartext old password is not equal to the new password, store login.password(not decrypted) in the history model
-                History.objects.create(old_passw=old_password, login=login)
+            # Check if new password is different from old password, and is NOT null, then stores old_passw in History table
+
+            new_pw = edit_form.instance.password
+            #
+            if new_pw:
+                if decrypt(old_password) != new_pw and old_password:
+                    # if cleartext old password is not equal to the new password, store login.password(not decrypted) in the history model
+                    History.objects.create(old_passw=old_password, login=login)
 
             edit_form.instance.password = encrypt(edit_form.instance.password)
-            edit_form.instance.uri = encrypt(edit_form.instance.uri)
+            uri = format_uri(edit_form.instance.uri)
+            edit_form.instance.uri = encrypt(uri)
             edit_form.instance.note = encrypt(edit_form.instance.note)
             edit_form.save()
 
@@ -148,26 +187,9 @@ def login_content(request, id):
             messages.error(request, 'Invalid form', fail_silently=True)
             return HttpResponseRedirect(reverse('vault:login_content', args=[id]))
 
-    elif request.method == "GET":
-        # decrypt the fields before running instances of login (uses _meta attribute to compile form)
-        # login = login.decrypted (this property does not work, does not return a model instance but a dictionary)
-        login.password = decrypt(login.password)
-        login.uri = decrypt(login.uri)
-        login.note = decrypt(login.note)
 
-        # 'user' **kwargs is used to return the folder instance beloging to the user
-        edit_form = LoginForm(instance=login, user=request.user)
+# ===================================================
 
-
-    context = {
-        'title': login.title,
-        'item_id': id,
-        'form':edit_form,
-        'history': login.has_history
-
-    }
-
-    return render(request, 'vault/login_content.html', context=context)
 
 def generate_password(request, size):
     try:
@@ -185,7 +207,7 @@ def delete(request,id):
         try:
             login = Login.objects.get(id=id)
         except:
-            return JsonResponse({"denied":'Failed request', "message":"This item doesn't exist!"})
+            return JsonResponse({"denied":'Failed request', "message":"This item does not exist!"})
 
 
         if login.owner == request.user:
@@ -209,6 +231,8 @@ def new_folder(request):
         messages.success(request, "Folder created", fail_silently=True)
         return HttpResponseRedirect(reverse('vault:index'))
 
+# ===================================================
+
 
 def edit_folder(request, id):
     """from async request GET method returns values of folder if present
@@ -220,7 +244,7 @@ def edit_folder(request, id):
     try:
         folder = Folder.objects.get(id=id)
     except:
-        return JsonResponse({"denied": "request denied", "message":"Folder doesn't exist"})
+        return JsonResponse({"denied": "request denied", "message":"Folder does not exist"})
 
     if folder.owner != request.user:
         return JsonResponse({"denied":"request denied", "message":"You are not the owner!"})
