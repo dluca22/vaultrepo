@@ -9,6 +9,7 @@ from .encrypt_util import encrypt, decrypt
 
 
 class Login(models.Model):
+    """ Login model only required field is title, field encryption is managed in backend"""
     id = models.BigAutoField(primary_key=True)
     title = models.CharField(max_length=80)
     username = models.CharField(max_length=80, null=True, blank=True)
@@ -23,42 +24,18 @@ class Login(models.Model):
 
     def __str__(self):
         return self.title
+
     @property
     def passw_history(self):
         return History.objects.filter(login=self)
-        
-
 
     @property
     def folderColor(self):
         return self.folder.color
 
-    @property
-    def decrypted(self):
-        return { 'title': self.title,
-                'username': self.username,
-                'password': decrypt(self.password),
-                'note': decrypt(self.note),
-                'folder': self.folder,
-                'protected': self.protected,
-                'favorite': self.favorite,
-                'uri' : decrypt(self.uri)
-        }
-    @property
-    def encrypted(self):
-        return { 'title': self.title,
-                'username': self.username,
-                'password': encrypt(self.password),
-                'note': encrypt(self.note),
-                'folder': self.folder,
-                'protected': self.protected,
-                'favorite': self.favorite,
-                'uri' : encrypt(self.uri)
-        }
-
-
 
 class History(models.Model):
+    """ Stores former Login password fields when updated by user """
     id = models.BigAutoField(primary_key=True)
     old_passw = models.CharField(max_length=80)
     login = models.ForeignKey(Login, on_delete=models.CASCADE, related_name="previous_password")
@@ -67,7 +44,7 @@ class History(models.Model):
     def __str__(self):
         return self.old_passw
 
-
+# fixed set of colors accents for Folders
 COLOR_CHOICES = (
     ('teal','TEAL'),
     ('green','GREEN'),
@@ -82,6 +59,7 @@ COLOR_CHOICES = (
 )
 
 class Folder(models.Model):
+    """ Folder to organize Logins/Items, default color is cyan, user has 10 color choices"""
     id = models.BigAutoField(primary_key=True)
     name = models.CharField(max_length=32, blank=False, null=False)
     color = models.CharField(max_length=8,choices=COLOR_CHOICES, default='cyan')

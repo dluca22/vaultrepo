@@ -5,8 +5,8 @@
 
 {% block body %}
 
-<div class="flex flex-col w-full px-8">
-    <div class="flex justify-center items-center">
+<div class="flex flex-col w-screen md:w-full px-8 scrollable overflow-y-auto h-4/5">
+    <div class="flex justify-center items-center ">
         <p class="text-4xl text-teal-500">Hello: <span class="text-teal-700">{{request.user |capfirst}}</span></p>
     </div>
 

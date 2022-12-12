@@ -18,14 +18,14 @@ overflow-x-hidden w-screen h-screen">
 
 
     <nav class="flex w-screen h-14 items-center justify-around
-    bg-teal-600 dark:bg-gray-800 dark:text-white
+    bg-teal-600 dark:bg-neutral-800 dark:text-white
      px-2 sm:px-4 py-2
     w-min-screen
     ">
         <div class="flex w-3/12">
-            <h2 class="text-3xl font-bold "><a href="{%url 'vault:index'%}">Key vault</a></h2>
+            <h2 class=" text-xl md:text-3xl font-bold "><a href="{%url 'vault:index'%}">Key vault</a></h2>
         </div>
-        <ul class="flex  w-5/12 justify-end">
+        <ul class="flex  w-5/12 justify-end items-center">
             {% if user.is_authenticated %}
             <li class="mx-2 font-bold hover:underline hover:text-white"><a
                     href="{%url 'dashboard:dashboard'%}">{{request.user | capfirst}}</a></li>
@@ -33,7 +33,7 @@ overflow-x-hidden w-screen h-screen">
             {%else%}
             <li class="mx-2"><a href="{%url 'dashboard:login'%}">Login</a></li>
             {%endif%}
-            <li id="darkmode_toggle" onclick="toggleTheme()" class="absolute right-5 top-1.5 text-yellow-200
+            <li id="darkmode_toggle" onclick="toggleTheme()" class="md:absolute right-5 top-1.5 text-yellow-200
             bg-gray-800 dark:bg-teal-600
             border-0 rounded-lg p-2 px-3
             ">
@@ -52,7 +52,7 @@ overflow-x-hidden w-screen h-screen">
     <!-- ------- -->
     <!--box containing messages handled via Js absolute position top right Z-index above all-->
     <!-- django messages also trigger the Js custom function  -->
-    <div id="message-box" class="absolute grid right-1 w-56 md:gap-2 mt-16 z-20
+    <div id="message-box" class="absolute grid right-1 w-56 md:gap-2 mt-16 z-30
     font-semibold text-lg ">
 
         {% if messages %}

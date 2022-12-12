@@ -1,12 +1,12 @@
 {% load static %}
 
+<!-- LATER might add this forms ad ModelForms -->
+
+<!-- change "hidden" to "grid" in modal wrapper to keep displaying it during UI editing/testing -->
 
 <!-- template for the form to update PIN (linked to #update_pin button only showing if a PIN is already set) -->
+<div id="pin_update_modal" class="fixed hidden z-20 inset-0 bg-gray-700 bg-opacity-50">
 
-<!-- overlay wrapper -->
-<div id="pin_update_modal" class="fixed hidden z-10 inset-0 bg-gray-700 bg-opacity-50">
-
-    <!-- form div -->
     <div id="pin_update_form" class="relative my-auto mx-auto p-8
      rounded-lg bg-yellow-100 bg-opacity-90 shadow-2xl
     text-yellow-800 font-bold">
@@ -37,11 +37,9 @@
 </div>
 
 
-<!-- template for the form to SET PIN () -->
-<!-- overlay wrapper -->
-<div id="pin_set_modal" class="fixed hidden z-10 inset-0 bg-gray-600 bg-opacity-50">
+<!-- template for the form to SET PIN if user hasn't yet -->
+<div id="pin_set_modal" class="fixed hidden z-20 inset-0 bg-gray-600 bg-opacity-50">
 
-    <!-- form div -->
     <div id="pin_set_form" class="relative my-auto mx-auto p-8
     rounded-lg bg-yellow-200 bg-opacity-90 shadow-2xl
     text-yellow-800 font-bold">
@@ -57,7 +55,7 @@
 </div>
 
 <!-- template for the form to change password -->
-<div id="change_masterPassword_modal" class="fixed hidden z-10 inset-0 bg-gray-600 bg-opacity-50">
+<div id="change_masterPassword_modal" class="fixed hidden z-20 inset-0 bg-gray-600 bg-opacity-50">
     <div id="delete_form" class="relative my-auto mx-auto p-4
     rounded-lg bg-violet-200 bg-opacity-90 shadow-2xl
     text-violet-800 font-bold
@@ -93,7 +91,7 @@
 
 <!-- template for the form to change email -->
 
-<div id="change_email_modal" class="fixed hidden z-10 inset-0 bg-gray-600 bg-opacity-50">
+<div id="change_email_modal" class="fixed hidden z-20 inset-0 bg-gray-600 bg-opacity-50">
     <div id="delete_form" class="relative my-auto mx-auto p-4
     rounded-lg bg-green-200 bg-opacity-90 shadow-2xl
     text-green-800 font-bold
@@ -115,7 +113,7 @@
 </div>
 
 <!-- template for the form to DELETE account -->
-<div id="delete_account_modal" class="fixed hidden z-10 inset-0 bg-gray-600 bg-opacity-50">
+<div id="delete_account_modal" class="fixed hidden z-20 inset-0 bg-gray-600 bg-opacity-50">
     <div id="delete_form" class="relative my-auto md:mx-auto p-4
     rounded-lg bg-red-300 bg-opacity-90 shadow-2xl
     text-red-800 font-bold
