@@ -1,6 +1,7 @@
 // ====== LISTENS ON DOM CONTENT LOADED AND BASED ON THE URL TRIGGERS DIFFERENT FUNCTIONS ===
 
 document.addEventListener("DOMContentLoaded", function () {
+    
   const url = new URL(document.URL);
 
   //   on access if not autheticated, will be redirected to login page
@@ -65,7 +66,6 @@ function vault_page() {
     // get 3 function buttons for form fields
     const generate_username = document.querySelector("#generate_username");
     const generate_password = document.querySelector("#generate_password");
-    const pw_visibility_toggle = document.querySelector("#see_password_toggle");
     generate_username.addEventListener("click", random_username);
     generate_password.addEventListener(
       "click",
@@ -79,8 +79,8 @@ function vault_page() {
   //   const search_form = document.querySelector('#search_form')
   //   search_form.addEventListener('enter')
 
-  //   event listener on "+ Folder"
 
+  //   event listener on "+ Folder"
   const new_folder = document.querySelector("#new_folder");
   const folder_modal = document.querySelector("#new_folder_modal");
   new_folder.addEventListener("click", () => {
@@ -128,7 +128,7 @@ function vault_page() {
     // click outside modal triggers close
     editFolder_modal.addEventListener("click", close_modal);
 
-    edit_btn.addEventListener("click", (e) => {
+    edit_btn.addEventListener("click", () => {
       // fetch request to PUT EDIT
       //not preventdefault so it refreshes
 
@@ -151,7 +151,7 @@ function vault_page() {
         });
     });
 
-    delete_btn.addEventListener("click", (e) => {
+    delete_btn.addEventListener("click", () => {
       // fetch request to DELETE
       //not preventdefault so it refreshes
 
@@ -176,7 +176,7 @@ function vault_page() {
 }
 
 function view_login(event) {
-  id = event.currentTarget.getAttribute("id");
+  const id = event.currentTarget.getAttribute("id");
   //   TODO add PIN unlock
 
   const url = `login/${id}`;
@@ -317,19 +317,19 @@ function login_content_page() {
   }
 
 // appends arrow to uri field, arrow.onclick opens URI in the uri_field
-  const uri_field = document.querySelector('input[name="uri"]')
-  const toggle = document.createElement('span')
+  const uri_field = document.querySelector('input[name="uri"]');
+  const toggle = document.createElement('span');
 // LATER   arrow as HTML code change to icon
-  toggle.innerHTML = "&#10551;"
+  toggle.innerHTML = "&#10551;";
 //   tailwind classes
-  toggle.classList.add('text-3xl', "font-bold", "text-white", "bg-red-500", "rounded-full", "px-2")
-  uri_field.parentElement.append(toggle)
+  toggle.classList.add('text-3xl', "font-bold", "text-white", "bg-red-500", "rounded-full", "px-2");
+  uri_field.parentElement.append(toggle);
   toggle.addEventListener('click', () =>{
     // check if starts with https else appends to it and open in another blank window
-    const page = uri_field.value.includes('https://') ? uri_field.value : "https://" + uri_field.value
+    const page = uri_field.value.includes('https://') ? uri_field.value : "https://" + uri_field.value;
     window.open(page, "_blank");
 
-  })
+  });
 
 }
 
@@ -388,7 +388,7 @@ function random_password() {
 // ===================================================================================
 // toggle password field visibility
 
-function toggle_visibility(e) {
+function toggle_visibility() {
   const pw_input = this.parentNode.querySelector("input");
   if (pw_input.getAttribute("type") == "password") {
     pw_input.setAttribute("type", "text");
@@ -403,28 +403,11 @@ function toggle_visibility(e) {
 // flash custom message in the message-box
 function flash_message(message, alert) {
   const msgDiv = document.querySelector("#message-box");
-  // msgDiv.classList.remove("hidden");
 
   const popup = create_popup(alert);
   popup.innerText = message;
   msgDiv.append(popup);
-
-  // setTimeout(function() {
-  // msgDiv.firstChild.remove()
-  // }, 5000);
 }
-// ===================================================================================
-// hide message box
-// function timeout_message(){
-//     const msgDiv = document.querySelector('#message-box')
-//     if( ! msgDiv.classList.contains('hidden')){
-//         setTimeout(function(){
-//             msgDiv.classList.add("hidden");
-//         }, 5000)
-//     }
-
-// }
-
 // ===================================================================================
 
 function create_popup(alert) {

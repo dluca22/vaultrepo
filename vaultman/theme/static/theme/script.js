@@ -9,6 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
       setDark();
       break;
   }
+  document.querySelector('#darkmode_toggle').addEventListener('click', toggleTheme, false);
 });
 // ===================================================================================
 
