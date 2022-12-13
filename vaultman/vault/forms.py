@@ -8,12 +8,12 @@ class LoginForm(ModelForm):
         model= Login
         fields = ('title', 'username', 'password', 'note', 'folder', 'protected', 'favorite', 'uri',)
         widgets = {
-            'title': TextInput(attrs={"class":"rounded-lg "}),
-            'username': TextInput(attrs={"class":"rounded-lg "}),
-            'password': PasswordInput(render_value=True, attrs={"class":"rounded-lg border-2"}),
-            'note': Textarea(attrs={'rows':6, 'placeholder':"Add notes here...", 'class':'rounded-lg border-2 '}),
-            'uri': TextInput(attrs={'placeholder': "url...", "class":"rounded-lg border-2 "}),
-            'folder': Select(attrs={"class":"rounded-lg border-2 "})
+            'title': TextInput(attrs={"class":" "}),
+            'username': TextInput(attrs={"class":" "}),
+            'password': PasswordInput(render_value=True, attrs={"class":" border-2"}),
+            'note': Textarea(attrs={'rows':6, 'placeholder':"Add notes here...", 'class':' border-2 '}),
+            'uri': TextInput(attrs={'placeholder': "url...", "class":" border-2 "}),
+            'folder': Select(attrs={"class":" border-2 "})
         }
 
     # initialize Form model, pass argument (user=request.user)
@@ -26,14 +26,14 @@ class LoginForm(ModelForm):
         self.fields['folder'].initial = 'None'
         self.fields['folder'].queryset = Folder.objects.filter(owner=user)
 
-    
+
 
 class FolderForm(ModelForm):
     class Meta:
         model = Folder
         fields = ('name', 'color',)
         widgets = {
-            'name': TextInput(attrs={'placeholder':"Folder Name...", 'class':'rounded-lg border-2 border-violet-500'}),
+            'name': TextInput(attrs={'placeholder':"Folder Name...", 'class':' border-2 border-violet-500'}),
             'color': Select(attrs={'class':'flex rounded-xl mx-2 p-1 text-black'})
         }
         labels = {

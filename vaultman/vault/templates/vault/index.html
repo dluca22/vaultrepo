@@ -4,7 +4,7 @@
 
 {% block body %}
 
-<sidebar class=" w-10/12 md:w-64 h-max-screen flex-shrink-0 m-9
+<sidebar class=" flex flex-col w-10/12 md:w-64 h-max-screen md:flex-shrink-0 md:m-9
 justify-around
 " aria-label="Sidebar">
 
@@ -20,7 +20,7 @@ flex-grow-1 items-center">
     <!-- div for the col containing the item boxes -->
     <div class="scrollable vault-content
 
-    overflow-y-auto h-2/5 overflow-x-hidden
+    overflow-y-auto h-4/5 overflow-x-hidden
     flex flex-col items-center md:w-8/12">
         {% for login in logins %}
         {% include "vault/login_box.html" %}

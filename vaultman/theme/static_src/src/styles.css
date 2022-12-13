@@ -64,10 +64,12 @@
 
 
     /* all form inputs have font teal */
-    input[type="text"], input[type="password"], textarea, option, select{
-        @apply text-teal-700;
+    input[type="text"], input[type="email"], input[type="password"], textarea, option, select{
+        @apply text-teal-700 dark:bg-transparent dark:text-neutral-500 flex rounded-lg ;
     }
-
+    option{
+        @apply dark:bg-neutral-700
+    }
 }
 
 @layer base{

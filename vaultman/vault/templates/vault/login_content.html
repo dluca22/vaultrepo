@@ -6,7 +6,7 @@
 {% block body %}
 
 <div class="flex flex-col md:flex-row items-center md:items-start md:justify-around
- bg-white bg-opacity-90 w-full">
+ bg-white dark:bg-neutral-800 bg-opacity-90 w-full mx-5 rounded-lg">
     <div id="item_content" class="w-6/12 flex justify-center">
 
         <form id="login_form" action="{%url 'vault:login_content' item_id%}" method="post"
@@ -24,25 +24,24 @@
     <!-- side bar -->
 
     <div id="settings" class="w-72">
-        <h3 class="text-lg font-bold bg-teal-600 bg-opacity-30 border border-teal-600 rounded-t-lg flex justify-center">Settings:</h3>
+        <h3 class="text-lg font-bold bg-teal-600 bg-opacity-30 border border-teal-600 rounded-t-lg flex justify-center dark:text-white">Settings:</h3>
 
         <button id="delete_item" value="{{item_id}}" class="flex mt-3 mx-auto btn btn-red">Delete Item</button>
 
         {% if history %}
-        <div id="password_history" class="my-2 bg-gray-50 rounded-md flex flex-col mx-auto justify-center ">
+        <div id="password_history" class="my-2 flex flex-col mx-auto justify-center rounded-lg ">
 
-            <div class="flex justify-center rounded-t-md
-                    border-b border-gray-400 bg-gray-200
-                    text-gray-700 font-bold
+            <div class="text-lg font-bold bg-teal-600 bg-opacity-30 border border-teal-600 rounded-lg flex justify-center dark:text-white
                     ">Previous passwords:
-                    <span id="dropdown" class="mx-2">&#9662;</span>
+                    <span id="dropdown" class="mx-2 ">&#9662;</span>
                 </div>
 
 
-                <ul id='history_list' class="hidden list-disc list-inside p-1">
+                <ul id='history_list' class="hidden list-disc list-inside p-1
+                rounded-b-lg dark:bg-neutral-600">
                     {% for old_pw in history %}
-                    <li class="italic text-blue-800
-                    hover:bg-teal-100  hover:cursor-pointer
+                    <li class="italic text-blue-800 dark:text-cyan-400
+                    hover:bg-teal-100 hover:dark:bg-opacity-10  hover:cursor-pointer
                     my-2">{{old_pw}}</li>
                     {%endfor%}
                 </ul>

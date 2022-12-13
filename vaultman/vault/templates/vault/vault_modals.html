@@ -1,5 +1,7 @@
 {% load static %}
 
+<!-- TODO fix input color in darkmode -->
+
 <!-- pin form modal -->
 <div id="pin_modal" class="fixed hidden inset-0 bg-gray-600 bg-opacity-50">
     <div class="relative my-auto mx-auto p-5 border-2 border-green-500 shadow-lg rounded-md bg-green-50">
@@ -20,7 +22,8 @@
 
     <div class=" relative p-2 md:p-5
     scale-75 md:transform-none
-    shadow-lg rounded-2xl border-2 border-blue-500 bg-blue-50 ">
+    shadow-lg rounded-2xl border-2 border-blue-500 bg-blue-50
+    dark:bg-neutral-800 ">
 
         <header class="flex relative -top-2 md:-top-5 justify-center
          bg-blue-200  border-2 border-t-0 rounded-b-lg border-blue-500
@@ -66,13 +69,13 @@
 <!-- edit folder modal -->
 
 <div id="edit_folder_modal" class="fixed hidden inset-0 bg-gray-600 bg-opacity-50 ">
-    <div class="relative my-auto mx-auto p-5 border-2 border-yellow-500 shadow-lg rounded-md bg-gray-200 ">
+    <div class="relative my-auto mx-auto p-5 border-2 border-yellow-500 shadow-lg rounded-md bg-yellow-100 ">
         <header class="flex relative -top-5 justify-center
          bg-yellow-200  border-2 border-t-0 rounded-b-lg border-yellow-500
          text-yellow-900 font-bold "> Edit Folder</header>
          <form value="">
 
-                <input type="text" name="name" placeholder="Edit Name..." class="rounded-lg border-2 border-yellow-500" maxlength="32" required id="current_folder_name">
+                <input type="text" name="name" placeholder="Edit Name..." class="rounded-lg border-2 border-yellow-500 " maxlength="32" required id="current_folder_name">
 
                 <div class="flex justify-around">
 
