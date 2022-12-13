@@ -33,6 +33,13 @@ class Login(models.Model):
     def folderColor(self):
         return self.folder.color
 
+    @property
+    def noPassword(self):
+        if decrypt(self.password) == "":
+            return True
+        else:
+            return False
+
 
 class History(models.Model):
     """ Stores former Login password fields when updated by user """
