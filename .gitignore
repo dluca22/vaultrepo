@@ -188,7 +188,7 @@ dmypy.json
 
 # Cython debug symbols
 cython_debug/
-vaultman/theme/static/icons/dark-hex-sm.png
-vaultman/theme/static/icons/dark-hex.png
-vaultman/theme/static/images/hex-teal.png
-vaultman/theme/static/images/hex.png
+keymdall/theme/static/icons/dark-hex-sm.png
+keymdall/theme/static/icons/dark-hex.png
+keymdall/theme/static/images/hex-teal.png
+keymdall/theme/static/images/hex.png
