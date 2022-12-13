@@ -1,5 +1,4 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import requires_csrf_token
 from django.urls import reverse, reverse_lazy
@@ -103,7 +102,6 @@ def get_password(request, id):
     pin = json.loads(request.body)
     # TODO convert to @property so that it can be decrypted from models.py
     user_pin = decrypt(request.user.pin)
-    print("call")
     # try if login is existing
     try:
         login = Login.objects.get(id=id)
@@ -116,7 +114,10 @@ def get_password(request, id):
 
 
     # if login is protected and pin wasn't provided (may change and just compare if pin is equal to User.pin)
-    if login.protected and pin != user_pin:
+    if login.protected and not pin:
+        return JsonResponse({"denied":"unauthorized", "message":"Item locked! PIN is required"})
+
+    elif login.protected and pin != user_pin:
         return JsonResponse({"denied":"unauthorized", "message":"Incorrect PIN"})
     else:
 

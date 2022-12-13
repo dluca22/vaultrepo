@@ -1,7 +1,7 @@
 // ====== LISTENS ON DOM CONTENT LOADED AND BASED ON THE URL TRIGGERS DIFFERENT FUNCTIONS ===
 
 document.addEventListener("DOMContentLoaded", function () {
-    
+
   const url = new URL(document.URL);
 
   //   on access if not autheticated, will be redirected to login page
@@ -32,6 +32,7 @@ function vault_page() {
   const logins = document.querySelectorAll(".login_box");
 
   logins.forEach((login) => {
+    console.log(login.dataset.protection);
     // clicking on entire box, opens new page with login content
     login.addEventListener("click", view_login, false);
     // clicking on username, gets the text of the username field and copies to clipboard
@@ -192,14 +193,13 @@ function copy_password(e) {
   const id = this.getAttribute("id");
 
   // from HTML data-protection attribute
-  const status = this.dataset.protection;
+  const protection = this.dataset.protection;
 
-  if (status == "unlocked") {
+  if (protection == "unlocked") {
     var pin = false;
     fetch_password(id, pin);
   }
-  // STOP TEMPOARANEO  ===================================================================================
-  else if (status == "locked") {
+  else {
     const pin_modal = document.querySelector("#pin_modal");
     const pin_form = pin_modal.querySelector("form");
     const pin_input = pin_form.querySelector("#pin_input");

@@ -50,8 +50,8 @@
     .login_box {
         @apply  relative flex flex-col
         my-2 mx-5 rounded-md p-3  w-80
-        border-2 border-teal-600 hover:bg-gray-500 hover:bg-opacity-75
-        dark:bg-neutral-700
+        border-2 border-teal-600 hover:bg-gray-500 hover:bg-opacity-30
+        dark:bg-neutral-700 hover:dark:bg-opacity-30
 
         hover:cursor-pointer;
     }
