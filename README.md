@@ -81,9 +81,14 @@ While displaying a Login form, the user has the option to generate a random user
         * a function to automate the format for Login urls, so that an user doesn't have to manually add "https://"
     * `views.py` manages the vault app logic, defines the content of the index page handling query filters, handles the insertion/ deletion and edit of new Logins and Folders to the database, manages async requests from Js to get password or create random passwords and ensures security, checking for the request.user to be the owner of the content he is trying to access.
 
-    ## Conclusion
+## How to deploy
+Open the repository, create virtual environment and run command `pip install -r requirements.txt`.
+After it finished installing, change directory to `Keymdall/` in the console and run `python3 manage.py runserver`
+You can then open a brower to the `localhost:8000` or `127.0.0.1:8000` and you will be redirected to the registration page
 
-    I'm using this project as a canvas to train my skills and reflect more on how features should be designed to be maintainable, scalable and secure.
-    I intend to continue building upon it as I go along my learning path, adding features and testing scalability and security.
+## Conclusion
 
-    I have learned a lot of things while working on it, as a frontend I used JavaScript in order to imporove my skills and knowledge of it, but I plan on switching to another framework better suited to create interactive UI in order to improve the user experience and have more complex features.
+I'm using this project as a canvas to train my skills and reflect more on how features should be designed to be maintainable, scalable and secure.
+I intend to continue building upon it as I go along my learning path, adding features and testing scalability and security.
+
+I have learned a lot of things while working on it, as a frontend I used JavaScript in order to imporove my skills and knowledge of it, but I plan on switching to another framework better suited to create interactive UI in order to improve the user experience and have more complex features.
