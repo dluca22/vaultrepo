@@ -31,7 +31,7 @@
         @apply bg-red-500 hover:bg-red-700 dark:text-red-500 dark:border-red-500 ;
     }
     .btn-pink {
-        @apply bg-red-500 hover:bg-red-700 dark:text-pink-500 dark:border-pink-500 ;
+        @apply bg-pink-500 hover:bg-pink-700 dark:text-pink-500 dark:border-pink-500 ;
     }
     .btn-yellow {
         @apply bg-yellow-500 hover:bg-yellow-700 dark:text-yellow-500 dark:border-yellow-500 ;

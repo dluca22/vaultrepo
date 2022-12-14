@@ -228,7 +228,6 @@ def new_folder(request):
 
         if form.is_valid():
             form.instance.owner = request.user
-            print(form.cleaned_data)
             form.save()
         messages.success(request, "Folder created", fail_silently=True)
         return HttpResponseRedirect(reverse('vault:index'))
@@ -237,7 +236,7 @@ def new_folder(request):
 
 
 def edit_folder(request, id):
-    """from async request GET method returns values of folder if present
+    """from async request GET method returns name of folder if present
         PUT request, gets body content of input field and assigns to the model
         DELETE request deletes the db entry"""
 

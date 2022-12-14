@@ -2,7 +2,7 @@
 
 <div class="h-1/4 flex flex-col justify-around py-4 px-3 rounded-lg
 bg-gray-50
-dark:bg-neutral-800 dark:border-4 dark:border-teal-700">
+dark:bg-neutral-800 border-4 border-double dark:border-teal-700 border-teal-400">
 
     <div class="rounded-t-md
     border-b font-bold
@@ -26,11 +26,12 @@ dark:bg-neutral-800 dark:border-4 dark:border-teal-700">
             <a href="{%url 'vault:index'%}?filter=fav" class="btn btn-yellow dark:bg-transparent dark:border-4 dark:border-yellow-500 dark:text-yellow-500">Favorites</a>
         </div>
         <div class="flex justify-around">
-            <span class="font-bold">Folders</span>
+            <span class="font-bold dark:text-white">Folders</span>
             <button id="new_folder" class="btn btn-green p-2 py-0">+</button>
         </div>
         {% if folders %}
             <!-- list of folders -->
+
             <ul id="folders" class="flex flex-col gap-2">
                 {% for folder in folders%}
                 <!-- every li has link to query for filtering items + Edit button and Delete button -->

@@ -32,7 +32,6 @@ function vault_page() {
   const logins = document.querySelectorAll(".login_box");
 
   logins.forEach((login) => {
-    console.log(login.dataset.protection);
     // clicking on entire box, opens new page with login content
     login.addEventListener("click", view_login, false);
     // clicking on username, gets the text of the username field and copies to clipboard
@@ -147,7 +146,9 @@ function vault_page() {
           if (data.success) {
             flash_message(data.success, "success");
           } else {
-            console.log(data);
+
+            flash_message(data.message, "error");
+
           }
         });
     });
@@ -168,8 +169,9 @@ function vault_page() {
           // if successful delete, flashes success message
           if (data.success) {
             flash_message(data.message, "success");
-          } else {
-            console.log(data);
+        } else {
+            flash_message(data.message, "error");
+
           }
         });
     });
@@ -210,7 +212,6 @@ function copy_password(e) {
       e.preventDefault();
       var pin = pin_input.value;
       pin_form.reset();
-      console.log(pin);
       pin_modal.style.display = "none";
       fetch_password(id, pin);
     }, { once: true });
@@ -296,10 +297,11 @@ function login_content_page() {
           .then((response) => response.json())
           .then((data) => {
             if (data.success) {
-              console.log(data.success);
               window.location = "/";
+            flash_message(data.message, "success");
+
             } else if (data.denied) {
-              console.log(data.message);
+                flash_message(data.message, "error");
             }
           });
       }
@@ -424,7 +426,6 @@ function create_popup(alert) {
     "border-r-4",
     "rounded-lg"
   );
-  console.log(alert);
   if (alert === "success") {
     popup.classList.add("green-popup");
   } else if (alert === "error") {

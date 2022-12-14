@@ -10,19 +10,7 @@
     <div class="w-2 h-full rounded-xl overflow-hidden absolute p-0 -m-3
          bg-{{login.folderColor}}-600 dark:bg-{{login.folderColor}}-400 opacity-70">
 
-         <!-- color accent initialization because this tailwind version has issues with displaying from template inherited values login.folderColor -->
-         <div class="hidden">
-            <div class="bg-teal-600 dark:bg-teal-400"></div>
-            <div class="bg-green-600 dark:bg-green-400"></div>
-            <div class="bg-emerald-600 dark:bg-emerald-400"></div>
-            <div class="bg-blue-600 dark:bg-blue-400"></div>
-            <div class="bg-cyan-600 dark:bg-cyan-400"></div>
-            <div class="bg-red-600 dark:bg-red-400"></div>
-            <div class="bg-orange-600 dark:bg-orange-400"></div>
-            <div class="bg-violet-600 dark:bg-violet-400"></div>
-            <div class="bg-pink-600 dark:bg-pink-400"></div>
-            <div class="bg-yellow-600 dark:bg-yellow-400"></div>
-         </div>
+
     </div>
 
     {%endif%}
@@ -70,7 +58,7 @@
                 " src="{%static 'icons/key.svg'%}" alt="password">
 
             {%else%}
-            <img class="opacity-10 " src="{%static 'icons/key.svg'%}" alt="unset">
+            <img class="opacity-5" src="{%static 'icons/key.svg'%}" alt="unset">
             {%endif%}
 
             <!-- TODO don't include value of password, listen for click and send request to backend and add to clipboard -->
