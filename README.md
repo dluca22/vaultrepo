@@ -1,4 +1,4 @@
-# Capstone
+# Key-Mdall ![icon](https://raw.githubusercontent.com/dluca22/vaultrepo/main/Keymdall/theme/static/icons/icon_sm.ico)
 This is my submission for the final project for the cs50-web course.
 
 I've built a web application for storing login credentials for websites.
