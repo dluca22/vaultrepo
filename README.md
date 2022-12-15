@@ -5,6 +5,8 @@ I've built a web application for storing login credentials for websites.
 I took inspiration from BitWarden, a service I daily use and really love; being one of the services that most helped me and improved my daily life,  it actually motivated me to start a career in coding and web development.
 I took the chance to re-create it to gain better knowledge and learn about security and user experience; working on it with a professional approach like it was meant to be ready for deployment.
 
+[**Video demo** ](https://youtu.be/lebXf0d5ziU)
+
 ## Description
 
 This web app is built using Django in the backend and plain JavaScript in the frontend while styling is managed using Tailwind.
