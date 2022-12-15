@@ -32,12 +32,12 @@ def index(request):
             logins = Login.objects.filter(folder__isnull=True, owner=request.user)
         # else, filter where folder name is the one in the query
         else:
-            logins = Login.objects.filter(folder__name=folder_query)
+            logins = Login.objects.filter(folder__name=folder_query, owner=request.user)
     # if query is for fav items, selects only those
     elif filter == "fav":
         logins = Login.objects.filter(owner=request.user, favorite=True)
     elif filter == "logins":
-        logins = Login.objects.filter(favorite=True)
+        logins = Login.objects.filter(favorite=True, owner=request.user)
     # elif filter == "notes":
     #     logins = Note.objects.filter(owner=request.user).order_by('title')
     # if the query is a ?q search request, selects ones where the title contains the word in search (insensitive contains)

@@ -23,7 +23,8 @@ overflow-x-hidden w-screen h-fit sm:h-screen">
     w-min-screen
     ">
         <div class="flex w-3/12">
-            <h2 class=" text-xl md:text-3xl font-bold "><a href="{%url 'vault:index'%}">Key-mdall</a></h2>
+                <img src="{%static 'icons/icon_big.png' %}" class="mr-3 h-14" alt="Logo" />
+                <h2 class=" text-xl md:text-3xl font-bold flex items-center"><a href="{%url 'vault:index'%}">Key-mdall</a></h2>
         </div>
         <ul class="flex  w-5/12 justify-end items-center">
             {% if user.is_authenticated %}
